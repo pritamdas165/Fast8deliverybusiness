@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8bondhu - Grocery Enterprise</title>
+    <title>Fast8bondhu - Grocery & More</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,16 +32,17 @@
 
         /* --- AUTH SCREEN --- */
         #auth-screen { position: fixed; inset: 0; background: var(--white); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
-        .auth-logo { width: 100px; height: 100px; border-radius: 20px; box-shadow: var(--shadow-md); margin-bottom: 20px; }
+        .brand-text { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 5px; text-align: center; }
+        .brand-text span { color: var(--accent); }
         .input-box { width: 100%; margin-bottom: 15px; text-align: left; }
         .input-box label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-left: 5px; }
         .input-box input, .input-box select { width: 100%; padding: 16px; border-radius: 16px; border: 1.5px solid #eee; font-size: 16px; margin-top: 6px; background: #F9FAFB; }
         .btn-main { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 18px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(211,47,47,0.2); }
 
         /* --- HEADER --- */
-        header { background: var(--white); padding: 15px 20px 25px; position: sticky; top: 0; z-index: 1000; border-radius: 0 0 30px 30px; box-shadow: var(--shadow-sm); text-align: center; }
-        .header-logo { width: 75px; height: 75px; object-fit: contain; background: white; padding: 5px; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .loc-info { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 15px; }
+        header { background: var(--white); padding: 15px 20px 25px; position: sticky; top: 0; z-index: 1000; border-radius: 0 0 30px 30px; box-shadow: var(--shadow-sm); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .loc-info { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
         .loc-info i { color: var(--primary); }
         .search-container { background: #F0F2F5; border-radius: 16px; display: flex; align-items: center; padding: 12px 18px; border: 1px solid #E8E8E8; }
         .search-container input { border: none; background: transparent; width: 100%; margin-left: 10px; font-size: 14px; color: var(--text-dark); }
@@ -50,32 +51,42 @@
         .banner-container { padding: 15px 20px 0; }
         .banner-card { width: 100%; height: 160px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); display: none; }
         .banner-card img { width: 100%; height: 100%; object-fit: cover; }
-
         .cat-scroll { display: flex; overflow-x: auto; padding: 20px; gap: 15px; scrollbar-width: none; }
         .cat-scroll::-webkit-scrollbar { display: none; }
-        .cat-item { text-align: center; flex-shrink: 0; width: 70px; }
+        .cat-item { text-align: center; flex-shrink: 0; width: 70px; cursor: pointer; }
         .cat-icon-box { width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); border: 1px solid #f0f0f0; margin-bottom: 8px; font-size: 24px; }
         .cat-item span { font-size: 11px; font-weight: 700; color: var(--text-dark); }
-
-        .section-header { padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .section-header h3 { font-size: 18px; font-weight: 800; }
-
-        /* --- PRODUCTS --- */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px 20px 140px; }
         .p-card { background: var(--white); border-radius: var(--radius-md); padding: 12px; position: relative; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
         .p-img-box { text-align: center; margin-bottom: 10px; height: 110px; position: relative; }
         .p-img-box img { width: 100%; height: 100%; object-fit: contain; }
-        .p-tag { position: absolute; top: 0; left: 0; background: var(--primary); color: white; font-size: 8px; font-weight: 900; padding: 3px 7px; border-radius: 6px; }
         .p-card h4 { font-size: 14px; height: 38px; overflow: hidden; line-height: 1.3; margin-bottom: 5px; font-weight: 600; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
         .p-price { font-weight: 800; font-size: 16px; }
         .add-btn-premium { background: white; color: #27ae60; border: 1.5px solid #27ae60; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 11px; cursor: pointer; }
 
-        /* --- FLOATING CART --- */
-        #floating-cart-bar { position: fixed; bottom: 95px; left: 15px; right: 15px; background: #27ae60; color: white; padding: 15px 20px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 2500; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3); animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } }
+        /* --- PROFILE VIEW --- */
+        .profile-header { background: white; padding: 40px 20px; border-radius: 0 0 35px 35px; text-align: center; box-shadow: var(--shadow-sm); }
+        .user-avatar { width: 80px; height: 80px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px; border: 3px solid white; box-shadow: var(--shadow-sm); }
+        .stats-row { display: flex; justify-content: space-around; margin: 20px 0; }
+        .stat-item { text-align: center; }
+        .stat-item b { display: block; font-size: 18px; color: var(--primary); }
+        .stat-item span { font-size: 11px; color: gray; }
+        .menu-item { background: white; padding: 18px; border-radius: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-weight: 600; border: 1px solid #f0f0f0; cursor: pointer; }
+        .menu-item i { color: var(--primary); font-size: 18px; width: 25px; }
 
-        /* --- CART SHEET --- */
+        /* --- ORDER TRACKING TIMELINE --- */
+        .order-history-card { background: white; border-radius: 22px; padding: 20px; margin-bottom: 15px; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); }
+        .tracking-timeline { display: flex; justify-content: space-between; margin-top: 15px; position: relative; padding: 10px 0; }
+        .tracking-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: #eee; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; width: 25%; }
+        .dot { width: 12px; height: 12px; background: #eee; border-radius: 50%; margin: 0 auto 5px; border: 2px solid white; }
+        .step.active .dot { background: #27ae60; box-shadow: 0 0 8px rgba(39,174,96,0.5); }
+        .step span { font-size: 9px; color: gray; font-weight: 600; }
+        .step.active span { color: #27ae60; }
+
+        /* --- CART & FLOATING --- */
+        #floating-cart-bar { position: fixed; bottom: 95px; left: 15px; right: 15px; background: #27ae60; color: white; padding: 15px 20px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 2500; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3); }
         #cart-sheet { position: fixed; bottom: 0; left: 0; width: 100%; height: 85%; background: var(--white); z-index: 3000; border-radius: 35px 35px 0 0; box-shadow: 0 -15px 40px rgba(0,0,0,0.15); transform: translateY(100%); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         #cart-sheet.active { transform: translateY(0); }
         .cart-header { padding: 25px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
@@ -86,20 +97,10 @@
         .bill-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
         .grand-total { border-top: 1.5px solid #ddd; padding-top: 10px; font-weight: 800; font-size: 17px; }
 
-        /* --- PROFILE --- */
-        .profile-header { background: white; padding: 40px 20px; border-radius: 0 0 35px 35px; text-align: center; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
-        .user-avatar { width: 80px; height: 80px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px; border: 3px solid white; box-shadow: var(--shadow-sm); }
-        .order-history-card { background: white; border-radius: 20px; padding: 18px; margin-bottom: 12px; border: 1px solid #f0f0f0; }
-        .status-pill { padding: 4px 10px; border-radius: 8px; font-size: 9px; font-weight: 800; text-transform: uppercase; }
-        .status-Pending { background: #FFF4E5; color: #B7791F; } 
-        .status-Delivered { background: #F0FFF4; color: #276749; }
-
-        /* --- NAV --- */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(255,255,255,0.98); display: flex; justify-content: space-around; padding: 12px 0 28px; border-top: 1px solid #eee; z-index: 2000; border-radius: 25px 25px 0 0; }
-        .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; flex: 1; transition: 0.3s; }
+        .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; flex: 1; transition: 0.3s; cursor: pointer; }
         .nav-item.active { color: var(--primary); font-weight: 800; }
         .nav-item i { font-size: 20px; display: block; margin-bottom: 4px; }
-
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2900; display: none; backdrop-filter: blur(4px); }
     </style>
 </head>
@@ -107,15 +108,14 @@
 
     <div id="loading-overlay"><div class="loader"></div></div>
 
-    <!-- 1. AUTH SCREEN -->
+    <!-- 1. AUTH -->
     <div id="auth-screen">
-        <div style="width: 100%; max-width: 380px; text-align: center;">
-            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" class="auth-logo" alt="Logo">
-            <h2 style="font-size: 24px; margin-bottom: 5px;">Join Fast8bondhu</h2>
-            <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 13px;">Apnar Pashei Shop Somoy.</p>
-            <div class="input-box"><label>Full Name</label><input type="text" id="user-name" placeholder="eg. Pritam Das"></div>
-            <div class="input-box"><label>Phone Number</label><input type="number" id="user-phone" placeholder="eg. 9330515650"></div>
-            <div class="input-box"><label>Select Area</label><select id="user-area"><option value="">Loading areas...</option></select></div>
+        <div style="width: 100%; max-width: 380px;">
+            <div class="brand-text">Fast8<span>bondhu</span></div>
+            <p style="text-align:center; color: var(--text-muted); margin-bottom: 25px; font-size: 13px;">Apnar Pashei Shop Somoy.</p>
+            <div class="input-box"><label>Full Name</label><input type="text" id="user-name" placeholder="Enter name"></div>
+            <div class="input-box"><label>Phone Number</label><input type="number" id="user-phone" placeholder="Enter 10-digit number"></div>
+            <div class="input-box"><label>Select Area</label><select id="user-area"><option value="">Loading...</option></select></div>
             <button class="btn-main" onclick="handleRegister()">CONTINUE</button>
         </div>
     </div>
@@ -123,7 +123,10 @@
     <!-- 2. MAIN APP -->
     <div id="main-app" style="display:none;">
         <header>
-            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" class="header-logo" alt="Logo">
+            <div class="header-top">
+                <div class="brand-text" style="font-size: 22px;">Fast8<span>bondhu</span></div>
+                <div onclick="switchView('profile', document.getElementById('nav-profile'))" style="cursor:pointer; font-size: 22px; color: var(--text-muted);"><i class="fas fa-user-circle"></i></div>
+            </div>
             <div class="loc-info" onclick="showAuth()">
                 <i class="fas fa-location-dot"></i>
                 <div style="text-align: left;">
@@ -134,13 +137,12 @@
             </div>
             <div class="search-container">
                 <i class="fas fa-search" style="color:gray;"></i>
-                <input type="text" id="search-box" placeholder="Search for groceries..." oninput="handleSearch()">
+                <input type="text" id="search-box" placeholder="Search vegetables, snacks..." oninput="handleSearch()">
             </div>
         </header>
 
         <main id="view-home">
-            <div class="banner-container"><div class="banner-card"><img id="app-banner" src="" alt="Banner"></div></div>
-            
+            <div class="banner-container"><div class="banner-card"><img id="app-banner" src=""></div></div>
             <div class="cat-scroll">
                 <div class="cat-item" onclick="filterCat('Vegetables')"><div class="cat-icon-box">🥦</div><span>Veggies</span></div>
                 <div class="cat-item" onclick="filterCat('Daily Needs')"><div class="cat-icon-box">🥛</div><span>Daily</span></div>
@@ -148,55 +150,59 @@
                 <div class="cat-item" onclick="filterCat('Household')"><div class="cat-icon-box">🧼</div><span>Home</span></div>
                 <div class="cat-item" onclick="renderProducts(allProducts)"><div class="cat-icon-box">✨</div><span>All</span></div>
             </div>
-
-            <div class="section-header"><h3 id="grid-title">Fresh Arrivals</h3></div>
+            <div class="section-header"><h3>Fresh Arrivals</h3></div>
             <div class="product-grid" id="product-grid"></div>
         </main>
 
+        <!-- ENHANCED PROFILE VIEW -->
         <main id="view-profile" style="display:none;">
             <div class="profile-header">
                 <div class="user-avatar"><i class="fas fa-user-ninja"></i></div>
-                <h2 id="p-name">Pritam Das</h2>
+                <h2 id="p-name">Loading...</h2>
                 <p id="p-phone">+91 0000000000</p>
+                <div class="stats-row">
+                    <div class="stat-item"><b id="stat-order-count">0</b><span>Orders</span></div>
+                    <div class="stat-item"><b id="stat-savings">₹0</b><span>Total Saved</span></div>
+                </div>
             </div>
-            <div style="padding: 0 20px 150px;">
-                <h3 style="margin-bottom: 15px;">Order History</h3>
+            <div style="padding: 20px 20px 150px;">
+                <div class="menu-item" onclick="window.open('tel:919330515650')"><i class="fas fa-phone"></i> Call Customer Care</div>
+                <div class="menu-item" onclick="window.open('https://wa.me/919330515650')"><i class="fab fa-whatsapp"></i> Chat with Admin</div>
+                <div class="menu-item" onclick="showAuth()"><i class="fas fa-map-location-dot"></i> Edit My Area</div>
+                
+                <h3 style="margin: 25px 0 15px;">Live History</h3>
                 <div id="order-history-list"></div>
-                <button class="btn-main" style="background:white; color:var(--primary); border:1.5px solid var(--primary); margin-top:20px;" onclick="logoutUser()">LOGOUT</button>
+                
+                <button class="btn-main" style="background:white; color:var(--primary); border:1.5px solid var(--primary); margin-top:20px;" onclick="logoutUser()">LOGOUT SESSION</button>
             </div>
         </main>
 
-        <!-- FLOATING CART -->
         <div id="floating-cart-bar" onclick="toggleCartSheet(true)">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-shopping-basket"></i>
-                <div><span id="float-qty" style="font-weight: 800; font-size: 14px;">0 ITEMS</span><small id="float-total" style="display: block; font-size: 11px; opacity: 0.9;">₹0</small></div>
-            </div>
-            <div style="font-weight: 800; font-size: 13px;">VIEW CART <i class="fas fa-chevron-right"></i></div>
+            <div style="display: flex; align-items: center; gap: 12px;"><i class="fas fa-shopping-basket"></i><div><span id="float-qty">0 ITEMS</span><small id="float-total" style="display: block;">₹0</small></div></div>
+            <div style="font-weight: 800;">VIEW CART <i class="fas fa-chevron-right"></i></div>
         </div>
 
-        <!-- CART SHEET -->
         <div class="overlay" id="cart-overlay" onclick="toggleCartSheet(false)"></div>
         <div id="cart-sheet">
-            <div class="cart-header"><h2>Review Cart</h2><i class="fas fa-times-circle" style="font-size:24px; color:#ccc;" onclick="toggleCartSheet(false)"></i></div>
+            <div class="cart-header"><h2>Review Order</h2><i class="fas fa-times-circle" style="font-size:24px; color:#ccc;" onclick="toggleCartSheet(false)"></i></div>
             <div class="cart-items-container" id="cart-items-list"></div>
             <div style="padding: 20px; background: white; border-radius: 35px 35px 0 0;">
                 <div class="bill-summary">
                     <div class="bill-row"><span>Items Total</span><span id="bill-sub">₹0</span></div>
-                    <div style="margin: 12px 0; border-top: 1px dashed #ddd; padding-top: 12px;">
+                    <div style="margin: 12px 0; border-top: 1px dashed #ddd; padding-top: 10px;">
                         <label style="font-size:10px; font-weight:800; color:gray;">DISTANCE (KM)</label>
                         <div style="display:flex; align-items:center; gap:12px; margin-top:5px;">
                             <input type="number" id="input-km" value="1" min="1" oninput="updateCartUI()" style="width:60px; padding:8px; border-radius:10px; border:1px solid #eee; font-weight:800; text-align:center;">
                             <span style="font-size:11px;">₹30 (3km) + ₹10/km extra</span>
                         </div>
                     </div>
-                    <div class="bill-row" id="coupon-display" style="display:none; color:green; font-weight:700;"><span>Discount</span><span id="bill-discount">-₹0</span></div>
+                    <div class="bill-row" id="coupon-display" style="display:none; color:green; font-weight:700;"><span>Coupon Savings</span><span id="bill-discount">-₹0</span></div>
                     <div class="bill-row"><span>Delivery Fee</span><b style="color:var(--primary);" id="bill-delivery">₹30</b></div>
                     <div class="bill-row grand-total"><span>To Pay</span><span id="bill-grand">₹0</span></div>
                 </div>
                 <div style="display:flex; gap:8px; margin:15px 0;">
-                    <input type="text" id="coupon-input" placeholder="COUPON" style="flex:1; padding:12px; border-radius:12px; border:1px solid #eee; text-transform:uppercase; font-weight:700;">
-                    <button onclick="applyCoupon()" style="padding:0 20px; background:var(--text-dark); color:white; border:none; border-radius:12px; font-weight:700; font-size:12px;">APPLY</button>
+                    <input type="text" id="coupon-input" placeholder="APPLY COUPON" style="flex:1; padding:12px; border-radius:12px; border:1px solid #eee; text-transform:uppercase; font-weight:700;">
+                    <button onclick="applyCoupon()" style="padding:0 20px; background:var(--text-dark); color:white; border:none; border-radius:12px; font-weight:700;">APPLY</button>
                 </div>
                 <button class="btn-main" onclick="checkoutOrder()">PLACE ORDER (COD)</button>
             </div>
@@ -226,10 +232,8 @@
 
         window.onload = async () => {
             await fetchAreas();
-            if(!user) {
-                document.getElementById('loading-overlay').style.display='none';
-                document.getElementById('auth-screen').style.display='flex';
-            } else { initApp(); }
+            if(!user) { document.getElementById('loading-overlay').style.display='none'; document.getElementById('auth-screen').style.display='flex'; } 
+            else { initApp(); }
         };
 
         async function fetchAreas() {
@@ -247,35 +251,16 @@
             document.getElementById('p-name').innerText = user.name;
             document.getElementById('p-phone').innerText = "+91 " + user.phone;
 
-            db.collection("settings").doc("banner").onSnapshot(doc => { 
-                if(doc.exists && doc.data().url) {
-                    document.getElementById('app-banner').src = doc.data().url;
-                    document.querySelector('.banner-card').style.display = 'block';
-                }
-            });
-
-            db.collection("products").onSnapshot(snap => {
-                allProducts = [];
-                snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
-                renderProducts(allProducts);
-            });
+            db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) { document.getElementById('app-banner').src = doc.data().url; document.querySelector('.banner-card').style.display = 'block'; } });
+            db.collection("products").onSnapshot(snap => { allProducts = []; snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() })); renderProducts(allProducts); });
             syncOrderHistory();
         }
 
         function renderProducts(list) {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = '';
+            const grid = document.getElementById('product-grid'); grid.innerHTML = '';
             list.forEach(p => {
                 const isOut = p.stock <= 0;
-                grid.innerHTML += `
-                    <div class="p-card">
-                        <div class="p-tag">FRESH</div>
-                        ${isOut ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.7);z-index:5;display:flex;align-items:center;justify-content:center;border-radius:18px;"><span style="background:#000;color:#fff;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;">SOLD OUT</span></div>' : ''}
-                        <div class="p-img-box"><img src="${p.img || 'https://via.placeholder.com/150'}"></div>
-                        <h4>${p.name}</h4>
-                        <div style="font-size:11px;color:gray;margin-bottom:8px;">${p.cat || 'Essentials'}</div>
-                        <div class="price-row"><span class="p-price">₹${p.sell}</span><button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button></div>
-                    </div>`;
+                grid.innerHTML += `<div class="p-card"><div class="p-tag">FRESH</div>${isOut ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.7);z-index:5;display:flex;align-items:center;justify-content:center;border-radius:18px;"><span style="background:#000;color:#fff;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;">SOLD OUT</span></div>' : ''}<div class="p-img-box"><img src="${p.img || 'https://via.placeholder.com/150'}"></div><h4>${p.name}</h4><div style="font-size:11px;color:gray;margin-bottom:8px;">${p.cat}</div><div class="price-row"><span class="p-price">₹${p.sell}</span><button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button></div></div>`;
             });
         }
 
@@ -299,26 +284,16 @@
                 sub += (item.sell * item.qty); count += item.qty; margin += (item.margin * item.qty);
                 list.innerHTML += `<div class="cart-item-row"><div style="flex:1;"><b>${item.name}</b><br><small>₹${item.sell}</small></div><div class="cart-qty-ctrl"><i class="fas fa-minus" onclick="updateQty(${i},-1)"></i><span>${item.qty}</span><i class="fas fa-plus" onclick="updateQty(${i},1)"></i></div><div style="width:60px;text-align:right;font-weight:700;">₹${item.sell*item.qty}</div></div>`;
             });
-
             const km = parseFloat(document.getElementById('input-km').value) || 1;
             let delFee = (km > 3) ? 30 + (Math.ceil(km - 3) * 10) : 30;
             let total = (sub + delFee) - appliedDiscount;
-
             window.currentOrderCalc = { subtotal: sub, delivery: delFee, total: total > 0 ? total : 0, margin: margin, distance: km };
-
             document.getElementById('bill-sub').innerText = '₹' + sub;
             document.getElementById('bill-delivery').innerText = '₹' + delFee;
             document.getElementById('bill-grand').innerText = '₹' + window.currentOrderCalc.total;
-
             const bar = document.getElementById('floating-cart-bar');
-            if(count > 0) { 
-                bar.style.display='flex'; 
-                document.getElementById('float-qty').innerText = count + ' ITEMS'; 
-                document.getElementById('float-total').innerText = 'Total: ₹' + window.currentOrderCalc.total; 
-            } else { 
-                bar.style.display='none'; 
-                toggleCartSheet(false); 
-            }
+            if(count > 0) { bar.style.display='flex'; document.getElementById('float-qty').innerText = count + ' ITEMS'; document.getElementById('float-total').innerText = 'Total: ₹' + window.currentOrderCalc.total; }
+            else { bar.style.display='none'; toggleCartSheet(false); }
         }
 
         async function applyCoupon() {
@@ -329,8 +304,8 @@
                 appliedDiscount = doc.data().amt; activeCoupon = code;
                 document.getElementById('coupon-display').style.display='flex';
                 document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
-                alert("Coupon SAVED!");
-            } else { alert("Invalid Coupon"); appliedDiscount=0; activeCoupon=""; }
+                alert("Coupon Applied!");
+            } else { alert("Invalid Code"); appliedDiscount=0; activeCoupon=""; }
             updateCartUI();
         }
 
@@ -338,20 +313,16 @@
             if(!cart.length) return;
             const calc = window.currentOrderCalc;
             const orderData = { customerName: user.name, customerPhone: String(user.phone), address: user.area, itemsSummary: cart.map(i => i.name+' x'+i.qty).join(', '), subtotal: calc.subtotal, deliveryCharge: calc.delivery, total: calc.total, totalMargin: calc.margin, distance: calc.distance, status: 'Pending', timestamp: Date.now(), discountAmt: appliedDiscount };
-
             try {
                 document.getElementById('loading-overlay').style.display='flex';
                 const docRef = await db.collection('orders').add(orderData);
                 for(let item of cart) { await db.collection('products').doc(item.id).update({ stock: firebase.firestore.FieldValue.increment(-item.qty) }); }
-
-                const waMsg = `*New Order: Fast8bondhu*%0A--------------------------%0A*Order ID:* #${docRef.id.slice(-5)}%0A*Customer:* ${user.name}%0A*Bill:* ₹${orderData.total}%0A*Address:* ${user.area}%0A--------------------------%0A_Apnar bondhu rasta-y asche!_`;
+                const waMsg = `*New Order: Fast8bondhu*%0A--------------------------%0A*ID:* #${docRef.id.slice(-5)}%0A*Name:* ${user.name}%0A*Bill:* ₹${orderData.total}%0A*Address:* ${user.area}%0A--------------------------%0A_Apnar bondhu rasta-y asche!_`;
                 window.open(`https://wa.me/919330515650?text=${waMsg}`, '_blank');
-
                 alert("Order Placed!");
                 cart=[]; appliedDiscount=0; activeCoupon="";
                 document.getElementById('coupon-display').style.display='none';
-                updateCartUI(); 
-                switchView('profile', document.getElementById('nav-profile'));
+                updateCartUI(); switchView('profile', document.getElementById('nav-profile'));
             } catch(e) { alert("Checkout Error!"); }
             finally { document.getElementById('loading-overlay').style.display='none'; }
         }
@@ -359,44 +330,31 @@
         function syncOrderHistory() {
             db.collection('orders').where('customerPhone','==',String(user.phone)).orderBy('timestamp','desc').onSnapshot(snap => {
                 const list = document.getElementById('order-history-list'); list.innerHTML = '';
+                let totalSavings = 0, orderCount = 0;
                 snap.forEach(doc => {
                     const o = doc.data();
-                    list.innerHTML += `<div class="order-history-card"><div style="display:flex;justify-content:space-between;margin-bottom:10px;"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${o.status}">${o.status}</span></div><div style="font-size:12px;color:gray;">${o.itemsSummary}</div><div style="margin-top:10px;text-align:right;font-weight:800;">₹${o.total}</div></div>`;
+                    orderCount++; totalSavings += (o.discountAmt || 0);
+                    const status = o.status;
+                    const steps = ['Pending','Packed','Out','Delivered'];
+                    const activeIdx = steps.indexOf(status);
+                    
+                    let timeline = `<div class="tracking-timeline">`;
+                    steps.forEach((s, i) => { timeline += `<div class="step ${i <= activeIdx ? 'active' : ''}"><div class="dot"></div><span>${s}</span></div>`; });
+                    timeline += `</div>`;
+
+                    list.innerHTML += `<div class="order-history-card"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}">${status}</span></div><div style="font-size:12px;color:gray;">${o.itemsSummary}</div>${timeline}<div style="margin-top:10px;text-align:right;font-weight:800;font-size:16px;">₹${o.total}</div></div>`;
                 });
+                document.getElementById('stat-order-count').innerText = orderCount;
+                document.getElementById('stat-savings').innerText = '₹' + totalSavings;
             });
         }
 
-        function handleSearch() {
-            const q = document.getElementById('search-box').value.toLowerCase();
-            renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q)));
-        }
-
-        function filterCat(c) {
-            renderProducts(allProducts.filter(p => p.cat === c));
-            document.getElementById('grid-title').innerText = c;
-        }
-
-        function switchView(view, el) {
-            document.querySelectorAll('main').forEach(m => m.style.display = 'none');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('view-' + view).style.display = 'block';
-            el.classList.add('active');
-        }
-
-        function toggleCartSheet(show) {
-            document.getElementById('cart-sheet').classList.toggle('active', show);
-            document.getElementById('cart-overlay').style.display = show ? 'block' : 'none';
-        }
-
-        function handleRegister() {
-            const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value;
-            if(!n || p.length < 10 || !a) return alert("Please provide correct details.");
-            user = { name: n, phone: p, area: a };
-            localStorage.setItem('fast8_customer', JSON.stringify(user));
-            location.reload();
-        }
-
-        function logoutUser() { if(confirm("Do you want to log out?")) { localStorage.clear(); location.reload(); } }
+        function handleSearch() { const q = document.getElementById('search-box').value.toLowerCase(); renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q))); }
+        function filterCat(c) { renderProducts(allProducts.filter(p => p.cat === c)); document.getElementById('grid-title').innerText = c; }
+        function switchView(view, el) { document.querySelectorAll('main').forEach(m => m.style.display = 'none'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('view-' + view).style.display = 'block'; el.classList.add('active'); }
+        function toggleCartSheet(show) { document.getElementById('cart-sheet').classList.toggle('active', show); document.getElementById('cart-overlay').style.display = show ? 'block' : 'none'; }
+        function handleRegister() { const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value; if(!n || p.length < 10 || !a) return alert("Fill data!"); user = { name: n, phone: p, area: a }; localStorage.setItem('fast8_customer', JSON.stringify(user)); location.reload(); }
+        function logoutUser() { if(confirm("Logout?")) { localStorage.clear(); location.reload(); } }
         function showAuth() { document.getElementById('auth-screen').style.display='flex'; }
     </script>
 </body>
