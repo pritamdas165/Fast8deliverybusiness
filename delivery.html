@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8 - Delivery Partner PRO</title>
+    <title>Fast8bondhu - Delivery Partner</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -26,8 +26,11 @@
 
         /* --- LOGIN --- */
         #login-screen { position: fixed; inset: 0; background: var(--primary); display: flex; align-items: center; justify-content: center; z-index: 10000; }
-        .login-card { background: var(--white); width: 85%; max-width: 350px; padding: 30px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
-        .login-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: #000; margin-top: 10px; }
+        .login-card { background: var(--white); width: 85%; max-width: 350px; padding: 35px 25px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
+        .login-card h2 { color: var(--primary); margin-bottom: 5px; }
+        .login-card p { font-size: 12px; color: var(--text-light); margin-bottom: 25px; }
+        .login-card input { width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 15px; text-align: center; font-size: 18px; font-weight: 600; }
+        .login-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: #000; }
 
         /* --- HEADER --- */
         header { background: var(--primary); color: white; padding: 25px 20px; border-radius: 0 0 30px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
@@ -39,25 +42,25 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- TASK CARDS --- */
-        .order-card { background: var(--white); border-radius: 18px; padding: 20px; margin-bottom: 15px; box-shadow: var(--shadow); border-left: 6px solid var(--accent); position: relative; }
+        .order-card { background: var(--white); border-radius: 18px; padding: 20px; margin-bottom: 15px; box-shadow: var(--shadow); border-left: 6px solid var(--accent); }
         .order-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 800; font-size: 16px; color: var(--primary); }
-        .bill-details { background: #f9f9f9; padding: 10px; border-radius: 10px; font-size: 12px; margin: 10px 0; border: 1px dashed #ddd; }
+        .bill-details { background: #f9f9f9; padding: 12px; border-radius: 12px; font-size: 12px; margin: 10px 0; border: 1px dashed #ddd; line-height: 1.5; }
         
         .action-btns { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-call { background: #e3f2fd; color: #1976d2; }
         .btn-nav { background: #fff3e0; color: #e65100; }
         .btn-deliver { background: var(--primary); color: white; }
 
         /* --- DASHBOARD STATS --- */
-        .summary-card { background: linear-gradient(135deg, #D32F2F, #B71C1C); color: white; padding: 30px 20px; border-radius: var(--radius); margin-bottom: 20px; text-align: center; box-shadow: 0 10px 20px rgba(211,47,47,0.2); }
+        .summary-card { background: linear-gradient(135deg, #D32F2F, #B71C1C); color: white; padding: 30px 20px; border-radius: var(--radius); margin-bottom: 20px; text-align: center; }
         .summary-card h1 { font-size: 36px; color: var(--accent); margin-top: 5px; }
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .small-stat { background: white; padding: 15px; border-radius: 15px; text-align: center; box-shadow: var(--shadow); }
 
         /* --- BOTTOM NAV --- */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--white); display: flex; justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid #eee; z-index: 1000; }
-        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; transition: 0.3s; }
+        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; }
         .nav-item.active { color: var(--primary); font-weight: 800; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; display: block; }
 
@@ -71,10 +74,11 @@
     <!-- 1. LOGIN -->
     <div id="login-screen">
         <div class="login-card">
-            <h2 style="color: var(--primary);">Fast8 <span style="color: var(--accent);">Partner</span></h2>
-            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 20px;">Direct Assignment Delivery Login</p>
-            <input type="number" id="login-phone" placeholder="Registered Phone Number" style="width:100%; padding:15px; border-radius:12px; border:1.5px solid #eee; margin-bottom:10px; text-align:center; font-size:18px;">
-            <button class="login-btn" onclick="handleLogin()">START MY SHIFT</button>
+            <img src="https://cdn-icons-png.flaticon.com/512/3724/3724720.png" width="60" alt="logo" style="margin-bottom:15px;">
+            <h2>Fast8<span style="color:var(--accent)">bondhu</span></h2>
+            <p>Rider Partner Portal</p>
+            <input type="number" id="login-phone" placeholder="Phone Number">
+            <button class="login-btn" onclick="handleLogin()">START SHIFT</button>
         </div>
     </div>
 
@@ -82,61 +86,61 @@
     <div id="main-app" style="display:none;">
         <header>
             <div>
-                <span id="rider-name-header" style="font-size: 12px; opacity: 0.9;">Rider</span>
-                <h3 id="rider-status-text">Active Shift</h3>
+                <span id="rider-name-header" style="font-size: 12px; opacity: 0.9;">Fast8 Rider</span>
+                <h3 id="rider-status-text">Duty Online</h3>
             </div>
-            <div class="status-badge"><i class="fas fa-circle" style="font-size:8px; margin-right:5px;"></i> ONLINE</div>
+            <div class="status-badge"><i class="fas fa-motorcycle"></i> ACTIVE</div>
         </header>
 
         <!-- VIEW: TASKS -->
         <div id="view-tasks" class="section active">
-            <h4 style="margin-bottom: 15px;"><i class="fas fa-motorcycle" style="color:var(--primary)"></i> Assigned Orders</h4>
+            <h4 style="margin-bottom: 15px;"><i class="fas fa-clipboard-list" style="color:var(--primary)"></i> Assigned to Me</h4>
             <div id="task-list">
-                <!-- Syncing orders specifically assigned to this phone number -->
+                <!-- Syncing orders assigned specifically to this rider -->
             </div>
         </div>
 
-        <!-- VIEW: EARNINGS & CASH -->
+        <!-- VIEW: CASH & STATS -->
         <div id="view-cash" class="section">
             <div class="summary-card">
-                <span>Cash Collection (To Submit)</span>
+                <span>Cash to Submit</span>
                 <h1 id="cash-balance">₹0</h1>
-                <p style="font-size: 11px; opacity: 0.8; margin-top: 10px;">Please submit this amount to Admin at Store</p>
+                <p style="font-size: 11px; opacity: 0.8; margin-top: 10px;">Submit this to Admin daily at the store.</p>
             </div>
 
             <div class="stat-grid">
                 <div class="small-stat">
-                    <span style="font-size: 11px; color: var(--text-light);">Deliveries</span>
+                    <span style="font-size: 11px; color: var(--text-light);">Orders Delivered</span>
                     <h3 id="stat-count">0</h3>
                 </div>
                 <div class="small-stat">
-                    <span style="font-size: 11px; color: var(--text-light);">Today's Cash</span>
+                    <span style="font-size: 11px; color: var(--text-light);">Today's Collection</span>
                     <h3 id="stat-today-cash">₹0</h3>
                 </div>
             </div>
 
-            <button class="login-btn" style="margin-top: 20px; background: #2D3436; color: white;" onclick="alert('Please visit store to settle cash collection.')">
-                <i class="fas fa-info-circle"></i> SETTLEMENT INSTRUCTIONS
-            </button>
+            <div class="small-stat" style="margin-top:20px; background:#fffde7; border: 1px dashed var(--accent);">
+                <p style="font-size:12px; font-weight:600;">"Apnar dorkare shop somoy pashei."</p>
+            </div>
         </div>
 
         <!-- VIEW: PROFILE -->
         <div id="view-profile" class="section">
-            <div class="small-stat" style="margin-top:20px; padding:30px;">
+            <div class="small-stat" style="margin-top:20px; padding:35px;">
                 <i class="fas fa-user-circle fa-4x" style="color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 id="profile-name">Name</h3>
-                <p id="profile-phone" style="color: var(--text-light); margin-bottom: 20px;">Phone</p>
-                <button class="btn" style="background: #FFF0F0; color: #D32F2F; width: 100%;" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> LOGOUT FROM SHIFT
+                <h3 id="profile-name">Rider Name</h3>
+                <p id="profile-phone" style="color: var(--text-light); margin-bottom: 25px;">Phone</p>
+                <button class="btn" style="background: #FFF0F0; color: #D32F2F; width: 100%; border-radius:12px;" onclick="logout()">
+                    <i class="fas fa-power-off"></i> LOGOUT FROM SHIFT
                 </button>
             </div>
         </div>
 
         <!-- NAVIGATION -->
         <nav class="bottom-nav">
-            <div class="nav-item active" onclick="switchView('view-tasks', this)"><i class="fas fa-list-check"></i>Tasks</div>
-            <div class="nav-item" onclick="switchView('view-cash', this)"><i class="fas fa-wallet"></i>My Cash</div>
-            <div class="nav-item" onclick="switchView('view-profile', this)"><i class="fas fa-user-gear"></i>Account</div>
+            <div class="nav-item active" onclick="switchView('view-tasks', this)"><i class="fas fa-route"></i>Tasks</div>
+            <div class="nav-item" onclick="switchView('view-cash', this)"><i class="fas fa-wallet"></i>Cash</div>
+            <div class="nav-item" onclick="switchView('view-profile', this)"><i class="fas fa-user-circle"></i>Profile</div>
         </nav>
     </div>
 
@@ -156,7 +160,7 @@
 
         let riderData = null;
 
-        // --- AUTH (Strict String Based) ---
+        // --- AUTH ---
         async function handleLogin() {
             let phoneInput = document.getElementById('login-phone').value.trim();
             if(!phoneInput) return alert("Please enter phone number");
@@ -164,27 +168,27 @@
             const phoneStr = String(phoneInput);
             showLoader(true);
 
-            // Double check (String vs Number) in database for safety
+            // Double Check String vs Number for compatibility
             let snap = await db.collection('deliveryBoys').where('phone', '==', phoneStr).get();
             if(snap.empty) {
                 snap = await db.collection('deliveryBoys').where('phone', '==', Number(phoneStr)).get();
             }
 
             if(snap.empty) {
-                alert("Account not found! Ask Admin to register you.");
+                alert("Rider not found! Contact Admin for registration.");
                 showLoader(false);
             } else {
                 snap.forEach(doc => {
                     riderData = { id: doc.id, ...doc.data() };
-                    riderData.phone = String(riderData.phone); // Lock as string
+                    riderData.phone = String(riderData.phone);
                 });
-                localStorage.setItem('fast8_rider_v2', JSON.stringify(riderData));
+                localStorage.setItem('fast8bondhu_rider', JSON.stringify(riderData));
                 initApp();
             }
         }
 
         function initApp() {
-            const stored = localStorage.getItem('fast8_rider_v2');
+            const stored = localStorage.getItem('fast8bondhu_rider');
             if(stored) {
                 riderData = JSON.parse(stored);
                 document.getElementById('login-screen').style.display = 'none';
@@ -193,11 +197,10 @@
                 document.getElementById('profile-name').innerText = riderData.name;
                 document.getElementById('profile-phone').innerText = riderData.phone;
                 syncOrders();
-                syncRiderProfile(); // To update cash in hand live
+                syncRiderProfile(); // Watch cash live
             }
         }
 
-        // --- SYNC LIVE CASH FROM DELIVERYBOYS COLLECTION ---
         function syncRiderProfile() {
             db.collection('deliveryBoys').doc(riderData.id).onSnapshot(doc => {
                 if(doc.exists) {
@@ -207,24 +210,23 @@
             });
         }
 
-        // --- TASK MANAGEMENT (SYNCED WITH ADMIN) ---
         function syncOrders() {
             const myPhone = String(riderData.phone);
 
-            // Fetch orders assigned specifically to this rider's phone number
+            // Fetch only orders strictly assigned to THIS rider
             db.collection('orders')
               .where('assignedTo', '==', myPhone)
               .onSnapshot(snap => {
                 const list = document.getElementById('task-list');
                 list.innerHTML = '';
-                let deliveredToday = 0;
-                let cashToday = 0;
+                let deliveredCount = 0;
+                let cashCollectedToday = 0;
+                const today = new Date().toDateString();
 
                 snap.forEach(doc => {
                     const o = doc.data();
-                    const isToday = new Date(o.timestamp).toDateString() === new Date().toDateString();
+                    const isToday = new Date(o.timestamp).toDateString() === today;
 
-                    // Only show "Out" orders in the active task list
                     if(o.status === 'Out') {
                         list.innerHTML += `
                             <div class="order-card">
@@ -233,16 +235,16 @@
                                     <span>₹${o.total}</span>
                                 </div>
                                 <div style="font-size:13px; font-weight:600; margin-bottom:5px;">
-                                    <i class="fas fa-user" style="color:var(--text-light)"></i> ${o.customerName}
+                                    <i class="fas fa-user-circle"></i> ${o.customerName}
                                 </div>
-                                <div style="font-size:12px; color:var(--text-light); line-height:1.4;">
+                                <div style="font-size:12px; color:var(--text-light); line-height:1.5;">
                                     <i class="fas fa-location-dot"></i> ${o.address}<br>
                                     <i class="fas fa-box-open"></i> ${o.itemsSummary}
                                 </div>
 
                                 <div class="bill-details">
-                                    Bill: ₹${o.subtotal} | Del: ₹${o.deliveryCharge} 
-                                    ${o.discountAmt ? `<br><b style="color:green">Discount Saved: ₹${o.discountAmt}</b>` : ''}
+                                    Bill: ₹${o.subtotal} | Delivery: ₹${o.deliveryCharge}
+                                    ${o.discountAmt ? `<br><b style="color:green">Coupon Saved: -₹${o.discountAmt}</b>` : ''}
                                 </div>
 
                                 <div class="action-btns">
@@ -250,47 +252,46 @@
                                         <i class="fas fa-phone"></i> CALL
                                     </button>
                                     <button class="btn btn-nav" onclick="window.open('https://www.google.com/maps/search/${o.address}')">
-                                        <i class="fas fa-location-arrow"></i> MAP
+                                        <i class="fas fa-map-location"></i> MAP
                                     </button>
                                     <button class="btn btn-deliver" onclick="markDelivered('${doc.id}', ${o.total})">
-                                        DELIVERED
+                                        DONE
                                     </button>
                                 </div>
                             </div>`;
                     }
 
                     if(o.status === 'Delivered' && isToday) {
-                        deliveredToday++;
-                        cashToday += o.total;
+                        deliveredCount++;
+                        cashCollectedToday += o.total;
                     }
                 });
 
-                document.getElementById('stat-count').innerText = deliveredToday;
-                document.getElementById('stat-today-cash').innerText = '₹' + cashToday;
+                document.getElementById('stat-count').innerText = deliveredCount;
+                document.getElementById('stat-today-cash').innerText = '₹' + cashCollectedToday;
                 
                 if(list.innerHTML === '') {
                     list.innerHTML = `<div style="text-align:center; padding:60px; color:#999;">
-                        <i class="fas fa-clipboard-check fa-3x" style="margin-bottom:15px; opacity:0.3"></i><br>
-                        No assignments.<br><span style="font-size:11px">Orders will appear here once Admin assigns them.</span></div>`;
+                        <i class="fas fa-check-circle fa-3x" style="margin-bottom:15px; opacity:0.2"></i><br>
+                        No assignments.<br><span style="font-size:11px">Waiting for Admin to assign orders.</span></div>`;
                 }
                 showLoader(false);
             });
         }
 
         async function markDelivered(id, amt) {
-            if(confirm("Confirm delivery and collection of ₹" + amt + "?")) {
+            if(confirm("Collect ₹" + amt + " and finish delivery?")) {
                 showLoader(true);
-                // 1. Update Order Status
+                // 1. Update Order
                 await db.collection('orders').doc(id).update({ status: 'Delivered' });
-                // 2. Add cash to rider's profile in database
+                // 2. Add cash to Rider profile
                 await db.collection('deliveryBoys').doc(riderData.id).update({
                     cashInHand: firebase.firestore.FieldValue.increment(amt)
                 });
-                alert("Delivery Marked Successful!");
+                alert("Job Done! Great work.");
             }
         }
 
-        // --- UI HELPERS ---
         function switchView(id, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -301,8 +302,8 @@
         function showLoader(s) { document.getElementById('loader').style.display = s ? 'flex' : 'none'; }
 
         function logout() {
-            if(confirm("Confirm shift logout?")) {
-                localStorage.removeItem('fast8_rider_v2');
+            if(confirm("Logout from shift?")) {
+                localStorage.removeItem('fast8bondhu_rider');
                 location.reload();
             }
         }
