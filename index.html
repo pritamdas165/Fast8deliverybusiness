@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fast8 - Local Fresh Grocery</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        :root {
+            --primary: #D32F2F; /* Fast8 Red */
+            --accent: #FFC107;  /* Fast8 Yellow */
+            --bg: #F8F9FA;
+            --white: #FFFFFF;
+            --text-dark: #212121;
+            --text-light: #757575;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+        /* --- LOADING OVERLAY --- */
+        #loading {
+            position: fixed; inset: 0; background: var(--white);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;
+        }
+        .loader { width: 48px; height: 48px; border: 5px solid var(--accent); border-bottom-color: var(--primary); border-radius: 50%; animation: rotation 1s linear infinite; }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- AUTH SCREEN --- */
+        #auth-screen {
+            position: fixed; inset: 0; background: var(--white); z-index: 2000;
+            display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px;
+        }
+        .auth-card { width: 100%; max-width: 400px; text-align: center; }
+        .auth-card img { width: 100px; margin-bottom: 20px; }
+        .input-group { width: 100%; margin-bottom: 15px; text-align: left; }
+        .input-group label { font-size: 12px; font-weight: 600; color: var(--text-light); margin-left: 5px; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #eee; font-size: 16px; margin-top: 5px;
+        }
+        .btn-primary {
+            width: 100%; padding: 16px; background: var(--primary); color: white; border: none;
+            border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(211,47,47,0.3);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--primary); padding: 25px 20px 45px; border-radius: 0 0 30px 30px;
+            position: sticky; top: 0; z-index: 100; color: white;
+        }
+        .user-loc { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; margin-bottom: 15px; }
+        .search-bar {
+            background: var(--white); border-radius: 15px; display: flex; align-items: center; padding: 12px 18px;
+            box-shadow: var(--shadow);
+        }
+        .search-bar input { border: none; width: 100%; margin-left: 10px; font-size: 15px; color: var(--text-dark); }
+        .search-bar i { color: var(--text-light); }
+
+        /* --- CATEGORIES --- */
+        .cat-scroll { display: flex; overflow-x: auto; padding: 10px 20px; gap: 15px; scrollbar-width: none; margin-top: -20px; }
+        .cat-scroll::-webkit-scrollbar { display: none; }
+        .cat-item { text-align: center; flex-shrink: 0; }
+        .cat-icon { 
+            width: 70px; height: 70px; background: white; border-radius: 20px; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: var(--shadow); margin-bottom: 8px; font-size: 28px;
+        }
+        .cat-item span { font-size: 11px; font-weight: 600; color: var(--text-dark); }
+
+        /* --- PRODUCT GRID --- */
+        .section-title { padding: 25px 20px 10px; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px 20px 100px; }
+        .p-card {
+            background: white; border-radius: var(--radius); padding: 12px; 
+            box-shadow: var(--shadow); position: relative; transition: 0.3s;
+        }
+        .p-card img { width: 100%; height: 120px; object-fit: contain; margin-bottom: 10px; border-radius: 12px; }
+        .p-card h4 { font-size: 14px; height: 40px; overflow: hidden; margin-bottom: 5px; }
+        .p-card .price { font-weight: 800; color: var(--primary); font-size: 17px; }
+        .p-card .old-price { font-size: 11px; text-decoration: line-through; color: var(--text-light); margin-left: 5px; }
+        .add-btn {
+            position: absolute; bottom: 12px; right: 12px; 
+            background: var(--accent); width: 35px; height: 35px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; font-size: 16px;
+        }
+        .stock-out { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; border-radius: var(--radius); z-index: 2; }
+
+        /* --- CART SHEET --- */
+        #cart-sheet {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
+            border-radius: 30px 30px 0 0; z-index: 1001; padding: 25px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.15); transform: translateY(100%); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #cart-sheet.active { transform: translateY(0); }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; }
+        .qty-ctrl { display: flex; align-items: center; gap: 15px; background: #F5F5F5; padding: 6px 14px; border-radius: 10px; }
+        
+        /* --- BOTTOM NAVIGATION --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background: white; display: flex;
+            justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid #eee; z-index: 1000;
+        }
+        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; position: relative; }
+        .nav-item.active { color: var(--primary); font-weight: 700; }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .cart-badge {
+            position: absolute; top: -8px; right: 20%; background: var(--accent);
+            color: black; font-size: 10px; width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white;
+        }
+
+        /* --- ORDER HISTORY --- */
+        .order-card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid var(--accent); box-shadow: var(--shadow); }
+        .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+
+        /* --- UI HELPERS --- */
+        .overlay { position: fixed; inset:0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; }
+        .banner-box { padding: 20px; margin-top: 10px; }
+        .banner-img { width: 100%; height: 160px; border-radius: 20px; object-fit: cover; box-shadow: var(--shadow); background: #eee; }
+        .coupon-row { display: flex; gap: 10px; margin-top: 15px; padding: 10px; background: #fffde7; border-radius: 12px; border: 1px dashed var(--accent); }
+        .coupon-row input { flex: 1; background: transparent; border: none; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+        .apply-btn { padding: 8px 15px; background: var(--text-dark); color: white; border: none; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="loading">
+        <div class="loader"></div>
+        <h2 style="margin-top: 20px; color: var(--primary);">Fast8</h2>
+    </div>
+
+    <!-- 1. AUTH SCREEN -->
+    <div id="auth-screen">
+        <div class="auth-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3724/3724720.png" alt="Fast8">
+            <h2 style="color: var(--primary); font-size: 28px;">Welcome to Fast8</h2>
+            <p style="margin-bottom: 35px; color: var(--text-light);">Direct Store to Doorstep Delivery</p>
+            
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="user-name" placeholder="eg. John Doe">
+            </div>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <input type="number" id="user-phone" placeholder="eg. 9876543210">
+            </div>
+            <div class="input-group">
+                <label>Select Your Area</label>
+                <select id="user-area">
+                    <option value="">Choose your neighborhood</option>
+                </select>
+            </div>
+            <button class="btn-primary" onclick="handleRegister()">START SHOPPING</button>
+        </div>
+    </div>
+
+    <!-- 2. MAIN APP -->
+    <div id="main-app" style="display:none;">
+        <header>
+            <div class="user-loc" onclick="showAuth()">
+                <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
+                <span id="display-area">Pinning location...</span>
+                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-box" placeholder="Search for bread, milk, snacks..." oninput="handleSearch()">
+            </div>
+        </header>
+
+        <!-- VIEW: HOME -->
+        <div id="view-home">
+            <!-- DYNAMIC BANNER -->
+            <div class="banner-box">
+                <img id="app-banner" src="" class="banner-img" alt="Offers">
+            </div>
+
+            <div class="cat-scroll">
+                <div class="cat-item" onclick="filterByCategory('Vegetables')"><div class="cat-icon">🥦</div><span>Veggies</span></div>
+                <div class="cat-item" onclick="filterByCategory('Daily Needs')"><div class="cat-icon">🥛</div><span>Daily Needs</span></div>
+                <div class="cat-item" onclick="filterByCategory('Snacks')"><div class="cat-icon">🍪</div><span>Snacks</span></div>
+                <div class="cat-item" onclick="filterByCategory('Household')"><div class="cat-icon">🧼</div><span>Home</span></div>
+            </div>
+
+            <div class="section-title">
+                <h3 id="grid-title">All Products</h3>
+                <span style="font-size: 12px; color: var(--primary); font-weight: bold;" onclick="renderProducts(products)">View All</span>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <!-- Dynamic Products -->
+            </div>
+        </div>
+
+        <!-- VIEW: ORDERS -->
+        <div id="view-orders" style="display:none; padding: 20px;">
+            <h3 style="margin-bottom: 20px;">Order History</h3>
+            <div id="order-history-list"></div>
+        </div>
+
+        <!-- CART BOTTOM SHEET -->
+        <div class="overlay" id="cart-overlay" onclick="toggleCart()"></div>
+        <div id="cart-sheet">
+            <div style="width: 40px; height: 5px; background: #eee; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-shopping-basket" style="color: var(--primary);"></i> Your Cart</h3>
+            
+            <div id="cart-items-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 10px;">
+                <!-- Cart items -->
+            </div>
+
+            <!-- COUPON SYSTEM -->
+            <div class="coupon-row">
+                <input type="text" id="coupon-input" placeholder="HAVE A COUPON CODE?">
+                <button class="apply-btn" onclick="applyCoupon()">APPLY</button>
+            </div>
+            <div id="coupon-msg" style="font-size: 10px; margin-top: 5px; margin-bottom: 10px; font-weight: 700;"></div>
+
+            <div style="background: #F9F9F9; padding: 18px; border-radius: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                    <span>Item Total</span><span id="cart-subtotal">₹0</span>
+                </div>
+                
+                <div style="margin: 12px 0;">
+                    <label style="font-size: 11px; font-weight: 700; color: var(--text-light);">Delivery Distance (KM)</label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
+                        <input type="number" id="input-km" value="1" min="1" oninput="calculateTotals()" style="width: 60px; padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
+                        <span style="font-size: 12px; color: var(--text-light);">₹30 (3km) + ₹10/extra km</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                    <span>Delivery Fee</span><span id="cart-delivery" style="color: var(--primary); font-weight: 700;">₹30</span>
+                </div>
+
+                <div id="discount-display" style="display: none; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: green; font-weight: 600;">
+                    <span>Coupon Discount</span><span id="cart-discount">-₹0</span>
+                </div>
+
+                <hr style="border: 0; border-top: 1px dashed #ddd; margin: 10px 0;">
+                <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 20px; color: var(--text-dark);">
+                    <span>To Pay</span><span id="cart-grandtotal">₹0</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-primary" onclick="checkoutOrder()" style="flex: 2;">PLACE ORDER (COD)</button>
+            </div>
+            <p style="text-align: center; font-size: 11px; margin-top: 12px; color: var(--text-light);">Direct store billing & WhatsApp confirmation.</p>
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="switchView('home', this)">
+                <i class="fas fa-home"></i>Home
+            </div>
+            <div class="nav-item" onclick="toggleCart()" id="nav-cart-btn">
+                <div class="cart-badge" id="cart-count">0</div>
+                <i class="fas fa-shopping-bag"></i>Cart
+            </div>
+            <div class="nav-item" onclick="switchView('orders', this)">
+                <i class="fas fa-receipt"></i>Orders
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // --- FIREBASE CONFIG ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
+            authDomain: "fast8delivery-business.firebaseapp.com",
+            projectId: "fast8delivery-business",
+            storageBucket: "fast8delivery-business.firebasestorage.app",
+            messagingSenderId: "968616663472",
+            appId: "1:968616663472:web:5ef89accec468344cd9e75",
+            measurementId: "G-WFHEXCC70P"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // --- APP STATE ---
+        let user = JSON.parse(localStorage.getItem('fast8_customer')) || null;
+        let products = [];
+        let cart = [];
+        let appliedDiscount = 0;
+        let activeCoupon = "";
+        let currentOrderCalc = { subtotal: 0, delivery: 30, margin: 0, total: 0 };
+
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            fetchAreas();
+            if(!user) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('auth-screen').style.display = 'flex';
+            } else {
+                initApp();
+            }
+        };
+
+        async function fetchAreas() {
+            const snap = await db.collection('areas').get();
+            const select = document.getElementById('user-area');
+            snap.forEach(doc => { select.innerHTML += `<option value="${doc.data().name}">${doc.data().name}</option>`; });
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('user-name').value, phone = document.getElementById('user-phone').value, area = document.getElementById('user-area').value;
+            if(!name || phone.length < 10 || !area) return alert("Fill all details correctly.");
+            user = { name, phone, area };
+            localStorage.setItem('fast8_customer', JSON.stringify(user));
+            location.reload();
+        }
+
+        function initApp() {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('display-area').innerText = user.area;
+
+            // Sync Banner
+            db.collection("settings").doc("banner").onSnapshot(doc => {
+                if(doc.exists) document.getElementById('app-banner').src = doc.data().url;
+            });
+
+            // Sync Products
+            db.collection('products').onSnapshot(snap => {
+                products = [];
+                snap.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
+                renderProducts(products);
+                document.getElementById('loading').style.display = 'none';
+            });
+
+            // Sync User Orders
+            db.collection('orders').where('customerPhone', '==', String(user.phone)).onSnapshot(snap => {
+                const list = document.getElementById('order-history-list');
+                list.innerHTML = '';
+                snap.forEach(doc => {
+                    const o = doc.data();
+                    list.innerHTML += `<div class="order-card"><div style="display:flex; justify-content:space-between;"><b>#${doc.id.slice(-5)}</b><span class="status-pill" style="background:#eee;">${o.status}</span></div><div style="font-size:12px; color:var(--text-light); margin-top:5px;">${o.itemsSummary}</div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;"><span style="font-size:11px;">${new Date(o.timestamp).toLocaleDateString()}</span><b style="color:var(--primary)">₹${o.total}</b></div></div>`;
+                });
+            });
+        }
+
+        // --- PRODUCT LOGIC ---
+        function renderProducts(list) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            list.forEach(p => {
+                const isOut = p.stock <= 0;
+                grid.innerHTML += `<div class="p-card">${isOut ? '<div class="stock-out"><b style="color:red">SOLD OUT</b></div>' : ''}<img src="${p.img || 'https://via.placeholder.com/150'}"><h4>${p.name}</h4><div><span class="price">₹${p.sell}</span><span class="old-price">₹${Math.round(p.sell * 1.2)}</span></div><button class="add-btn" onclick="addToCart('${p.id}')"><i class="fas fa-plus"></i></button></div>`;
+            });
+        }
+
+        function handleSearch() {
+            const q = document.getElementById('search-box').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(q));
+            renderProducts(filtered);
+            document.getElementById('grid-title').innerText = q ? 'Search Results' : 'All Products';
+        }
+
+        function filterByCategory(cat) {
+            const filtered = products.filter(p => p.cat === cat || p.category === cat);
+            renderProducts(filtered);
+            document.getElementById('grid-title').innerText = cat;
+        }
+
+        // --- CART & COUPON ENGINE ---
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id), inCart = cart.find(item => item.id === id);
+            if(inCart) inCart.qty++; else cart.push({ ...prod, qty: 1 });
+            updateCartBadge(); calculateTotals(); if(cart.length === 1) toggleCart();
+        }
+
+        async function applyCoupon() {
+            const code = document.getElementById('coupon-input').value.toUpperCase();
+            const msg = document.getElementById('coupon-msg');
+            if(!code) return;
+            const doc = await db.collection("coupons").doc(code).get();
+            if(doc.exists && doc.data().active) {
+                appliedDiscount = doc.data().amt; activeCoupon = code;
+                msg.style.color = "green"; msg.innerText = "COUPON APPLIED! SAVE ₹" + appliedDiscount;
+                document.getElementById('discount-display').style.display = "flex";
+                document.getElementById('cart-discount').innerText = "-₹" + appliedDiscount;
+            } else {
+                appliedDiscount = 0; activeCoupon = "";
+                msg.style.color = "red"; msg.innerText = "INVALID OR EXPIRED COUPON";
+                document.getElementById('discount-display').style.display = "none";
+            }
+            calculateTotals();
+        }
+
+        function calculateTotals() {
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = ''; let sub = 0, margin = 0;
+            cart.forEach((item, i) => {
+                sub += (item.sell * item.qty); margin += (item.margin * item.qty);
+                list.innerHTML += `<div class="cart-item"><div style="flex:1;"><div style="font-weight:600; font-size:14px;">${item.name}</div><div style="font-size:12px; color:var(--primary); font-weight:700;">₹${item.sell * item.qty}</div></div><div class="qty-ctrl"><i class="fas fa-minus" style="font-size:10px;" onclick="updateQty(${i}, -1)"></i><b>${item.qty}</b><i class="fas fa-plus" style="font-size:10px; color:var(--primary);" onclick="updateQty(${i}, 1)"></i></div></div>`;
+            });
+            const km = parseFloat(document.getElementById('input-km').value) || 1;
+            let delFee = (km > 3) ? 30 + ((km - 3) * 10) : 30;
+            currentOrderCalc = { subtotal: sub, delivery: delFee, margin: margin, total: (sub + delFee) - appliedDiscount };
+            document.getElementById('cart-subtotal').innerText = '₹' + sub;
+            document.getElementById('cart-delivery').innerText = '₹' + delFee;
+            document.getElementById('cart-grandtotal').innerText = '₹' + (currentOrderCalc.total > 0 ? currentOrderCalc.total : 0);
+        }
+
+        function updateQty(index, delta) { cart[index].qty += delta; if(cart[index].qty <= 0) cart.splice(index, 1); calculateTotals(); updateCartBadge(); }
+        function updateCartBadge() { document.getElementById('cart-count').innerText = cart.reduce((acc, item) => acc + item.qty, 0); }
+        function toggleCart() { document.getElementById('cart-sheet').classList.toggle('active'); document.getElementById('cart-overlay').style.display = document.getElementById('cart-sheet').classList.contains('active') ? 'block' : 'none'; }
+
+        // --- CHECKOUT & WHATSAPP NOTIFY ---
+        async function checkoutOrder() {
+            if(cart.length === 0) return alert("Cart is empty!");
+            const orderData = {
+                customerName: user.name, customerPhone: String(user.phone), address: user.area,
+                itemsSummary: cart.map(i => `${i.name} x${i.qty}`).join(', '),
+                subtotal: currentOrderCalc.subtotal, deliveryCharge: currentOrderCalc.delivery,
+                discountAmt: appliedDiscount, couponCode: activeCoupon,
+                total: currentOrderCalc.total, totalMargin: currentOrderCalc.margin,
+                status: 'Pending', timestamp: Date.now()
+            };
+
+            try {
+                document.getElementById('loading').style.display = 'flex';
+                const docRef = await db.collection('orders').add(orderData);
+                
+                // WHATSAPP NOTIFICATION
+                const adminPhone = "910000000000"; // APNAR WHATSAPP NUMBER DAON (e.g. 919876543210)
+                const waMsg = `*Fast8 New Order!*%0A` +
+                              `--------------------------%0A` +
+                              `*Order ID:* #${docRef.id.slice(-5)}%0A` +
+                              `*Customer:* ${user.name}%0A` +
+                              `*Bill:* ₹${orderData.total}%0A` +
+                              `*Items:* ${orderData.itemsSummary}%0A` +
+                              `*Address:* ${user.area}%0A` +
+                              `--------------------------%0A` +
+                              `_Check Admin Panel to Process!_`;
+                
+                window.open(`https://wa.me/${adminPhone}?text=${waMsg}`, '_blank');
+
+                alert("Order Placed! Please send the WhatsApp message to confirm.");
+                cart = []; updateCartBadge(); toggleCart();
+                location.reload();
+            } catch (err) { alert("Error placing order."); document.getElementById('loading').style.display = 'none'; }
+        }
+
+        function switchView(view, el) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active');
+            document.getElementById('view-home').style.display = (view === 'home') ? 'block' : 'none';
+            document.getElementById('view-orders').style.display = (view === 'orders') ? 'block' : 'none';
+        }
+
+        function showAuth() { if(confirm("Logout and change details?")) { localStorage.removeItem('fast8_customer'); location.reload(); } }
+    </script>
+</body>
+</html>
