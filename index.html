@@ -1,207 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Fast8bondhu - Grocery & More</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fast8 - Local Grocery & Delivery</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #D32F2F; /* Fast8 Red */
+            --accent: #FFC107;  /* Fast8 Yellow */
+            --bg: #F5F5F5;
+            --white: #FFFFFF;
+            --text-dark: #212121;
+            --text-light: #757575;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 16px;
+        }
 
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-<style>
-:root{
---primary:#D32F2F;
---accent:#FFC107;
---bg:#F5F7F9;
---white:#fff;
---text-dark:#1C1C1C;
---text-muted:#666;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter',sans-serif;background:var(--bg);}
-h1,h2,h3{font-family:'Poppins',sans-serif;}
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            padding-bottom: 90px;
+        }
 
-header{
-background:white;
-padding:15px 20px 25px;
-position:sticky;
-top:0;
-border-radius:0 0 30px 30px;
-box-shadow:0 4px 20px rgba(0,0,0,.05);
-}
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
-.brand-text{font-size:22px;font-weight:800;color:var(--primary);}
-.brand-text span{color:var(--accent);}
+        /* --- Header --- */
+        .header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 20px 16px 15px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
 
-.search-container{
-margin-top:12px;
-background:#f1f1f1;
-border-radius:16px;
-padding:12px 15px;
-display:flex;
-align-items:center;
-}
-.search-container input{
-border:none;background:none;width:100%;margin-left:10px;font-size:14px;
-}
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.product-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-padding:15px 20px 140px;
-}
+        .brand-name { font-size: 22px; font-weight: 600; letter-spacing: 1px; }
+        .brand-name span { color: var(--accent); }
 
-.p-card{
-background:white;
-border-radius:18px;
-padding:12px;
-box-shadow:0 2px 10px rgba(0,0,0,.05);
-display:flex;
-flex-direction:column;
-}
+        .location-bar {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.p-img-box{height:110px;text-align:center;margin-bottom:10px;}
-.p-img-box img{height:100%;object-fit:contain;}
+        /* --- Main Container --- */
+        .container { padding: 16px; }
 
-.price-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:auto;
-}
+        /* --- Category Section --- */
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.add-btn{
-background:white;
-color:#27ae60;
-border:1.5px solid #27ae60;
-padding:5px 15px;
-border-radius:10px;
-font-weight:700;
-cursor:pointer;
-}
+        .categories {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
 
-#floating-cart-bar{
-position:fixed;
-bottom:90px;
-left:15px;
-right:15px;
-background:#27ae60;
-color:white;
-padding:15px;
-border-radius:18px;
-display:none;
-justify-content:space-between;
-align-items:center;
-font-weight:700;
-}
+        .cat-card {
+            min-width: 85px;
+            background: var(--white);
+            padding: 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .cat-card img { width: 35px; height: 35px; margin-bottom: 5px; }
+        .cat-card p { font-size: 11px; font-weight: 500; }
 
-.bottom-nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:white;
-display:flex;
-justify-content:space-around;
-padding:12px 0 25px;
-border-radius:25px 25px 0 0;
-box-shadow:0 -4px 20px rgba(0,0,0,.05);
-}
+        /* --- Product Cards --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
 
-.nav-item{text-align:center;font-size:12px;color:gray;flex:1;cursor:pointer;}
-.nav-item.active{color:var(--primary);font-weight:800;}
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
 
-#cart-sheet{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-height:85%;
-background:white;
-border-radius:35px 35px 0 0;
-transform:translateY(100%);
-transition:.4s;
-display:flex;
-flex-direction:column;
-z-index:999;
-}
-#cart-sheet.active{transform:translateY(0);}
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-display:none;
-z-index:998;
-}
-.btn-main{
-width:100%;
-padding:15px;
-background:var(--primary);
-color:white;
-border:none;
-border-radius:18px;
-font-weight:800;
-cursor:pointer;
-}
-</style>
+        .product-image {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            background: #eee;
+        }
+
+        .product-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .product-price { color: var(--primary); font-weight: 700; font-size: 16px; }
+        .product-unit { font-size: 11px; color: var(--text-light); }
+
+        .add-btn {
+            background: var(--accent);
+            color: var(--text-dark);
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        /* --- Cart Styles --- */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .km-box {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 2px solid var(--accent);
+        }
+
+        .km-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            height: 70px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.1);
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .nav-item i { font-size: 22px; margin-bottom: 4px; }
+        .nav-item.active { color: var(--primary); }
+
+        /* --- Floating Cart Bar --- */
+        #cart-bar {
+            position: fixed;
+            bottom: 85px;
+            left: 16px;
+            right: 16px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            z-index: 999;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.3s ease-in; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
 </head>
 <body>
 
-<header>
-<div class="brand-text">Fast8<span>bondhu</span></div>
-<div class="search-container">
-<i class="fas fa-search"></i>
-<input type="text" placeholder="Search..." oninput="handleSearch()">
-</div>
-</header>
+    <header class="header">
+        <div class="header-top">
+            <div class="brand-name">FAST<span>8</span></div>
+            <i class="fa-solid fa-circle-user fa-xl"></i>
+        </div>
+        <div class="location-bar">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Area: Local Delivery (Active)</span>
+        </div>
+    </header>
 
-<div class="product-grid" id="product-grid"></div>
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="section-title"><h3>Categories</h3></div>
+            <div class="categories">
+                <div class="cat-card"><img src="https://cdn-icons-png.flaticon.com/512/2329/2329888.png"><p>Vegetables</p></div>
+                <div class="cat-card"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081918.png"><p>Grocery</p></div>
+                <div class="cat-card"><img src="https://cdn-icons-png.flaticon.com/512/2674/2674068.png"><p>Oil & Dal</p></div>
+                <div class="cat-card"><img src="https://cdn-icons-png.flaticon.com/512/3721/3721028.png"><p>Essentials</p></div>
+            </div>
 
-<div id="floating-cart-bar" onclick="toggleCart(true)">
-<span id="float-qty">0 Items</span>
-<span id="float-total">₹0</span>
-</div>
+            <div class="section-title" style="margin-top:20px;"><h3>Fresh Products</h3></div>
+            <div class="product-grid" id="product-container">
+                </div>
+        </div>
+    </div>
 
-<div class="overlay" id="overlay" onclick="toggleCart(false)"></div>
+    <div id="cart" class="page">
+        <div class="container">
+            <h3>Checkout</h3>
+            <div class="km-box" id="km-section">
+                <p style="font-weight: 600;">Delivery Distance (KM)</p>
+                <input type="number" id="km-input" class="km-input" placeholder="Enter KM (e.g. 2.5)" oninput="updateKM(this.value)">
+                <p style="font-size:11px; color:var(--text-light); margin-top:8px;">Charge: ₹30 up to 3KM, then ₹10/extra KM</p>
+            </div>
+            <div id="cart-items"></div>
+            <div id="cart-summary"></div>
+        </div>
+    </div>
 
-<div id="cart-sheet">
-<div style="padding:20px;border-bottom:1px solid #eee;">
-<h2>Review Order</h2>
-</div>
+    <div id="orders" class="page">
+        <div class="container">
+            <h3>My Orders</h3>
+            <div id="order-list" style="margin-top:15px;"></div>
+        </div>
+    </div>
 
-<div id="cart-items" style="flex:1;overflow-y:auto;padding:15px;"></div>
+    <div id="cart-bar" onclick="showPage('cart', document.getElementById('nav-cart'))">
+        <span><i class="fa-solid fa-basket-shopping"></i> <span id="cart-count">0</span> Items</span>
+        <span id="cart-total">₹0</span>
+    </div>
 
-<div style="padding:20px;">
-<div style="margin-bottom:8px;">Distance (KM)</div>
-<input type="number" id="input-km" value="1" min="1" oninput="updateCart()" style="width:80px;padding:5px;text-align:center;border-radius:8px;border:1px solid #eee;font-weight:700;">
+    <nav class="bottom-nav">
+        <a href="javascript:void(0)" class="nav-item active" onclick="showPage('home', this)">
+            <i class="fa-solid fa-house"></i><span>Home</span>
+        </a>
+        <a href="javascript:void(0)" id="nav-cart" class="nav-item" onclick="showPage('cart', this)">
+            <i class="fa-solid fa-cart-shopping"></i><span>Cart</span>
+        </a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showPage('orders', this)">
+            <i class="fa-solid fa-clock-rotate-left"></i><span>Orders</span>
+        </a>
+    </nav>
 
-<div style="margin:15px 0;font-weight:700;">
-Subtotal: ₹<span id="bill-sub">0</span><br>
-Delivery: ₹<span id="bill-delivery">30</span><br>
-Total: ₹<span id="bill-total">0</span>
-</div>
-
-<div style="margin-bottom:10px;font-weight:700;">Select Payment</div>
-<div style="display:flex;gap:10px;margin-bottom:15px;">
-<button onclick="selectPayment('COD')" id="btn-cod" style="flex:1;padding:10px;border-radius:12px;border:2px solid var(--primary);background:var(--primary);color:white;font-weight:700;">COD</button>
-<button onclick="selectPayment('Online')" id="btn-online" style="flex:1;padding:10px;border-radius:12px;border:2px solid var(--primary);background:white;color:var(--primary);font-weight:700;">Online</button>
-</div>
-
-<button class="btn-main" onclick="checkout()">CONFIRM ORDER</button>
-</div>
-</div>
-
-<nav class="bottom-nav">
-<div class="nav-item active">Home</div>
-<div class="nav-item">Orders</div>
-<div class="nav-item">Account</div>
-</nav>
-
-<script>
-const firebaseConfig = {
+    <script>
+        // --- FIREBASE SETUP ---
+        const firebaseConfig = {
             apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
             authDomain: "fast8delivery-business.firebaseapp.com",
             projectId: "fast8delivery-business",
@@ -209,130 +308,152 @@ const firebaseConfig = {
             messagingSenderId: "968616663472",
             appId: "1:968616663472:web:5ef89accec468344cd9e75"
         };
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
 
-let allProducts=[];
-let cart=[];
-let selectedPayment="COD";
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-db.collection("products").onSnapshot(snap=>{
-allProducts=[];
-snap.forEach(doc=>allProducts.push({id:doc.id,...doc.data()}));
-renderProducts(allProducts);
-});
+        let cart = [];
+        let products = [];
+        let deliveryKM = 0;
 
-function renderProducts(list){
-const grid=document.getElementById("product-grid");
-grid.innerHTML="";
-list.forEach(p=>{
-grid.innerHTML+=`
-<div class="p-card">
-<div class="p-img-box"><img src="${p.img||'https://via.placeholder.com/150'}"></div>
-<h4>${p.name}</h4>
-<div class="price-row">
-<span>₹${p.sell}</span>
-<button class="add-btn" onclick="addToCart('${p.id}')">ADD</button>
-</div>
-</div>`;
-});
-}
+        // --- PAGE NAVIGATION ---
+        function showPage(pageId, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            el.classList.add('active');
+            if(pageId === 'cart') renderCart();
+            if(pageId === 'orders') loadOrders();
+        }
 
-function addToCart(id){
-const prod=allProducts.find(p=>p.id===id);
-const exist=cart.find(i=>i.id===id);
-if(exist)exist.qty++;
-else cart.push({...prod,qty:1});
-updateCart();
-}
+        // --- LOAD PRODUCTS ---
+        async function loadProducts() {
+            const container = document.getElementById('product-container');
+            container.innerHTML = "<p>Loading products...</p>";
+            const snapshot = await db.collection('products').get();
+            products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            container.innerHTML = "";
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.imageUrl}" class="product-image">
+                        <p class="product-name">${p.name}</p>
+                        <p class="product-unit">${p.unit}</p>
+                        <p class="product-price">₹${p.sellPrice}</p>
+                        <button class="add-btn" onclick="addToCart('${p.id}')">Add</button>
+                    </div>
+                `;
+            });
+        }
 
-function updateCart(){
-let sub=0,count=0;
-const list=document.getElementById("cart-items");
-list.innerHTML="";
-cart.forEach((i,index)=>{
-sub+=i.sell*i.qty;
-count+=i.qty;
-list.innerHTML+=`
-<div style="display:flex;justify-content:space-between;margin-bottom:10px;">
-${i.name} x${i.qty}
-<span>₹${i.sell*i.qty}</span>
-</div>`;
-});
+        // --- CART LOGIC ---
+        function addToCart(id) {
+            const p = products.find(x => x.id === id);
+            const exist = cart.find(x => x.id === id);
+            if(exist) exist.qty++;
+            else cart.push({...p, qty: 1});
+            updateFloatingCart();
+        }
 
-let km=parseFloat(document.getElementById("input-km").value)||1;
-let delivery=30;
-if(km>3){
-delivery=30+10+(Math.ceil(km-3)*10);
-}
+        function updateFloatingCart() {
+            const bar = document.getElementById('cart-bar');
+            if(cart.length > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('cart-count').innerText = cart.reduce((s,i) => s + i.qty, 0);
+                document.getElementById('cart-total').innerText = "₹" + cart.reduce((s,i) => s + (i.sellPrice * i.qty), 0);
+            } else {
+                bar.style.display = 'none';
+            }
+        }
 
-let total=sub+delivery;
+        function updateKM(val) {
+            deliveryKM = parseFloat(val) || 0;
+            renderCart();
+        }
 
-document.getElementById("bill-sub").innerText=sub;
-document.getElementById("bill-delivery").innerText=delivery;
-document.getElementById("bill-total").innerText=total;
+        function calculateDelivery(km) {
+            if(km <= 0) return 0;
+            if(km <= 3) return 30;
+            return 30 + (Math.ceil(km - 3) * 10);
+        }
 
-if(count>0){
-document.getElementById("floating-cart-bar").style.display="flex";
-document.getElementById("float-qty").innerText=count+" Items";
-document.getElementById("float-total").innerText="₹"+total;
-}else{
-document.getElementById("floating-cart-bar").style.display="none";
-toggleCart(false);
-}
-}
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const summary = document.getElementById('cart-summary');
+            if(cart.length === 0) {
+                container.innerHTML = "<p style='text-align:center; margin-top:50px;'>Your cart is empty</p>";
+                summary.innerHTML = "";
+                return;
+            }
 
-function toggleCart(state){
-document.getElementById("cart-sheet").classList.toggle("active",state);
-document.getElementById("overlay").style.display=state?"block":"none";
-}
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div><b>${item.name}</b><br><small>₹${item.sellPrice} x ${item.qty}</small></div>
+                    <b>₹${item.sellPrice * item.qty}</b>
+                </div>
+            `).join('');
 
-function selectPayment(mode){
-selectedPayment=mode;
-if(mode==="COD"){
-btn-cod.style.background="var(--primary)";
-btn-cod.style.color="white";
-btn-online.style.background="white";
-btn-online.style.color="var(--primary)";
-}else{
-btn-online.style.background="var(--primary)";
-btn-online.style.color="white";
-btn-cod.style.background="white";
-btn-cod.style.color="var(--primary)";
-}
-}
+            const subtotal = cart.reduce((s,i) => s + (i.sellPrice * i.qty), 0);
+            const devCharge = calculateDelivery(deliveryKM);
+            
+            summary.innerHTML = `
+                <div style="background:var(--white); padding:20px; border-radius:15px; margin-top:10px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Subtotal</span> <span>₹${subtotal}</span></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Delivery Charge</span> <span>₹${devCharge}</span></div>
+                    <hr style="margin:10px 0; border:0; border-top:1px solid #eee;">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:18px; color:var(--primary);">
+                        <span>Total Pay</span> <span>₹${subtotal + devCharge}</span>
+                    </div>
+                </div>
+                <button class="add-btn" style="padding:16px; margin-top:20px; font-size:16px;" onclick="placeOrder()">Place Order (Cash on Delivery)</button>
+            `;
+        }
 
-async function checkout(){
-if(!cart.length)return alert("Cart empty");
+        async function placeOrder() {
+            if(deliveryKM <= 0) return alert("Please enter delivery distance KM");
+            
+            const subtotal = cart.reduce((s,i) => s + (i.sellPrice * i.qty), 0);
+            const devCharge = calculateDelivery(deliveryKM);
 
-let sub=parseInt(document.getElementById("bill-sub").innerText);
-let delivery=parseInt(document.getElementById("bill-delivery").innerText);
-let total=parseInt(document.getElementById("bill-total").innerText);
-let km=parseFloat(document.getElementById("input-km").value);
+            const order = {
+                items: cart,
+                subtotal: subtotal,
+                deliveryCharge: devCharge,
+                total: subtotal + devCharge,
+                km: deliveryKM,
+                status: "Pending",
+                time: new Date().toLocaleString()
+            };
 
-await db.collection("orders").add({
-items:cart,
-subtotal:sub,
-deliveryCharge:delivery,
-total:total,
-distance:km,
-paymentMode:selectedPayment,
-paymentStatus:selectedPayment==="Online"?"Paid":"Unpaid",
-status:"Pending",
-timestamp:Date.now()
-});
+            await db.collection('orders').add(order);
+            alert("Order Success! Tracking your order now.");
+            cart = [];
+            updateFloatingCart();
+            showPage('orders', document.querySelector('.nav-item:nth-child(3)'));
+        }
 
-alert("Order Placed Successfully!");
-cart=[];
-updateCart();
-toggleCart(false);
-}
+        async function loadOrders() {
+            const list = document.getElementById('order-list');
+            list.innerHTML = "Loading orders...";
+            const snap = await db.collection('orders').orderBy('time', 'desc').get();
+            
+            list.innerHTML = snap.docs.map(doc => {
+                const o = doc.data();
+                return `
+                    <div style="background:white; padding:15px; border-radius:15px; margin-bottom:10px; border-left:5px solid var(--primary);">
+                        <div style="display:flex; justify-content:space-between;">
+                            <b>Order #${doc.id.slice(0,5)}</b>
+                            <span style="color:var(--primary); font-weight:600;">${o.status}</span>
+                        </div>
+                        <p style="font-size:12px; color:gray; margin:5px 0;">${o.time}</p>
+                        <p style="font-weight:600;">Total: ₹${o.total}</p>
+                    </div>
+                `;
+            }).join('');
+        }
 
-function handleSearch(){
-const q=event.target.value.toLowerCase();
-renderProducts(allProducts.filter(p=>p.name.toLowerCase().includes(q)));
-}
-</script>
-
+        window.onload = loadProducts;
+    </script>
 </body>
 </html>
