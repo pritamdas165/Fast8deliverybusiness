@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fast8 - Delivery Partner PRO</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        :root {
+            --primary: #D32F2F; --accent: #FFC107; --bg: #F4F4F9;
+            --white: #FFFFFF; --text-dark: #2D3436; --text-light: #636E72;
+            --shadow: 0 8px 20px rgba(0,0,0,0.1); --radius: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+        /* --- LOGIN --- */
+        #login-screen { position: fixed; inset: 0; background: var(--primary); display: flex; align-items: center; justify-content: center; z-index: 10000; }
+        .login-card { background: var(--white); width: 85%; max-width: 350px; padding: 30px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
+        .login-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: #000; margin-top: 10px; }
+
+        /* --- HEADER --- */
+        header { background: var(--primary); color: white; padding: 25px 20px; border-radius: 0 0 30px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .status-badge { background: #4CAF50; color: white; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+
+        /* --- CONTENT --- */
+        .section { display: none; padding: 20px; padding-bottom: 100px; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- TASK CARDS --- */
+        .order-card { background: var(--white); border-radius: 18px; padding: 20px; margin-bottom: 15px; box-shadow: var(--shadow); border-left: 6px solid var(--accent); position: relative; }
+        .order-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 800; font-size: 16px; color: var(--primary); }
+        .bill-details { background: #f9f9f9; padding: 10px; border-radius: 10px; font-size: 12px; margin: 10px 0; border: 1px dashed #ddd; }
+        
+        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        .btn-call { background: #e3f2fd; color: #1976d2; }
+        .btn-nav { background: #fff3e0; color: #e65100; }
+        .btn-deliver { background: var(--primary); color: white; }
+
+        /* --- DASHBOARD STATS --- */
+        .summary-card { background: linear-gradient(135deg, #D32F2F, #B71C1C); color: white; padding: 30px 20px; border-radius: var(--radius); margin-bottom: 20px; text-align: center; box-shadow: 0 10px 20px rgba(211,47,47,0.2); }
+        .summary-card h1 { font-size: 36px; color: var(--accent); margin-top: 5px; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .small-stat { background: white; padding: 15px; border-radius: 15px; text-align: center; box-shadow: var(--shadow); }
+
+        /* --- BOTTOM NAV --- */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--white); display: flex; justify-content: space-around; padding: 15px 0 25px; border-top: 1px solid #eee; z-index: 1000; }
+        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; transition: 0.3s; }
+        .nav-item.active { color: var(--primary); font-weight: 800; }
+        .nav-item i { font-size: 22px; margin-bottom: 5px; display: block; }
+
+        #loader { position: fixed; inset: 0; background: rgba(255,255,255,0.8); display: none; align-items: center; justify-content: center; z-index: 11000; }
+    </style>
+</head>
+<body>
+
+    <div id="loader"><i class="fas fa-spinner fa-spin fa-3x" style="color: var(--primary);"></i></div>
+
+    <!-- 1. LOGIN -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2 style="color: var(--primary);">Fast8 <span style="color: var(--accent);">Partner</span></h2>
+            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 20px;">Direct Assignment Delivery Login</p>
+            <input type="number" id="login-phone" placeholder="Registered Phone Number" style="width:100%; padding:15px; border-radius:12px; border:1.5px solid #eee; margin-bottom:10px; text-align:center; font-size:18px;">
+            <button class="login-btn" onclick="handleLogin()">START MY SHIFT</button>
+        </div>
+    </div>
+
+    <!-- 2. MAIN APP -->
+    <div id="main-app" style="display:none;">
+        <header>
+            <div>
+                <span id="rider-name-header" style="font-size: 12px; opacity: 0.9;">Rider</span>
+                <h3 id="rider-status-text">Active Shift</h3>
+            </div>
+            <div class="status-badge"><i class="fas fa-circle" style="font-size:8px; margin-right:5px;"></i> ONLINE</div>
+        </header>
+
+        <!-- VIEW: TASKS -->
+        <div id="view-tasks" class="section active">
+            <h4 style="margin-bottom: 15px;"><i class="fas fa-motorcycle" style="color:var(--primary)"></i> Assigned Orders</h4>
+            <div id="task-list">
+                <!-- Syncing orders specifically assigned to this phone number -->
+            </div>
+        </div>
+
+        <!-- VIEW: EARNINGS & CASH -->
+        <div id="view-cash" class="section">
+            <div class="summary-card">
+                <span>Cash Collection (To Submit)</span>
+                <h1 id="cash-balance">₹0</h1>
+                <p style="font-size: 11px; opacity: 0.8; margin-top: 10px;">Please submit this amount to Admin at Store</p>
+            </div>
+
+            <div class="stat-grid">
+                <div class="small-stat">
+                    <span style="font-size: 11px; color: var(--text-light);">Deliveries</span>
+                    <h3 id="stat-count">0</h3>
+                </div>
+                <div class="small-stat">
+                    <span style="font-size: 11px; color: var(--text-light);">Today's Cash</span>
+                    <h3 id="stat-today-cash">₹0</h3>
+                </div>
+            </div>
+
+            <button class="login-btn" style="margin-top: 20px; background: #2D3436; color: white;" onclick="alert('Please visit store to settle cash collection.')">
+                <i class="fas fa-info-circle"></i> SETTLEMENT INSTRUCTIONS
+            </button>
+        </div>
+
+        <!-- VIEW: PROFILE -->
+        <div id="view-profile" class="section">
+            <div class="small-stat" style="margin-top:20px; padding:30px;">
+                <i class="fas fa-user-circle fa-4x" style="color: var(--primary); margin-bottom: 15px;"></i>
+                <h3 id="profile-name">Name</h3>
+                <p id="profile-phone" style="color: var(--text-light); margin-bottom: 20px;">Phone</p>
+                <button class="btn" style="background: #FFF0F0; color: #D32F2F; width: 100%;" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT FROM SHIFT
+                </button>
+            </div>
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="switchView('view-tasks', this)"><i class="fas fa-list-check"></i>Tasks</div>
+            <div class="nav-item" onclick="switchView('view-cash', this)"><i class="fas fa-wallet"></i>My Cash</div>
+            <div class="nav-item" onclick="switchView('view-profile', this)"><i class="fas fa-user-gear"></i>Account</div>
+        </nav>
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
+            authDomain: "fast8delivery-business.firebaseapp.com",
+            projectId: "fast8delivery-business",
+            storageBucket: "fast8delivery-business.firebasestorage.app",
+            messagingSenderId: "968616663472",
+            appId: "1:968616663472:web:5ef89accec468344cd9e75",
+            measurementId: "G-WFHEXCC70P"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let riderData = null;
+
+        // --- AUTH (Strict String Based) ---
+        async function handleLogin() {
+            let phoneInput = document.getElementById('login-phone').value.trim();
+            if(!phoneInput) return alert("Please enter phone number");
+
+            const phoneStr = String(phoneInput);
+            showLoader(true);
+
+            // Double check (String vs Number) in database for safety
+            let snap = await db.collection('deliveryBoys').where('phone', '==', phoneStr).get();
+            if(snap.empty) {
+                snap = await db.collection('deliveryBoys').where('phone', '==', Number(phoneStr)).get();
+            }
+
+            if(snap.empty) {
+                alert("Account not found! Ask Admin to register you.");
+                showLoader(false);
+            } else {
+                snap.forEach(doc => {
+                    riderData = { id: doc.id, ...doc.data() };
+                    riderData.phone = String(riderData.phone); // Lock as string
+                });
+                localStorage.setItem('fast8_rider_v2', JSON.stringify(riderData));
+                initApp();
+            }
+        }
+
+        function initApp() {
+            const stored = localStorage.getItem('fast8_rider_v2');
+            if(stored) {
+                riderData = JSON.parse(stored);
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                document.getElementById('rider-name-header').innerText = riderData.name;
+                document.getElementById('profile-name').innerText = riderData.name;
+                document.getElementById('profile-phone').innerText = riderData.phone;
+                syncOrders();
+                syncRiderProfile(); // To update cash in hand live
+            }
+        }
+
+        // --- SYNC LIVE CASH FROM DELIVERYBOYS COLLECTION ---
+        function syncRiderProfile() {
+            db.collection('deliveryBoys').doc(riderData.id).onSnapshot(doc => {
+                if(doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('cash-balance').innerText = '₹' + (data.cashInHand || 0);
+                }
+            });
+        }
+
+        // --- TASK MANAGEMENT (SYNCED WITH ADMIN) ---
+        function syncOrders() {
+            const myPhone = String(riderData.phone);
+
+            // Fetch orders assigned specifically to this rider's phone number
+            db.collection('orders')
+              .where('assignedTo', '==', myPhone)
+              .onSnapshot(snap => {
+                const list = document.getElementById('task-list');
+                list.innerHTML = '';
+                let deliveredToday = 0;
+                let cashToday = 0;
+
+                snap.forEach(doc => {
+                    const o = doc.data();
+                    const isToday = new Date(o.timestamp).toDateString() === new Date().toDateString();
+
+                    // Only show "Out" orders in the active task list
+                    if(o.status === 'Out') {
+                        list.innerHTML += `
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <span>#${doc.id.slice(-5)}</span>
+                                    <span>₹${o.total}</span>
+                                </div>
+                                <div style="font-size:13px; font-weight:600; margin-bottom:5px;">
+                                    <i class="fas fa-user" style="color:var(--text-light)"></i> ${o.customerName}
+                                </div>
+                                <div style="font-size:12px; color:var(--text-light); line-height:1.4;">
+                                    <i class="fas fa-location-dot"></i> ${o.address}<br>
+                                    <i class="fas fa-box-open"></i> ${o.itemsSummary}
+                                </div>
+
+                                <div class="bill-details">
+                                    Bill: ₹${o.subtotal} | Del: ₹${o.deliveryCharge} 
+                                    ${o.discountAmt ? `<br><b style="color:green">Discount Saved: ₹${o.discountAmt}</b>` : ''}
+                                </div>
+
+                                <div class="action-btns">
+                                    <button class="btn btn-call" onclick="window.open('tel:${o.customerPhone}')">
+                                        <i class="fas fa-phone"></i> CALL
+                                    </button>
+                                    <button class="btn btn-nav" onclick="window.open('https://www.google.com/maps/search/${o.address}')">
+                                        <i class="fas fa-location-arrow"></i> MAP
+                                    </button>
+                                    <button class="btn btn-deliver" onclick="markDelivered('${doc.id}', ${o.total})">
+                                        DELIVERED
+                                    </button>
+                                </div>
+                            </div>`;
+                    }
+
+                    if(o.status === 'Delivered' && isToday) {
+                        deliveredToday++;
+                        cashToday += o.total;
+                    }
+                });
+
+                document.getElementById('stat-count').innerText = deliveredToday;
+                document.getElementById('stat-today-cash').innerText = '₹' + cashToday;
+                
+                if(list.innerHTML === '') {
+                    list.innerHTML = `<div style="text-align:center; padding:60px; color:#999;">
+                        <i class="fas fa-clipboard-check fa-3x" style="margin-bottom:15px; opacity:0.3"></i><br>
+                        No assignments.<br><span style="font-size:11px">Orders will appear here once Admin assigns them.</span></div>`;
+                }
+                showLoader(false);
+            });
+        }
+
+        async function markDelivered(id, amt) {
+            if(confirm("Confirm delivery and collection of ₹" + amt + "?")) {
+                showLoader(true);
+                // 1. Update Order Status
+                await db.collection('orders').doc(id).update({ status: 'Delivered' });
+                // 2. Add cash to rider's profile in database
+                await db.collection('deliveryBoys').doc(riderData.id).update({
+                    cashInHand: firebase.firestore.FieldValue.increment(amt)
+                });
+                alert("Delivery Marked Successful!");
+            }
+        }
+
+        // --- UI HELPERS ---
+        function switchView(id, el) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
+        }
+
+        function showLoader(s) { document.getElementById('loader').style.display = s ? 'flex' : 'none'; }
+
+        function logout() {
+            if(confirm("Confirm shift logout?")) {
+                localStorage.removeItem('fast8_rider_v2');
+                location.reload();
+            }
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
