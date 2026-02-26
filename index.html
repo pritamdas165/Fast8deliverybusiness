@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8bondhu - Apnar Pashei Shop Somoy</title>
+    <title>Fast8bondhu - Grocery & More</title>
     
-    <!-- Fonts & Icons -->
+    <!-- Fonts: Poppins for Titles, Inter for Body -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -15,271 +15,175 @@
 
     <style>
         :root {
-            --primary: #D32F2F; /* Fast8 Red */
+            --primary: #D32F2F; /* Premium Red */
             --accent: #FFC107;  /* Fast8 Yellow */
-            --bg: #F5F7F9;      /* Zomato Style Background */
+            --bg: #F5F7F9;      /* Zomato-style greyish white */
             --white: #FFFFFF;
             --text-dark: #1C1C1C;
-            --text-muted: #707070;
-            --shadow-soft: 0 4px 15px rgba(0,0,0,0.05);
-            --radius-lg: 24px;
-            --radius-md: 18px;
+            --text-muted: #666666;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 15px rgba(0,0,0,0.06);
+            --radius-xl: 28px;
+            --radius-lg: 20px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); overflow-x: hidden; }
-        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
-        /* --- LOADING OVERLAY --- */
-        #loading { position: fixed; inset: 0; background: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
-        .loader { width: 50px; height: 50px; border: 5px solid #eee; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* --- SKELETON LOADING ANIMATION --- */
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* --- STICKY PREMIUM HEADER --- */
+        /* --- PREMIUM AUTH SCREEN --- */
+        #auth-screen {
+            position: fixed; inset: 0; background: var(--white); z-index: 5000;
+            display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px;
+        }
+        .auth-container { width: 100%; max-width: 400px; text-align: center; animation: fadeInUp 0.6s ease; }
+        .auth-logo { width: 120px; height: 120px; background: white; border-radius: 30px; padding: 15px; box-shadow: var(--shadow-md); margin-bottom: 25px; object-fit: contain; }
+        
+        .input-box { width: 100%; margin-bottom: 18px; text-align: left; }
+        .input-box label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-left: 5px; text-transform: uppercase; }
+        .input-box input, .input-box select {
+            width: 100%; padding: 16px; border-radius: 16px; border: 1.5px solid #eee; font-size: 16px; margin-top: 6px; transition: 0.3s;
+            background: #F9FAFB;
+        }
+        .input-box input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1); }
+        
+        .btn-main {
+            width: 100%; padding: 18px; background: var(--primary); color: white; border: none;
+            border-radius: 18px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.2);
+        }
+        .btn-main:active { transform: scale(0.96); }
+
+        /* --- MODERN STICKY HEADER --- */
         header {
-            background: var(--white);
-            padding: 15px 20px 25px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-radius: 0 0 30px 30px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
-            text-align: center;
+            background: var(--white); padding: 15px 20px 25px; position: sticky; top: 0; z-index: 1000;
+            border-radius: 0 0 30px 30px; box-shadow: var(--shadow-sm);
         }
-        .header-logo { 
-            width: 80px; height: 80px; object-fit: contain; background: white; 
-            padding: 8px; border-radius: 20px; margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee;
-        }
-        .user-loc { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); cursor: pointer; }
-        .user-loc i { color: var(--primary); }
-        
-        .search-bar {
-            background: #F0F2F5; border-radius: 16px; display: flex; align-items: center; padding: 12px 18px;
-            border: 1px solid #E8E8E8;
-        }
-        .search-bar input { border: none; background: transparent; width: 100%; margin-left: 10px; font-size: 15px; color: var(--text-dark); }
+        .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .loc-info { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .loc-info i { color: var(--primary); font-size: 20px; }
+        .loc-info b { font-size: 15px; font-weight: 800; border-bottom: 1.5px dashed #ccc; }
+        .profile-trigger { width: 45px; height: 45px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-muted); border: 1px solid #eee; }
 
-        /* --- BANNER --- */
-        .banner-box { padding: 20px 20px 0; }
-        .banner-img { width: 100%; height: 170px; border-radius: 25px; object-fit: cover; box-shadow: var(--shadow-soft); display: none; }
-
-        /* --- CATEGORIES (BLINKIT STYLE) --- */
-        .cat-scroll { display: flex; overflow-x: auto; padding: 20px; gap: 18px; scrollbar-width: none; }
-        .cat-scroll::-webkit-scrollbar { display: none; }
-        .cat-item { text-align: center; flex-shrink: 0; width: 75px; }
-        .cat-icon { 
-            width: 65px; height: 65px; background: white; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: var(--shadow-soft); margin-bottom: 8px; font-size: 28px; border: 1px solid #f0f0f0;
+        .search-container {
+            background: #F0F2F5; border-radius: 16px; display: flex; align-items: center; padding: 14px 18px;
+            border: 1px solid #E8E8E8; transition: 0.3s;
         }
-        .cat-item span { font-size: 11px; font-weight: 700; color: var(--text-dark); }
+        .search-container:focus-within { background: white; border-color: var(--accent); box-shadow: var(--shadow-md); }
+        .search-container input { border: none; background: transparent; width: 100%; margin-left: 12px; font-size: 15px; font-weight: 500; }
 
-        /* --- PRODUCT GRID (SWIGGY STYLE) --- */
-        .section-title { padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px 20px 120px; }
-        .p-card {
-            background: var(--white); border-radius: var(--radius-md); padding: 12px; 
-            box-shadow: var(--shadow-soft); position: relative; border: 1px solid #f0f0f0;
-        }
-        .p-card img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 8px; border-radius: 15px; }
-        .p-card h4 { font-size: 14px; height: 38px; overflow: hidden; margin-bottom: 4px; line-height: 1.3; }
-        .p-tag { position: absolute; top: 12px; left: 12px; background: var(--primary); color: white; font-size: 8px; font-weight: 900; padding: 3px 7px; border-radius: 6px; z-index: 1; }
-        
-        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .price { font-weight: 800; color: var(--text-dark); font-size: 17px; }
-        .add-btn-premium {
-            background: white; color: #27ae60; border: 1px solid #27ae60; padding: 6px 16px;
-            border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        /* --- FLOATING CART BAR (SWIGGY STYLE) --- */
-        #floating-cart-bar {
-            position: fixed; bottom: 90px; left: 15px; right: 15px;
-            background: #27ae60; color: white; padding: 15px 20px;
-            border-radius: 18px; display: none; justify-content: space-between; align-items: center;
-            z-index: 1001; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
-            animation: slideUp 0.3s ease;
-        }
-
-        /* --- PROFILE VIEW (ZOMATO STYLE) --- */
-        .profile-card { background: white; padding: 30px 20px; border-radius: 25px; text-align: center; margin-bottom: 20px; box-shadow: var(--shadow-soft); }
-        .profile-avatar { width: 80px; height: 80px; background: #f0f0f0; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 35px; color: #bbb; }
-        .menu-item { background: white; padding: 18px; border-radius: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-weight: 600; border: 1px solid #f0f0f0; }
-        .menu-item i { width: 35px; height: 35px; background: #f9f9f9; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
-
-        /* --- CART SHEET --- */
-        #cart-sheet {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            border-radius: 30px 30px 0 0; z-index: 2000; padding: 25px;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.15); transform: translateY(100%); transition: 0.5s cubic-bezier(0, 0, 0.2, 1);
-        }
-        #cart-sheet.active { transform: translateY(0); }
-        
-        .coupon-row { display: flex; gap: 10px; margin: 15px 0; padding: 12px; background: #FFF9E6; border-radius: 14px; border: 1px dashed var(--accent); }
-        .coupon-row input { flex: 1; border: none; background: transparent; font-weight: 700; text-transform: uppercase; }
-
-        /* --- BOTTOM NAV --- */
+        /* --- NAVIGATION --- */
         .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background: white; display: flex;
-            justify-content: space-around; padding: 15px 0 30px; border-top: 1px solid #eee; z-index: 1000;
-            border-radius: 25px 25px 0 0;
+            position: fixed; bottom: 0; width: 100%; background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px); display: flex; justify-content: space-around;
+            padding: 15px 0 30px; border-top: 1px solid #eee; z-index: 2000;
+            border-radius: 30px 30px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.04);
         }
-        .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; flex: 1; position: relative; }
-        .nav-item.active { color: var(--primary); font-weight: 800; }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; font-weight: 600; flex: 1; transition: 0.3s; position: relative; }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; transition: 0.3s; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-5px); color: var(--primary); }
+        .nav-item.active::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: var(--primary); border-radius: 50%; }
 
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
-        
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .cart-badge {
+            position: absolute; top: -8px; right: 25%; background: var(--accent);
+            color: #000; font-size: 10px; width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; border: 2.5px solid var(--white);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="loading"><div class="loader"></div><h2 style="margin-top:20px; color:var(--primary);">Fast8bondhu</h2></div>
-
-    <!-- 1. AUTH SCREEN -->
-    <div id="auth-screen">
-        <div class="auth-card">
-            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" alt="Logo">
-            <h2 style="color: var(--primary); font-size: 28px;">Fast8bondhu</h2>
-            <p style="margin-bottom: 35px; color: var(--text-muted); font-weight: 500;">Apnar dorkare shop somoy pashei.</p>
-            <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" id="user-name" placeholder="eg. John Doe">
-            </div>
-            <div class="input-group">
-                <label>Phone Number</label>
-                <input type="number" id="user-phone" placeholder="eg. 9876543210">
-            </div>
-            <div class="input-group">
-                <label>Select Your Area</label>
-                <select id="user-area"><option value="">Choose neighborhood</option></select>
-            </div>
-            <button class="btn-primary" onclick="handleRegister()">START SHOPPING</button>
+    <!-- Loading Skeleton Screen (Initial) -->
+    <div id="loading-overlay" style="position:fixed; inset:0; background:white; z-index:9999; display:flex; align-items:center; justify-content:center;">
+        <div class="loader-fast8" style="text-align:center;">
+            <div class="skeleton" style="width:80px; height:80px; border-radius:20px; margin:0 auto 20px;"></div>
+            <h2 style="color:var(--primary); letter-spacing:1px;">Fast8bondhu</h2>
         </div>
     </div>
 
-    <!-- 2. MAIN APP -->
+    <!-- 1. AUTH SCREEN -->
+    <div id="auth-screen">
+        <div class="auth-container">
+            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" class="auth-logo" alt="Logo">
+            <h2 style="font-size: 26px; margin-bottom: 8px;">Welcome Friend!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 14px;">Your own delivery partner is here.</p>
+            
+            <div class="input-box">
+                <label>Full Name</label>
+                <input type="text" id="user-name" placeholder="Enter your name">
+            </div>
+            <div class="input-box">
+                <label>Phone Number</label>
+                <input type="number" id="user-phone" placeholder="10-digit mobile number">
+            </div>
+            <div class="input-box">
+                <label>Select Delivery Area</label>
+                <select id="user-area">
+                    <option value="">Where should we deliver?</option>
+                </select>
+            </div>
+            <button class="btn-main" onclick="handleRegister()">CONTINUE</button>
+        </div>
+    </div>
+
+    <!-- 2. MAIN APP CONTENT -->
     <div id="main-app" style="display:none;">
         <header>
-            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" alt="Logo" class="header-logo">
-            <div class="user-loc" onclick="showAuth()">
-                <i class="fas fa-location-dot"></i>
-                <span id="display-area">Pinning location...</span>
-                <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+            <div class="header-top">
+                <div class="loc-info" onclick="showAuth()">
+                    <i class="fas fa-location-dot"></i>
+                    <div>
+                        <small style="display:block; font-size:10px; color:gray; font-weight:700; text-transform:uppercase;">Delivering To</small>
+                        <b id="display-area">Pinning...</b>
+                    </div>
+                    <i class="fas fa-chevron-down" style="font-size:10px; margin-left:5px;"></i>
+                </div>
+                <div class="profile-trigger" onclick="switchView('profile', this)">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
-            <div class="search-bar">
-                <i class="fas fa-search" style="color:gray;"></i>
-                <input type="text" id="search-box" placeholder="Search for 'milk', 'eggs' or 'bread'..." oninput="handleSearch()">
+
+            <div class="search-container">
+                <i class="fas fa-search" style="color:#999;"></i>
+                <input type="text" id="search-box" placeholder="Search 'tomato', 'milk' or 'biscuits'..." oninput="handleSearch()">
             </div>
         </header>
 
-        <!-- VIEW: HOME -->
-        <div id="view-home">
-            <div class="banner-box">
-                <img id="app-banner" src="" class="banner-img" onload="this.style.display='block'">
-            </div>
+        <!-- DASHBOARD VIEW -->
+        <main id="view-home">
+            <!-- Dynamic Banner, Categories, and Products will go here in Part 2 -->
+        </main>
 
-            <div class="cat-scroll">
-                <div class="cat-item" onclick="filterByCategory('Vegetables')"><div class="cat-icon">🥦</div><span>Veggies</span></div>
-                <div class="cat-item" onclick="filterByCategory('Daily Needs')"><div class="cat-icon">🥛</div><span>Daily</span></div>
-                <div class="cat-item" onclick="filterByCategory('Snacks')"><div class="cat-icon">🍪</div><span>Snacks</span></div>
-                <div class="cat-item" onclick="filterByCategory('Household')"><div class="cat-icon">🧼</div><span>Home</span></div>
-            </div>
+        <!-- PROFILE VIEW -->
+        <main id="view-profile" style="display:none;">
+            <!-- Profile Details and Order History will go here in Part 4 -->
+        </main>
 
-            <div class="section-title">
-                <h3 id="grid-title">All Products</h3>
-                <span style="font-size: 12px; color: var(--primary); font-weight: 700;" onclick="renderProducts(products)">View All</span>
-            </div>
-
-            <div class="product-grid" id="product-grid"></div>
-        </div>
-
-        <!-- VIEW: PROFILE & ORDERS -->
-        <div id="view-orders" style="display:none; padding: 20px;">
-            <div class="profile-card">
-                <div class="profile-avatar"><i class="fas fa-user"></i></div>
-                <h2 id="profile-name-display">User Name</h2>
-                <p id="profile-phone-display" style="color: gray; font-size: 14px;">+91 0000000000</p>
-            </div>
-
-            <div class="menu-item" onclick="document.getElementById('order-history-list').scrollIntoView({behavior:'smooth'})">
-                <i class="fas fa-receipt"></i> Order History
-            </div>
-            <div class="menu-item" onclick="showAuth()">
-                <i class="fas fa-map-location-dot"></i> Change Address
-            </div>
-            <div class="menu-item" style="color: var(--primary);" onclick="localStorage.clear(); location.reload();">
-                <i class="fas fa-power-off"></i> Logout
-            </div>
-
-            <h3 style="margin: 25px 0 15px;">Recent Orders</h3>
-            <div id="order-history-list"></div>
-        </div>
-
-        <!-- FLOATING CART BAR -->
-        <div id="floating-cart-bar" onclick="toggleCart()">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-shopping-basket"></i>
-                <div>
-                    <span id="f-cart-qty" style="font-weight: 800; font-size: 14px;">0 ITEMS</span>
-                    <small id="f-cart-total" style="display: block; font-size: 11px; opacity: 0.9;">Total: ₹0</small>
-                </div>
-            </div>
-            <div style="font-weight: 800; font-size: 13px;">VIEW CART <i class="fas fa-chevron-right"></i></div>
-        </div>
-
-        <!-- CART SHEET -->
-        <div class="overlay" id="cart-overlay" onclick="toggleCart()"></div>
-        <div id="cart-sheet">
-            <div style="width: 40px; height: 5px; background: #eee; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <h3 style="margin-bottom: 15px;"><i class="fas fa-shopping-basket" style="color: var(--primary);"></i> Your Cart</h3>
-            
-            <div id="cart-items-list" style="max-height: 220px; overflow-y: auto; margin-bottom: 15px;"></div>
-
-            <div class="coupon-box">
-                <input type="text" id="coupon-input" placeholder="APPLY COUPON CODE">
-                <button class="add-btn-premium" style="background:var(--text-dark); color:white; border:none;" onclick="applyCoupon()">APPLY</button>
-            </div>
-            <div id="coupon-msg" style="font-size: 10px; margin-bottom: 10px; font-weight: 700;"></div>
-
-            <div style="background: #F9F9F9; padding: 20px; border-radius: 18px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-                    <span>Item Total</span><span id="cart-subtotal">₹0</span>
-                </div>
-                <div style="margin: 12px 0;">
-                    <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Distance from Store (KM)</label>
-                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
-                        <input type="number" id="input-km" value="1" min="1" oninput="calculateTotals()" style="width: 70px; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-weight: 700;">
-                        <span style="font-size: 11px; color: gray;">₹30 (3km) + ₹10/km extra</span>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
-                    <span>Delivery Fee</span><span id="cart-delivery" style="color: var(--primary); font-weight: 700;">₹30</span>
-                </div>
-                <div id="discount-row" style="display: none; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: #27ae60; font-weight: 700;">
-                    <span>Coupon Savings</span><span id="cart-discount">-₹0</span>
-                </div>
-                <hr style="border: 0; border-top: 1px dashed #ddd; margin: 12px 0;">
-                <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 20px; color: var(--text-dark);">
-                    <span>To Pay</span><span id="cart-grandtotal">₹0</span>
-                </div>
-            </div>
-
-            <button class="btn-primary" onclick="checkoutOrder()" style="margin-top: 20px; width: 100%; padding: 18px;">CONFIRM ORDER (COD)</button>
-        </div>
-
-        <!-- NAVIGATION -->
+        <!-- BOTTOM NAV -->
         <nav class="bottom-nav">
-            <div class="nav-item active" onclick="switchView('home', this)"><i class="fas fa-home"></i>Home</div>
-            <div class="nav-item" onclick="toggleCart()"><i class="fas fa-shopping-bag"></i>Cart</div>
-            <div class="nav-item" onclick="switchView('orders', this)"><i class="fas fa-user-circle"></i>Profile</div>
+            <div class="nav-item active" onclick="switchView('home', this)">
+                <i class="fas fa-house"></i>Home
+            </div>
+            <div class="nav-item" onclick="toggleCartSheet()">
+                <div class="cart-badge" id="cart-count">0</div>
+                <i class="fas fa-bag-shopping"></i>Cart
+            </div>
+            <div class="nav-item" onclick="switchView('profile', this)">
+                <i class="fas fa-circle-user"></i>Account
+            </div>
         </nav>
     </div>
 
     <script>
-        // --- CONFIG ---
+        // --- INITIAL SETUP ---
         const firebaseConfig = {
             apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
             authDomain: "fast8delivery-business.firebaseapp.com",
@@ -292,170 +196,50 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // --- STATE ---
         let user = JSON.parse(localStorage.getItem('fast8_customer')) || null;
-        let products = [], cart = [];
-        let appliedDiscount = 0, activeCoupon = "";
-        let currentOrderCalc = { subtotal: 0, delivery: 30, margin: 0, total: 0 };
 
-        window.onload = () => {
-            fetchAreas();
-            if(!user) { document.getElementById('loading').style.display = 'none'; document.getElementById('auth-screen').style.display = 'flex'; } 
-            else { initApp(); }
+        window.onload = async () => {
+            await fetchAreas();
+            if(!user) {
+                document.getElementById('loading-overlay').style.display = 'none';
+                document.getElementById('auth-screen').style.display = 'flex';
+            } else {
+                initApp();
+            }
         };
 
         async function fetchAreas() {
             const snap = await db.collection('areas').get();
             const select = document.getElementById('user-area');
-            snap.forEach(doc => { select.innerHTML += `<option value="${doc.data().name}">${doc.data().name}</option>`; });
+            snap.forEach(doc => {
+                select.innerHTML += `<option value="${doc.data().name}">${doc.data().name}</option>`;
+            });
         }
 
         function handleRegister() {
-            const name = document.getElementById('user-name').value, phone = document.getElementById('user-phone').value, area = document.getElementById('user-area').value;
-            if(!name || phone.length < 10 || !area) return alert("Please fill all details.");
+            const name = document.getElementById('user-name').value;
+            const phone = document.getElementById('user-phone').value;
+            const area = document.getElementById('user-area').value;
+            if(!name || phone.length < 10 || !area) return alert("Please complete all fields.");
             user = { name, phone, area };
             localStorage.setItem('fast8_customer', JSON.stringify(user));
             location.reload();
         }
 
         function initApp() {
+            document.getElementById('loading-overlay').style.display = 'none';
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             document.getElementById('display-area').innerText = user.area;
-            document.getElementById('profile-name-display').innerText = user.name;
-            document.getElementById('profile-phone-display').innerText = "+91 " + user.phone;
-
-            db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) document.getElementById('app-banner').src = doc.data().url; });
-
-            db.collection('products').onSnapshot(snap => {
-                products = []; snap.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
-                renderProducts(products); document.getElementById('loading').style.display = 'none';
-            });
-
-            db.collection('orders').where('customerPhone', '==', String(user.phone)).onSnapshot(snap => {
-                const list = document.getElementById('order-history-list'); list.innerHTML = '';
-                snap.forEach(doc => {
-                    const o = doc.data();
-                    list.innerHTML += `<div class="order-card"><div style="display:flex; justify-content:space-between;"><b>#${doc.id.slice(-5)}</b><span class="status-pill" style="background:#eee; font-size:10px; padding:4px 10px; border-radius:10px;">${o.status}</span></div><div style="font-size:12px; color:gray; margin-top:5px;">${o.itemsSummary}</div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;"><span style="font-size:11px;">${new Date(o.timestamp).toLocaleDateString()}</span><b style="color:var(--primary)">₹${o.total}</b></div></div>`;
-                });
-            });
-        }
-
-        function renderProducts(list) {
-            const grid = document.getElementById('product-grid'); grid.innerHTML = '';
-            list.forEach(p => {
-                const isOut = p.stock <= 0;
-                grid.innerHTML += `
-                    <div class="p-card">
-                        <div class="p-tag">FRESH</div>
-                        ${isOut ? '<div class="stock-out"><b style="color:red; font-size:10px;">OUT OF STOCK</b></div>' : ''}
-                        <img src="${p.img || 'https://via.placeholder.com/150'}">
-                        <h4>${p.name}</h4>
-                        <div style="font-size:11px; color:gray; margin-bottom:5px;">${p.cat || 'Essentials'}</div>
-                        <div class="price-row">
-                            <div>
-                                <span class="price">₹${p.sell}</span><br>
-                                <span style="font-size:10px; text-decoration:line-through; color:gray;">₹${Math.round(p.sell*1.3)}</span>
-                            </div>
-                            <button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function handleSearch() {
-            const q = document.getElementById('search-box').value.toLowerCase();
-            renderProducts(products.filter(p => p.name.toLowerCase().includes(q)));
-        }
-
-        function filterByCategory(cat) {
-            renderProducts(products.filter(p => p.cat === cat));
-            document.getElementById('grid-title').innerText = cat;
-        }
-
-        function addToCart(id) {
-            const prod = products.find(p => p.id === id), inCart = cart.find(item => item.id === id);
-            if(inCart) inCart.qty++; else cart.push({ ...prod, qty: 1 });
-            calculateTotals();
-        }
-
-        async function applyCoupon() {
-            const code = document.getElementById('coupon-input').value.toUpperCase();
-            const msg = document.getElementById('coupon-msg');
-            if(!code) return;
-            const doc = await db.collection("coupons").doc(code).get();
-            if(doc.exists && doc.data().active) {
-                appliedDiscount = doc.data().amt; activeCoupon = code;
-                msg.style.color = "#27ae60"; msg.innerText = "SAVED ₹" + appliedDiscount + " WITH " + code;
-                document.getElementById('discount-row').style.display = "flex";
-                document.getElementById('cart-discount').innerText = "-₹" + appliedDiscount;
-            } else {
-                appliedDiscount = 0; activeCoupon = "";
-                msg.style.color = "red"; msg.innerText = "INVALID COUPON CODE";
-                document.getElementById('discount-row').style.display = "none";
-            }
-            calculateTotals();
-        }
-
-        function calculateTotals() {
-            const list = document.getElementById('cart-items-list'); list.innerHTML = '';
-            let sub = 0, margin = 0, itemsCount = 0;
-            cart.forEach((item, i) => {
-                sub += (item.sell * item.qty); margin += (item.margin * item.qty); itemsCount += item.qty;
-                list.innerHTML += `<div class="cart-item"><div style="flex:1;"><b>${item.name}</b><br><span style="color:var(--primary); font-size:12px; font-weight:700;">₹${item.sell * item.qty}</span></div><div class="qty-ctrl" style="background:#eee; padding:5px 12px; border-radius:10px; display:flex; gap:10px;"><i class="fas fa-minus" onclick="updateQty(${i},-1)"></i><b>${item.qty}</b><i class="fas fa-plus" onclick="updateQty(${i},1)"></i></div></div>`;
-            });
-            const km = parseFloat(document.getElementById('input-km').value) || 1;
-            let delFee = (km > 3) ? 30 + ((km - 3) * 10) : 30;
-            let total = (sub + delFee) - appliedDiscount;
-            currentOrderCalc = { subtotal: sub, delivery: delFee, margin: margin, total: total > 0 ? total : 0 };
-            
-            document.getElementById('cart-subtotal').innerText = '₹' + sub;
-            document.getElementById('cart-delivery').innerText = '₹' + delFee;
-            document.getElementById('cart-grandtotal').innerText = '₹' + currentOrderCalc.total;
-
-            const floatBar = document.getElementById('floating-cart-bar');
-            if(itemsCount > 0) {
-                floatBar.style.display = 'flex';
-                document.getElementById('f-cart-qty').innerText = `${itemsCount} ITEM${itemsCount > 1 ? 'S' : ''}`;
-                document.getElementById('f-cart-total').innerText = `Total: ₹${currentOrderCalc.total}`;
-            } else { floatBar.style.display = 'none'; }
-        }
-
-        function updateQty(idx, delta) { cart[idx].qty += delta; if(cart[idx].qty <= 0) cart.splice(idx, 1); calculateTotals(); }
-        function toggleCart() { document.getElementById('cart-sheet').classList.toggle('active'); document.getElementById('cart-overlay').style.display = document.getElementById('cart-sheet').classList.contains('active') ? 'block' : 'none'; }
-
-        async function checkoutOrder() {
-            if(cart.length === 0) return alert("Cart is empty!");
-            const orderData = {
-                customerName: user.name, customerPhone: String(user.phone), address: user.area,
-                itemsSummary: cart.map(i => `${i.name} x${i.qty}`).join(', '),
-                subtotal: currentOrderCalc.subtotal, deliveryCharge: currentOrderCalc.delivery,
-                discountAmt: appliedDiscount, couponUsed: activeCoupon,
-                total: currentOrderCalc.total, totalMargin: currentOrderCalc.margin,
-                status: 'Pending', timestamp: Date.now()
-            };
-
-            try {
-                document.getElementById('loading').style.display = 'flex';
-                const docRef = await db.collection('orders').add(orderData);
-                for(let item of cart) { await db.collection('products').doc(item.id).update({ stock: firebase.firestore.FieldValue.increment(-item.qty) }); }
-
-                const adminWA = "919330515650"; 
-                const waMsg = `*New Order: Fast8bondhu*%0A--------------------------%0A*ID:* #${docRef.id.slice(-5)}%0A*Customer:* ${user.name}%0A*Bill:* ₹${orderData.total}%0A*Items:* ${orderData.itemsSummary}%0A*Address:* ${user.area}%0A--------------------------%0A_Apnar bondhu ekhon rasta-y!_`;
-                window.open(`https://wa.me/${adminWA}?text=${waMsg}`, '_blank');
-
-                alert("Order Placed Successfully!");
-                cart = []; calculateTotals(); toggleCart(); location.reload();
-            } catch (err) { alert("Error."); document.getElementById('loading').style.display = 'none'; }
+            // More logic coming in Part 2
         }
 
         function switchView(view, el) {
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active');
-            document.getElementById('view-home').style.display = (view === 'home') ? 'block' : 'none';
-            document.getElementById('view-orders').style.display = (view === 'orders') ? 'block' : 'none';
+            document.querySelectorAll('main').forEach(m => m.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('view-' + view).style.display = 'block';
+            if(el) el.classList.add('active');
         }
-
-        function showAuth() { if(confirm("Logout?")) { localStorage.removeItem('fast8_customer'); location.reload(); } }
     </script>
 </body>
 </html>
