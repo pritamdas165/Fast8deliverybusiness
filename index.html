@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8bondhu - Grocery & More</title>
+    <title>Fast8bondhu - Enterprise App</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -47,75 +47,52 @@
         .search-container { background: #F0F2F5; border-radius: 16px; display: flex; align-items: center; padding: 12px 18px; border: 1px solid #E8E8E8; }
         .search-container input { border: none; background: transparent; width: 100%; margin-left: 10px; font-size: 14px; color: var(--text-dark); }
 
-        /* --- DASHBOARD --- */
-        .banner-container { padding: 15px 20px 0; }
-        .banner-card { width: 100%; height: 160px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); display: none; }
-        .banner-card img { width: 100%; height: 100%; object-fit: cover; }
-        .cat-scroll { display: flex; overflow-x: auto; padding: 20px; gap: 15px; scrollbar-width: none; }
-        .cat-scroll::-webkit-scrollbar { display: none; }
-        .cat-item { text-align: center; flex-shrink: 0; width: 70px; cursor: pointer; }
-        .cat-icon-box { width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); border: 1px solid #f0f0f0; margin-bottom: 8px; font-size: 24px; }
-        .cat-item span { font-size: 11px; font-weight: 700; color: var(--text-dark); }
+        /* --- PRODUCT GRID --- */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px 20px 140px; }
         .p-card { background: var(--white); border-radius: var(--radius-md); padding: 12px; position: relative; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
         .p-img-box { text-align: center; margin-bottom: 10px; height: 110px; position: relative; }
         .p-img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .p-tag { position: absolute; top: 0; left: 0; background: var(--primary); color: white; font-size: 8px; font-weight: 900; padding: 3px 7px; border-radius: 6px; }
         .p-card h4 { font-size: 14px; height: 38px; overflow: hidden; line-height: 1.3; margin-bottom: 5px; font-weight: 600; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
         .p-price { font-weight: 800; font-size: 16px; }
         .add-btn-premium { background: white; color: #27ae60; border: 1.5px solid #27ae60; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 11px; cursor: pointer; }
 
-        /* --- PREMIUM PROFILE & ORDERS VIEW --- */
-        .profile-header { background: white; padding: 40px 20px; border-radius: 0 0 35px 35px; text-align: center; box-shadow: var(--shadow-sm); }
-        .user-avatar { width: 85px; height: 85px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; margin: 0 auto 15px; border: 4px solid white; box-shadow: var(--shadow-md); }
-        
-        .stats-card-row { display: flex; justify-content: space-around; margin: 20px 0; }
-        .stat-card-mini { background: white; padding: 15px; border-radius: 18px; width: 45%; box-shadow: var(--shadow-sm); border: 1px solid #f0f0f0; text-align: center; }
-        .stat-card-mini b { display: block; font-size: 18px; color: var(--primary); }
-        .stat-card-mini span { font-size: 10px; font-weight: 700; color: gray; text-transform: uppercase; }
-
-        .menu-list { padding: 0 20px; margin-top: 10px; }
-        .menu-item-premium { background: white; padding: 18px; border-radius: 18px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; border: 1px solid #f0f0f0; cursor: pointer; transition: 0.2s; }
-        .menu-item-premium:active { transform: scale(0.98); background: #fafafa; }
-        .menu-item-premium i { width: 35px; height: 35px; background: #F5F7F9; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 16px; }
-        .menu-item-premium div { flex: 1; }
-        .menu-item-premium div b { display: block; font-size: 14px; }
-        .menu-item-premium div span { font-size: 11px; color: gray; }
-
-        /* --- LIVE ORDER TRACKING (SWIGGY STYLE) --- */
-        .order-history-card { background: white; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); }
-        .oh-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .status-pill { padding: 6px 14px; border-radius: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-        .status-Pending { background: #FFF4E5; color: #B7791F; }
+        /* --- ORDER HISTORY VIEW (Dedicated) --- */
+        .order-history-card { background: white; border-radius: 22px; padding: 20px; margin-bottom: 15px; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease; }
+        .oh-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .status-pill { padding: 5px 12px; border-radius: 10px; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+        .status-Pending { background: #FFF4E5; color: #B7791F; } 
         .status-Packed { background: #EBF8FF; color: #2B6CB0; }
         .status-Out { background: #E6FFFA; color: #2C7A7B; }
         .status-Delivered { background: #F0FFF4; color: #276749; }
 
-        .tracking-box { display: flex; justify-content: space-between; margin: 20px 0; position: relative; padding: 10px 0; }
-        .tracking-box::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2.5px; background: #eee; z-index: 1; }
-        .t-step { width: 25%; text-align: center; position: relative; z-index: 2; }
-        .t-dot { width: 14px; height: 14px; background: #ddd; border: 3px solid white; border-radius: 50%; margin: 0 auto 8px; transition: 0.4s; }
-        .t-step.active .t-dot { background: #27ae60; transform: scale(1.3); box-shadow: 0 0 10px rgba(39,174,96,0.4); }
-        .t-step span { font-size: 9px; font-weight: 700; color: gray; }
-        .t-step.active span { color: #27ae60; }
+        /* Tracking Timeline */
+        .tracking-timeline { display: flex; justify-content: space-between; margin-top: 15px; position: relative; padding: 10px 0; }
+        .tracking-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2.5px; background: #eee; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; width: 25%; }
+        .dot { width: 14px; height: 14px; background: #ddd; border: 3px solid white; border-radius: 50%; margin: 0 auto 5px; transition: 0.3s; }
+        .step.active .dot { background: #27ae60; transform: scale(1.2); }
+        .step span { font-size: 9px; color: gray; font-weight: 700; }
+        .step.active span { color: #27ae60; }
 
-        /* --- CART & FOOTER --- */
-        #floating-cart-bar { position: fixed; bottom: 95px; left: 15px; right: 15px; background: #27ae60; color: white; padding: 15px 20px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 2500; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3); }
-        #cart-sheet { position: fixed; bottom: 0; left: 0; width: 100%; height: 85%; background: var(--white); z-index: 3000; border-radius: 35px 35px 0 0; box-shadow: 0 -15px 40px rgba(0,0,0,0.15); transform: translateY(100%); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
-        #cart-sheet.active { transform: translateY(0); }
-        .cart-header { padding: 25px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items-container { flex: 1; overflow-y: auto; padding: 20px; }
-        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px dashed #eee; }
-        .cart-qty-ctrl { display: flex; align-items: center; gap: 12px; background: #f1f1f1; padding: 6px 12px; border-radius: 10px; border: 1.5px solid #27ae60; color: #27ae60; font-weight: 800; }
-        .bill-summary { background: #F9FAFB; padding: 20px; border-radius: 20px; margin-top: 5px; }
-        .bill-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
-        .grand-total { border-top: 1.5px solid #ddd; padding-top: 10px; font-weight: 800; font-size: 17px; }
+        /* --- PROFILE VIEW --- */
+        .profile-header { background: white; padding: 40px 20px; border-radius: 0 0 35px 35px; text-align: center; box-shadow: var(--shadow-sm); }
+        .user-avatar { width: 85px; height: 85px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; margin: 0 auto 15px; border: 4px solid white; box-shadow: var(--shadow-md); }
+        .stats-row { display: flex; justify-content: space-around; margin: 20px 0; }
+        .stat-item { text-align: center; background: #f9f9f9; padding: 10px 20px; border-radius: 15px; width: 45%; }
+        .stat-item b { display: block; font-size: 18px; color: var(--primary); }
+        .stat-item span { font-size: 11px; color: gray; font-weight: 600; }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(255,255,255,0.98); display: flex; justify-content: space-around; padding: 12px 0 28px; border-top: 1px solid #eee; z-index: 2000; border-radius: 25px 25px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+        /* --- BOTTOM NAVIGATION --- */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(255,255,255,0.98); display: flex; justify-content: space-around; padding: 12px 0 28px; border-top: 1px solid #eee; z-index: 2000; border-radius: 25px 25px 0 0; }
         .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; flex: 1; transition: 0.3s; cursor: pointer; }
         .nav-item.active { color: var(--primary); font-weight: 800; }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 4px; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 4px; }
+
+        /* --- UTILS --- */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2900; display: none; backdrop-filter: blur(4px); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -136,7 +113,7 @@
 
     <!-- 2. MAIN APP -->
     <div id="main-app" style="display:none;">
-        <header>
+        <header id="main-header">
             <div class="header-top">
                 <div class="brand-text" style="font-size: 22px;">Fast8<span>bondhu</span></div>
                 <div onclick="switchView('profile', document.getElementById('nav-profile'))" style="cursor:pointer; font-size: 24px; color: var(--text-muted);"><i class="fas fa-circle-user"></i></div>
@@ -151,54 +128,49 @@
             </div>
             <div class="search-container">
                 <i class="fas fa-search" style="color:gray;"></i>
-                <input type="text" id="search-box" placeholder="Search vegetables, milk, snacks..." oninput="handleSearch()">
+                <input type="text" id="search-box" placeholder="Search vegetables, snacks..." oninput="handleSearch()">
             </div>
         </header>
 
-        <!-- VIEW: HOME -->
+        <!-- TAB 1: HOME VIEW -->
         <main id="view-home">
-            <div class="banner-container"><div class="banner-card"><img id="app-banner" src=""></div></div>
-            <div class="cat-scroll">
+            <div class="cat-scroll" style="margin-top: 15px;">
                 <div class="cat-item" onclick="filterCat('Vegetables')"><div class="cat-icon-box">🥦</div><span>Veggies</span></div>
                 <div class="cat-item" onclick="filterCat('Daily Needs')"><div class="cat-icon-box">🥛</div><span>Daily</span></div>
                 <div class="cat-item" onclick="filterCat('Snacks')"><div class="cat-icon-box">🍿</div><span>Snacks</span></div>
-                <div class="cat-item" onclick="filterCat('Household')"><div class="cat-icon-box">🧼</div><span>Home</span></div>
                 <div class="cat-item" onclick="renderProducts(allProducts)"><div class="cat-icon-box">✨</div><span>All</span></div>
             </div>
-            <div class="section-header"><h3>Fresh Arrivals</h3></div>
+            <div class="section-header"><h3>Fresh Picks</h3></div>
             <div class="product-grid" id="product-grid"></div>
         </main>
 
-        <!-- PREMIUM PROFILE & LIVE ORDERS VIEW -->
+        <!-- TAB 2: LIVE ORDERS VIEW (Dedicated History) -->
+        <main id="view-orders" style="display:none; padding: 20px 20px 150px;">
+            <div class="section-header" style="padding-left:0;"><h3>Track Orders</h3><i class="fas fa-clock-rotate-left"></i></div>
+            <div id="order-history-list">
+                <!-- Orders will be injected here with Live Timeline -->
+            </div>
+        </main>
+
+        <!-- TAB 3: PROFILE VIEW -->
         <main id="view-profile" style="display:none;">
             <div class="profile-header">
-                <div class="user-avatar"><i class="fas fa-user-ninja"></i></div>
-                <h2 id="p-name">User Name</h2>
+                <div class="user-avatar"><i class="fas fa-user-astronaut"></i></div>
+                <h2 id="p-name">Loading...</h2>
                 <p id="p-phone">+91 0000000000</p>
-                
-                <div class="stats-card-row">
-                    <div class="stat-card-mini"><b id="stat-order-count">0</b><span>Orders</span></div>
-                    <div class="stat-card-mini"><b id="stat-savings" style="color: #27ae60;">₹0</b><span>Total Saved</span></div>
+                <div class="stats-row">
+                    <div class="stat-item"><b id="stat-order-count">0</b><span>Total Orders</span></div>
+                    <div class="stat-item"><b id="stat-savings" style="color:#27ae60;">₹0</b><span>Total Saved</span></div>
                 </div>
             </div>
-
-            <div class="menu-list">
-                <div class="menu-item-premium" onclick="window.open('tel:919330515650')">
-                    <i class="fas fa-headset"></i>
-                    <div><b>Help & Support</b><span>Call apnar bondhu directly</span></div>
-                    <i class="fas fa-chevron-right" style="font-size:12px; color:#ccc;"></i>
+            <div style="padding: 20px;">
+                <div class="menu-item-premium" style="background:white; padding:18px; border-radius:18px; display:flex; align-items:center; gap:15px; margin-bottom:12px; border:1px solid #f0f0f0;" onclick="window.open('tel:919330515650')">
+                    <i class="fas fa-headset" style="color:var(--primary);"></i>
+                    <b>Call Customer Care</b>
                 </div>
-                <div class="menu-item-premium" onclick="window.open('https://wa.me/919330515650')">
-                    <i class="fab fa-whatsapp"></i>
-                    <div><b>WhatsApp Chat</b><span>Instant message to admin</span></div>
-                    <i class="fas fa-chevron-right" style="font-size:12px; color:#ccc;"></i>
-                </div>
-            </div>
-
-            <div style="padding: 20px 20px 150px;">
-                <h3 style="margin-bottom: 15px; font-size: 18px;">Live & Past Orders</h3>
-                <div id="order-history-list">
-                    <!-- Dynamic Orders with Tracking -->
+                <div class="menu-item-premium" style="background:white; padding:18px; border-radius:18px; display:flex; align-items:center; gap:15px; margin-bottom:12px; border:1px solid #f0f0f0;" onclick="window.open('https://wa.me/919330515650')">
+                    <i class="fab fa-whatsapp" style="color:#25D366;"></i>
+                    <b>Chat with Admin</b>
                 </div>
                 <button class="btn-main" style="background:white; color:var(--primary); border:1.5px solid var(--primary); margin-top:20px;" onclick="logoutUser()">LOGOUT SESSION</button>
             </div>
@@ -206,10 +178,7 @@
 
         <!-- FLOATING CART -->
         <div id="floating-cart-bar" onclick="toggleCartSheet(true)">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-shopping-basket"></i>
-                <div><span id="float-qty">0 ITEMS</span><small id="float-total" style="display: block;">₹0</small></div>
-            </div>
+            <div style="display: flex; align-items: center; gap: 12px;"><i class="fas fa-shopping-basket"></i><div><span id="float-qty">0 ITEMS</span><small id="float-total" style="display: block;">₹0</small></div></div>
             <div style="font-weight: 800;">VIEW CART <i class="fas fa-chevron-right"></i></div>
         </div>
 
@@ -240,15 +209,16 @@
             </div>
         </div>
 
+        <!-- NAVIGATION -->
         <nav class="bottom-nav">
             <div class="nav-item active" id="nav-home" onclick="switchView('home', this)"><i class="fas fa-house"></i>Home</div>
-            <div class="nav-item" id="nav-cart" onclick="toggleCartSheet(true)"><i class="fas fa-bag-shopping"></i>Cart</div>
+            <div class="nav-item" id="nav-orders" onclick="switchView('orders', this)"><i class="fas fa-receipt"></i>Orders</div>
             <div class="nav-item" id="nav-profile" onclick="switchView('profile', this)"><i class="fas fa-circle-user"></i>Account</div>
         </nav>
     </div>
 
     <script>
-        // CONFIG
+        // --- CONFIG ---
         const firebaseConfig = {
             apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
             authDomain: "fast8delivery-business.firebaseapp.com",
@@ -264,7 +234,7 @@
         let user = JSON.parse(localStorage.getItem('fast8_customer')) || null;
         let allProducts = [], cart = [], appliedDiscount = 0, activeCoupon = "";
 
-        // INIT
+        // --- INIT ---
         window.onload = async () => {
             await fetchAreas();
             if(!user) { document.getElementById('loading-overlay').style.display='none'; document.getElementById('auth-screen').style.display='flex'; } 
@@ -286,7 +256,6 @@
             document.getElementById('p-name').innerText = user.name;
             document.getElementById('p-phone').innerText = "+91 " + user.phone;
 
-            db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) { document.getElementById('app-banner').src = doc.data().url; document.querySelector('.banner-card').style.display = 'block'; } });
             db.collection("products").onSnapshot(snap => { allProducts = []; snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() })); renderProducts(allProducts); });
             syncOrderHistory();
         }
@@ -299,16 +268,11 @@
             });
         }
 
+        // --- CORE LOGIC ---
         function addToCart(id) {
             const prod = allProducts.find(p => p.id === id);
             const exist = cart.find(i => i.id === id);
             if(exist) exist.qty++; else cart.push({...prod, qty: 1});
-            updateCartUI();
-        }
-
-        function updateQty(i, delta) {
-            cart[i].qty += delta;
-            if(cart[i].qty <= 0) cart.splice(i, 1);
             updateCartUI();
         }
 
@@ -323,75 +287,58 @@
             let delFee = (km > 3) ? 30 + (Math.ceil(km - 3) * 10) : 30;
             let total = (sub + delFee) - appliedDiscount;
             window.currentOrderCalc = { subtotal: sub, delivery: delFee, total: total > 0 ? total : 0, margin: margin, distance: km };
-            document.getElementById('bill-sub').innerText = '₹' + sub;
-            document.getElementById('bill-delivery').innerText = '₹' + delFee;
-            document.getElementById('bill-grand').innerText = '₹' + window.currentOrderCalc.total;
+            document.getElementById('bill-sub').innerText = '₹' + sub; document.getElementById('bill-delivery').innerText = '₹' + delFee; document.getElementById('bill-grand').innerText = '₹' + window.currentOrderCalc.total;
             const bar = document.getElementById('floating-cart-bar');
             if(count > 0) { bar.style.display='flex'; document.getElementById('float-qty').innerText = count + ' ITEMS'; document.getElementById('float-total').innerText = 'Total: ₹' + window.currentOrderCalc.total; }
             else { bar.style.display='none'; toggleCartSheet(false); }
         }
 
-        async function applyCoupon() {
-            const code = document.getElementById('coupon-input').value.toUpperCase();
-            const doc = await db.collection("coupons").doc(code).get();
-            if(doc.exists && doc.data().active) {
-                appliedDiscount = doc.data().amt; activeCoupon = code;
-                document.getElementById('coupon-display').style.display='flex';
-                document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
-                alert("Coupon Applied!");
-            } else { alert("Invalid Code"); appliedDiscount=0; activeCoupon=""; }
-            updateCartUI();
-        }
+        function updateQty(i, delta) { cart[i].qty += delta; if(cart[i].qty <= 0) cart.splice(i, 1); updateCartUI(); }
 
         async function checkoutOrder() {
             if(!cart.length) return;
             const calc = window.currentOrderCalc;
             const orderData = { customerName: user.name, customerPhone: String(user.phone), address: user.area, itemsSummary: cart.map(i => i.name+' x'+i.qty).join(', '), subtotal: calc.subtotal, deliveryCharge: calc.delivery, total: calc.total, totalMargin: calc.margin, distance: calc.distance, status: 'Pending', timestamp: Date.now(), discountAmt: appliedDiscount };
             try {
-                document.getElementById('loading-overlay').style.display='flex';
                 const docRef = await db.collection('orders').add(orderData);
                 for(let item of cart) { await db.collection('products').doc(item.id).update({ stock: firebase.firestore.FieldValue.increment(-item.qty) }); }
-                window.open(`https://wa.me/919330515650?text=*New Order: Fast8bondhu*%0AID: #${docRef.id.slice(-5)}%0ABill: ₹${orderData.total}`, '_blank');
-                alert("Order Placed!");
+                alert("Order Successful!");
                 cart=[]; appliedDiscount=0; activeCoupon="";
-                updateCartUI(); switchView('profile', document.getElementById('nav-profile'));
-            } catch(e) { alert("Error!"); }
-            finally { document.getElementById('loading-overlay').style.display='none'; }
+                updateCartUI(); switchView('orders', document.getElementById('nav-orders'));
+            } catch(e) { alert("Checkout Error!"); }
         }
 
         function syncOrderHistory() {
             db.collection('orders').where('customerPhone','==',String(user.phone)).orderBy('timestamp','desc').onSnapshot(snap => {
                 const list = document.getElementById('order-history-list'); list.innerHTML = '';
-                let totalSavings = 0, orderCount = 0;
+                let totalSavings = 0, count = 0;
                 snap.forEach(doc => {
                     const o = doc.data();
-                    orderCount++; totalSavings += (o.discountAmt || 0);
+                    count++; totalSavings += (o.discountAmt || 0);
                     const status = o.status;
                     const steps = ['Pending','Packed','Out','Delivered'];
                     const activeIdx = steps.indexOf(status);
-                    
-                    let timeline = `<div class="tracking-box">`;
-                    steps.forEach((s, i) => { timeline += `<div class="t-step ${i <= activeIdx ? 'active' : ''}"><div class="t-dot"></div><span>${s}</span></div>`; });
+                    let timeline = `<div class="tracking-timeline">`;
+                    steps.forEach((s, i) => { timeline += `<div class="step ${i <= activeIdx ? 'active' : ''}"><div class="dot"></div><span>${s}</span></div>`; });
                     timeline += `</div>`;
-
-                    list.innerHTML += `
-                        <div class="order-history-card">
-                            <div class="oh-header"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}">${status}</span></div>
-                            <div style="font-size:12px;color:gray;">${o.itemsSummary}</div>
-                            ${timeline}
-                            <div style="text-align:right;font-weight:800;font-size:16px;">₹${o.total}</div>
-                        </div>`;
+                    list.innerHTML += `<div class="order-history-card"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}" style="float:right">${status}</span><p style="font-size:12px;color:gray;margin-top:5px;">${o.itemsSummary}</p>${timeline}<div style="text-align:right;font-weight:800;margin-top:10px;">₹${o.total}</div></div>`;
                 });
-                document.getElementById('stat-order-count').innerText = orderCount;
+                document.getElementById('stat-order-count').innerText = count;
                 document.getElementById('stat-savings').innerText = '₹' + totalSavings;
             });
         }
 
-        function handleSearch() { const q = document.getElementById('search-box').value.toLowerCase(); renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q))); }
-        function filterCat(c) { renderProducts(allProducts.filter(p => p.cat === c)); document.getElementById('grid-title').innerText = c; }
-        function switchView(view, el) { document.querySelectorAll('main').forEach(m => m.style.display = 'none'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('view-' + view).style.display = 'block'; el.classList.add('active'); }
+        // --- UI HELPERS ---
+        function switchView(view, el) {
+            document.querySelectorAll('main').forEach(m => m.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('view-' + view).style.display = 'block';
+            el.classList.add('active');
+            if(view === 'home') document.getElementById('main-header').style.display='block';
+            else document.getElementById('main-header').style.display='none';
+        }
         function toggleCartSheet(show) { document.getElementById('cart-sheet').classList.toggle('active', show); document.getElementById('cart-overlay').style.display = show ? 'block' : 'none'; }
-        function handleRegister() { const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value; if(!n || p.length < 10 || !a) return alert("Fill data!"); user = { name: n, phone: p, area: a }; localStorage.setItem('fast8_customer', JSON.stringify(user)); location.reload(); }
+        function handleRegister() { const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value; if(!n || p.length < 10 || !a) return alert("Fill data!"); user={name:n,phone:p,area:a}; localStorage.setItem('fast8_customer',JSON.stringify(user)); location.reload(); }
         function logoutUser() { if(confirm("Logout?")) { localStorage.clear(); location.reload(); } }
         function showAuth() { document.getElementById('auth-screen').style.display='flex'; }
     </script>
