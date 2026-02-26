@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8bondhu - Apnar Pashei</title>
+    <title>Fast8bondhu - Apnar Pashei Shop Somoy</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
             display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px;
         }
         .auth-card { width: 100%; max-width: 400px; text-align: center; }
-        .auth-card img { width: 100px; margin-bottom: 20px; }
+        .auth-card img { width: 180px; margin-bottom: 20px; } /* Updated for Logo */
         .input-group { width: 100%; margin-bottom: 15px; text-align: left; }
         .input-group label { font-size: 12px; font-weight: 600; color: var(--text-light); margin-left: 5px; }
         .input-group input, .input-group select {
@@ -56,10 +56,11 @@
 
         /* --- HEADER --- */
         header {
-            background: var(--primary); padding: 25px 20px 45px; border-radius: 0 0 30px 30px;
-            position: sticky; top: 0; z-index: 100; color: white;
+            background: var(--primary); padding: 20px 20px 45px; border-radius: 0 0 30px 30px;
+            position: sticky; top: 0; z-index: 100; color: white; text-align: center;
         }
-        .user-loc { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; margin-bottom: 15px; }
+        .header-logo { width: 130px; margin-bottom: 15px; } /* Added Logo Style */
+        .user-loc { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 500; margin-bottom: 15px; }
         .search-bar {
             background: var(--white); border-radius: 15px; display: flex; align-items: center; padding: 12px 18px;
             box-shadow: var(--shadow);
@@ -141,7 +142,7 @@
     <!-- 1. AUTH SCREEN -->
     <div id="auth-screen">
         <div class="auth-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3724/3724720.png" alt="Logo">
+            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" alt="Fast8bondhu Logo">
             <h2 style="color: var(--primary); font-size: 28px;">Fast8bondhu</h2>
             <p style="margin-bottom: 35px; color: var(--text-light);">Apnar dorkare shop somoy pashei.</p>
             
@@ -166,6 +167,7 @@
     <!-- 2. MAIN APP -->
     <div id="main-app" style="display:none;">
         <header>
+            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" alt="Fast8bondhu Logo" class="header-logo">
             <div class="user-loc" onclick="showAuth()">
                 <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
                 <span id="display-area">Pinning location...</span>
@@ -213,7 +215,7 @@
             
             <div id="cart-items-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
 
-            <!-- COUPON INPUT -->
+            <!-- COUPON SECTION -->
             <div class="coupon-box">
                 <input type="text" id="coupon-input" placeholder="APPLY COUPON CODE">
                 <button class="btn-apply" onclick="applyCoupon()">APPLY</button>
@@ -224,7 +226,7 @@
                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
                     <span>Item Total</span><span id="cart-subtotal">₹0</span>
                 </div>
-                <div style="margin: 10px 0;">
+                <div style="margin: 12px 0;">
                     <label style="font-size: 11px; font-weight: 700; color: var(--text-light);">Delivery Distance (KM)</label>
                     <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
                         <input type="number" id="input-km" value="1" min="1" oninput="calculateTotals()" style="width: 60px; padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
@@ -338,7 +340,6 @@
             document.getElementById('grid-title').innerText = cat;
         }
 
-        // --- CART & COUPON ENGINE ---
         function addToCart(id) {
             const prod = products.find(p => p.id === id), inCart = cart.find(item => item.id === id);
             if(inCart) inCart.qty++; else cart.push({ ...prod, qty: 1 });
@@ -377,14 +378,12 @@
             document.getElementById('cart-subtotal').innerText = '₹' + sub;
             document.getElementById('cart-delivery').innerText = '₹' + delFee;
             document.getElementById('cart-grandtotal').innerText = '₹' + currentOrderCalc.total;
-            document.getElementById('cart-count').innerText = cart.reduce((acc, item) => acc + item.qty, 0);
         }
 
         function updateQty(idx, delta) { cart[idx].qty += delta; if(cart[idx].qty <= 0) cart.splice(idx, 1); calculateTotals(); updateCartBadge(); }
         function updateCartBadge() { document.getElementById('cart-count').innerText = cart.reduce((acc, item) => acc + item.qty, 0); }
         function toggleCart() { document.getElementById('cart-sheet').classList.toggle('active'); document.getElementById('cart-overlay').style.display = document.getElementById('cart-sheet').classList.contains('active') ? 'block' : 'none'; }
 
-        // --- CHECKOUT & WHATSAPP ALERT ---
         async function checkoutOrder() {
             if(cart.length === 0) return alert("Cart is empty!");
             const orderData = {
@@ -404,7 +403,7 @@
                 for(let item of cart) { await db.collection('products').doc(item.id).update({ stock: firebase.firestore.FieldValue.increment(-item.qty) }); }
 
                 // WHATSAPP NOTIFICATION
-                const adminWA = "919330515650"; // APNAR WHATSAPP NUMBER
+                const adminWA = "919330515650"; 
                 const waMsg = `*New Order: Fast8bondhu*%0A` +
                               `--------------------------%0A` +
                               `*ID:* #${docRef.id.slice(-5)}%0A` +
