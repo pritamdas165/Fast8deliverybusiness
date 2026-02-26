@@ -37,13 +37,26 @@
         .loader { width: 48px; height: 48px; border: 5px solid var(--accent); border-bottom-color: var(--primary); border-radius: 50%; animation: rotation 1s linear infinite; }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* --- HEADER LOGO UI FIX --- */
+        .header-logo { 
+            width: 85px; 
+            height: 85px;
+            object-fit: contain;
+            background: white; 
+            padding: 8px; 
+            border-radius: 18px; 
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
         /* --- AUTH SCREEN --- */
         #auth-screen {
             position: fixed; inset: 0; background: var(--white); z-index: 2000;
             display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px;
         }
         .auth-card { width: 100%; max-width: 400px; text-align: center; }
-        .auth-card img { width: 180px; margin-bottom: 20px; } /* Updated for Logo */
+        .auth-card img { width: 180px; margin-bottom: 20px; }
         .input-group { width: 100%; margin-bottom: 15px; text-align: left; }
         .input-group label { font-size: 12px; font-weight: 600; color: var(--text-light); margin-left: 5px; }
         .input-group input, .input-group select {
@@ -56,11 +69,10 @@
 
         /* --- HEADER --- */
         header {
-            background: var(--primary); padding: 20px 20px 45px; border-radius: 0 0 30px 30px;
+            background: var(--primary); padding: 25px 20px 45px; border-radius: 0 0 30px 30px;
             position: sticky; top: 0; z-index: 100; color: white; text-align: center;
         }
-        .header-logo { width: 130px; margin-bottom: 15px; } /* Added Logo Style */
-        .user-loc { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 500; margin-bottom: 15px; }
+        .user-loc { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 15px; }
         .search-bar {
             background: var(--white); border-radius: 15px; display: flex; align-items: center; padding: 12px 18px;
             box-shadow: var(--shadow);
@@ -167,15 +179,17 @@
     <!-- 2. MAIN APP -->
     <div id="main-app" style="display:none;">
         <header>
-            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" alt="Fast8bondhu Logo" class="header-logo">
+            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" alt="Fast8bondhu" class="header-logo">
+            
             <div class="user-loc" onclick="showAuth()">
                 <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
                 <span id="display-area">Pinning location...</span>
                 <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
             </div>
+
             <div class="search-bar">
                 <i class="fas fa-search"></i>
-                <input type="text" id="search-box" placeholder="Search vegetables, milk, snacks..." oninput="handleSearch()">
+                <input type="text" id="search-box" placeholder="Search for fresh items..." oninput="handleSearch()">
             </div>
         </header>
 
@@ -183,7 +197,7 @@
         <div id="view-home">
             <!-- DYNAMIC BANNER -->
             <div class="banner-box">
-                <img id="app-banner" src="" class="banner-img" alt="Special Offers">
+                <img id="app-banner" src="" class="banner-img" style="display: none;" onload="this.style.display='block'">
             </div>
 
             <div class="cat-scroll">
