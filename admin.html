@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8bondhu - Business Enterprise Console</title>
+    <title>Fast8bondhu - Admin Enterprise Console</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
         :root {
             --primary: #D32F2F; --accent: #FFC107; --bg: #F4F7F6;
             --white: #FFFFFF; --text-dark: #2D3436; --text-light: #636E72;
-            --shadow: 0 10px 20px rgba(0,0,0,0.08); --radius: 20px;
+            --shadow: 0 10px 20px rgba(0,0,0,0.08); --radius: 22px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -27,9 +27,9 @@
         /* --- LOGIN --- */
         #login-screen { position: fixed; inset: 0; background: var(--primary); display: flex; align-items: center; justify-content: center; z-index: 10000; }
         .login-card { background: var(--white); width: 90%; max-width: 380px; padding: 40px 30px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
-        .login-card h2 { color: var(--primary); font-weight: 800; font-size: 26px; margin-bottom: 10px; }
+        .brand-text { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+        .brand-text span { color: var(--accent); }
         .login-card input { width: 100%; padding: 15px; margin: 10px 0; border: 1.5px solid #eee; border-radius: 12px; font-size: 16px; transition: 0.3s; }
-        .login-card input:focus { border-color: var(--accent); }
         .login-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 12px; font-weight: 800; cursor: pointer; color: #000; margin-top: 15px; }
 
         /* --- APP STRUCTURE --- */
@@ -37,7 +37,7 @@
         header { background: var(--primary); color: var(--white); padding: 25px 20px 50px; border-radius: 0 0 35px 35px; position: sticky; top: 0; z-index: 100; }
         .header-top { display: flex; justify-content: space-between; align-items: center; }
 
-        /* --- DASHBOARD --- */
+        /* --- DASHBOARD STATS --- */
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; margin-top: -40px; }
         .stat-card { background: var(--white); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); position: relative; overflow: hidden; border: 1px solid #f0f0f0; }
         .stat-card.full { grid-column: span 2; background: linear-gradient(135deg, #D32F2F, #B71C1C); color: white; text-align: center; border: none; }
@@ -45,7 +45,6 @@
         .stat-card.full i { color: var(--accent); }
         .stat-card h2 { font-size: 22px; margin-top: 5px; }
         .stat-card span { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; }
-        .stat-card.full span { color: rgba(255,255,255,0.8); }
 
         /* --- TABS --- */
         .section { display: none; padding: 20px; padding-bottom: 120px; animation: slideUp 0.4s ease-out; }
@@ -57,17 +56,17 @@
         .form-group h4 { margin-bottom: 15px; color: var(--primary); border-left: 4px solid var(--accent); padding-left: 10px; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1.5px solid #eee; border-radius: 12px; font-family: inherit; font-size: 14px; }
         .btn-action { background: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; transition: 0.3s; }
-        .btn-action:active { transform: scale(0.97); }
 
         .item-card { background: var(--white); border-radius: 18px; padding: 15px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; border: 1px solid #f0f0f0; }
         .item-info { display: flex; align-items: center; gap: 15px; }
         .item-info img { width: 55px; height: 55px; border-radius: 12px; object-fit: cover; background: #f9f9f9; }
 
         /* --- ORDER CARDS --- */
-        .order-card { background: var(--white); border-radius: 22px; padding: 20px; margin-bottom: 18px; border-left: 8px solid var(--accent); box-shadow: var(--shadow); }
+        .order-card { background: var(--white); border-radius: 24px; padding: 20px; margin-bottom: 18px; border-left: 8px solid var(--accent); box-shadow: var(--shadow); }
         .order-header { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
-        .status-btn { padding: 10px 16px; border-radius: 10px; border: none; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-right: 5px; transition: 0.2s; }
+        .status-btn { padding: 10px 16px; border-radius: 10px; border: none; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-right: 5px; }
         .print-btn { background: #2d3436; color: white; padding: 10px 16px; border-radius: 10px; font-size: 11px; font-weight: 800; cursor: pointer; border: none; }
+        .rider-assign-box { background: #f8f9fa; padding: 12px; border-radius: 12px; margin-top: 10px; border: 1px solid #eee; }
 
         /* --- MODAL --- */
         #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; backdrop-filter: blur(4px); }
@@ -79,20 +78,19 @@
         .nav-item.active { color: var(--primary); font-weight: 800; }
         .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
 
-        .badge-area { background: #e3f2fd; color: #1976d2; padding: 6px 14px; border-radius: 25px; font-size: 11px; font-weight: 800; cursor: pointer; margin-right: 8px; margin-bottom: 8px; display: inline-block; }
+        .badge-area { background: #e3f2fd; color: #1976d2; padding: 8px 16px; border-radius: 25px; font-size: 11px; font-weight: 800; cursor: pointer; margin-right: 8px; margin-bottom: 8px; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN SCREEN -->
+    <!-- 1. LOGIN -->
     <div id="login-screen">
         <div class="login-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3724/3724720.png" width="70" alt="logo">
-            <h2>Fast8<span>bondhu</span></h2>
-            <p style="font-size: 12px; color: var(--text-light); margin-bottom: 25px;">Enterprise Management Console</p>
+            <div class="brand-text">Fast8<span>bondhu</span></div>
+            <p style="font-size: 12px; color: var(--text-light); margin-bottom: 25px;">Enterprise Admin Console</p>
             <input type="text" id="admin-id" placeholder="Admin ID">
             <input type="password" id="admin-pass" placeholder="Password">
-            <button class="login-btn" onclick="handleLogin()">LOGIN TO CONSOLE</button>
+            <button class="login-btn" onclick="handleLogin()">LOGIN TO SYSTEM</button>
         </div>
     </div>
 
@@ -100,12 +98,12 @@
     <div id="main-app">
         <header>
             <div class="header-top">
-                <div><span style="font-size: 12px; opacity: 0.8; font-weight: 600;">Fast8 Enterprise</span><h3>Dashboard</h3></div>
+                <div class="brand-text" style="color: white; font-size: 22px;">Fast8<span>bondhu</span></div>
                 <div onclick="location.reload()" style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer;"><i class="fas fa-sync-alt"></i></div>
             </div>
         </header>
 
-        <!-- DASHBOARD TAB -->
+        <!-- TAB: DASHBOARD -->
         <div id="tab-dash" class="section active">
             <div class="stats-grid">
                 <div class="stat-card full"><span>Today's Est. Net Profit</span><h2 id="stat-profit">₹0.00</h2></div>
@@ -114,18 +112,18 @@
                 <div class="stat-card"><i class="fas fa-truck-fast"></i><span>Delivery</span><h2 id="stat-delivery">₹0</h2></div>
                 <div class="stat-card"><i class="fas fa-wallet"></i><span>Expenses</span><h2 id="stat-expenses">₹0</h2></div>
             </div>
-            <div class="form-group" style="margin: 0 20px; border: 1px dashed var(--accent); background: #fffde7;"><p style="font-size: 13px; font-weight: 600;"><i class="fas fa-bell" style="color: var(--primary);"></i> <b>Stock Alert:</b> <span id="low-stock-count" style="color: var(--primary);">0</span> items are low in stock.</p></div>
+            <div class="form-group" style="margin: 0 20px; border: 1px dashed var(--accent); background: #fffde7;"><p style="font-size: 13px; font-weight: 600;"><i class="fas fa-bell" style="color: var(--primary);"></i> <b>Inventory Alert:</b> <span id="low-stock-count" style="color: var(--primary);">0</span> items are low.</p></div>
         </div>
 
-        <!-- PRODUCTS TAB -->
+        <!-- TAB: STOCK -->
         <div id="tab-stock" class="section">
             <div class="form-group">
                 <h4><i class="fas fa-plus-circle"></i> Add New Product</h4>
                 <input type="text" id="p-name" placeholder="Item Name">
-                <input type="text" id="p-img" placeholder="Image Direct Link (URL)">
+                <input type="text" id="p-img" placeholder="Image Link (URL)">
                 <div style="display:flex; gap:10px;">
-                    <input type="number" id="p-buy" placeholder="Buy Price ₹" oninput="calcMargin()">
-                    <input type="number" id="p-sell" placeholder="Sell Price ₹" oninput="calcMargin()">
+                    <input type="number" id="p-buy" placeholder="Buy ₹" oninput="calcMargin()">
+                    <input type="number" id="p-sell" placeholder="Sell ₹" oninput="calcMargin()">
                 </div>
                 <div id="p-margin-label" style="font-size:12px; color:green; font-weight:800; margin-bottom:12px;">MARGIN: ₹0</div>
                 <input type="number" id="p-stock" placeholder="Initial Stock Qty">
@@ -135,82 +133,73 @@
                     <option value="Snacks">Snacks</option>
                     <option value="Household">Household</option>
                 </select>
-                <button class="btn-action" onclick="saveProduct()">SAVE TO INVENTORY</button>
+                <button class="btn-action" onclick="saveProduct()">SAVE TO STOCK</button>
             </div>
             <div id="product-list"></div>
         </div>
 
-        <!-- ORDERS TAB -->
+        <!-- TAB: ORDERS -->
         <div id="tab-orders" class="section">
-            <h4 style="margin-bottom: 15px;">Today's Orders</h4>
+            <h4 style="margin-bottom: 15px;">Today's Processing</h4>
             <div id="order-list"></div>
         </div>
 
-        <!-- TEAM TAB -->
+        <!-- TAB: TEAM -->
         <div id="tab-team" class="section">
             <div class="form-group">
                 <h4><i class="fas fa-map-marked-alt"></i> Delivery Areas</h4>
-                <div style="display:flex; gap:10px;"><input type="text" id="area-name" placeholder="Area Name" style="margin-bottom:0;"><button class="btn-action" style="width:100px;" onclick="saveArea()">ADD</button></div>
+                <div style="display:flex; gap:10px;"><input type="text" id="area-name" placeholder="New Area Name" style="margin-bottom:0;"><button class="btn-action" style="width:100px;" onclick="saveArea()">ADD</button></div>
                 <div id="area-list" style="margin-top:15px; display: flex; flex-wrap: wrap;"></div>
             </div>
             <div class="form-group">
-                <h4><i class="fas fa-user-plus"></i> Register New Rider</h4>
-                <input type="text" id="dboy-name" placeholder="Rider Full Name">
-                <input type="number" id="dboy-phone" placeholder="Registered Phone">
-                <button class="btn-action" onclick="saveDBoy()">REGISTER RIDER</button>
+                <h4><i class="fas fa-user-plus"></i> Register Delivery Partner</h4>
+                <input type="text" id="dboy-name" placeholder="Full Name">
+                <input type="number" id="dboy-phone" placeholder="Phone Number">
+                <button class="btn-action" onclick="saveDBoy()">SAVE RIDER</button>
             </div>
             <div id="dboy-list"></div>
         </div>
 
-        <!-- ACCOUNTING TAB -->
+        <!-- TAB: FINANCE -->
         <div id="tab-acc" class="section">
             <div class="form-group" style="background:#fff9e6; border-color: orange;">
                 <h4><i class="fas fa-image"></i> App Banner Control</h4>
-                <input type="text" id="banner-url" placeholder="Paste New Banner URL">
+                <input type="text" id="banner-url" placeholder="Paste New Image URL">
                 <button class="btn-action" onclick="updateBanner()" style="background:orange; color:black;">UPDATE APP BANNER</button>
             </div>
 
-            <div class="form-group" style="background:#f0f4ff; border-color: #2196f3;">
-                <h4><i class="fas fa-ticket-alt"></i> Active Coupons</h4>
-                <div style="display:flex; gap:10px;"><input type="text" id="coupon-code" placeholder="CODE"><input type="number" id="coupon-amt" placeholder="Amount ₹"></div>
-                <button class="btn-action" onclick="addCoupon()" style="background:#2196f3;">CREATE COUPON</button>
-                <div id="coupon-list" style="margin-top:10px;"></div>
-            </div>
-
             <div class="form-group">
-                <h4><i class="fas fa-calendar-check"></i> Enterprise Profit Report</h4>
+                <h4><i class="fas fa-calendar-check"></i> Date-Wise Report</h4>
                 <div style="display:flex; gap:10px; margin-bottom:12px;"><input type="date" id="acc-start-date" style="margin:0;"><input type="date" id="acc-end-date" style="margin:0;"></div>
                 <button class="btn-action" onclick="fetchAdvancedReport()">GENERATE REPORT</button>
                 <div id="adv-report-box" style="display:none; margin-top:15px; background:#f9f9f9; padding:20px; border-radius:15px; border:1px solid #eee;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Total Sales:</span><b id="adv-sales">₹0</b></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Period Sales:</span><b id="adv-sales">₹0</b></div>
                     <div style="display:flex; justify-content:space-between; border-top:1px solid #ddd; padding-top:8px;"><span>Net Profit:</span><b id="adv-profit" style="color:green; font-size:18px;">₹0</b></div>
                 </div>
             </div>
 
             <div class="form-group">
-                <h4>Log Direct Expense</h4>
-                <input type="text" id="exp-reason" placeholder="Reason (Petrol, Rent, etc.)"><input type="number" id="exp-amt" placeholder="Amount ₹">
+                <h4>Log Extra Expense</h4>
+                <input type="text" id="exp-reason" placeholder="Petrol, Rent, etc."><input type="number" id="exp-amt" placeholder="Amount ₹">
                 <button class="btn-action" onclick="saveExpense()">LOG EXPENSE</button>
             </div>
-            <button class="btn-action" style="background:#2d3436;" onclick="downloadReport()">EXPORT ORDER DATA (CSV)</button>
         </div>
 
-        <!-- EDIT MODAL -->
+        <!-- MODAL -->
         <div id="edit-modal">
             <div class="modal-card">
-                <h4 style="margin-bottom:15px;">Edit Product</h4><input type="hidden" id="edit-id">
+                <h4>Edit Product</h4><input type="hidden" id="edit-id">
                 <input type="text" id="edit-name" placeholder="Name">
                 <div style="display:flex; gap:10px;"><input type="number" id="edit-buy" placeholder="Buy ₹"><input type="number" id="edit-sell" placeholder="Sell ₹"></div>
-                <input type="number" id="edit-stock" placeholder="Stock Quantity">
+                <input type="number" id="edit-stock" placeholder="Stock Qty">
                 <div style="display:flex; gap:10px; margin-top:10px;"><button class="btn-action" onclick="updateProduct()">UPDATE</button><button class="btn-action" style="background:#999" onclick="closeEditModal()">CANCEL</button></div>
             </div>
         </div>
 
-        <!-- NAVIGATION -->
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('tab-dash', this)"><i class="fas fa-th-large"></i>Dash</div>
             <div class="nav-item" onclick="switchTab('tab-stock', this)"><i class="fas fa-boxes-stacked"></i>Stock</div>
-            <div class="nav-item" onclick="switchTab('tab-orders', this)"><i class="fas fa-bag-shopping"></i>Orders</div>
+            <div class="nav-item" onclick="switchTab('tab-orders', this)"><i class="fas fa-receipt"></i>Orders</div>
             <div class="nav-item" onclick="switchTab('tab-team', this)"><i class="fas fa-users-gear"></i>Team</div>
             <div class="nav-item" onclick="switchTab('tab-acc', this)"><i class="fas fa-file-invoice-dollar"></i>Finance</div>
         </nav>
@@ -224,7 +213,8 @@
             projectId: "fast8delivery-business",
             storageBucket: "fast8delivery-business.firebasestorage.app",
             messagingSenderId: "968616663472",
-            appId: "1:968616663472:web:5ef89accec468344cd9e75"
+            appId: "1:968616663472:web:5ef89accec468344cd9e75",
+            measurementId: "G-WFHEXCC70P"
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
@@ -236,28 +226,29 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 initDataSync();
-            } else { alert("ACCESS DENIED: Wrong Credentials!"); }
+            } else { alert("Login Failed!"); }
         }
 
         function switchTab(tabId, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(tabId).classList.add('active'); el.classList.add('active');
-            window.scrollTo(0,0);
         }
 
-        // STOCK ENGINE
+        // MARGIN
         function calcMargin() {
             const b = parseFloat(document.getElementById('p-buy').value) || 0, s = parseFloat(document.getElementById('p-sell').value) || 0;
             document.getElementById('p-margin-label').innerText = `MARGIN: ₹${(s - b).toFixed(2)}`;
         }
 
+        // CRUD
         async function saveProduct() {
             const b = parseFloat(document.getElementById('p-buy').value), s = parseFloat(document.getElementById('p-sell').value);
             const data = { name: document.getElementById('p-name').value, img: document.getElementById('p-img').value, buy: b, sell: s, stock: parseInt(document.getElementById('p-stock').value), cat: document.getElementById('p-cat').value, margin: s - b, timestamp: Date.now() };
-            if(!data.name || isNaN(s)) return alert("Missing Product Details!");
-            await db.collection("products").add(data); alert("Product Added Successfully!");
+            if(!data.name || isNaN(s)) return alert("Fill Info!");
+            await db.collection("products").add(data);
             ['p-name','p-img','p-buy','p-sell','p-stock'].forEach(id => document.getElementById(id).value = '');
+            alert("Added!");
         }
 
         function openEdit(id, n, b, s, st) {
@@ -266,14 +257,12 @@
             document.getElementById('edit-stock').value = st; document.getElementById('edit-modal').style.display = 'flex';
         }
         function closeEditModal() { document.getElementById('edit-modal').style.display = 'none'; }
-
         async function updateProduct() {
             const id = document.getElementById('edit-id').value, b = parseFloat(document.getElementById('edit-buy').value), s = parseFloat(document.getElementById('edit-sell').value);
             await db.collection("products").doc(id).update({ name: document.getElementById('edit-name').value, buy: b, sell: s, stock: parseInt(document.getElementById('edit-stock').value), margin: s - b });
             alert("Updated!"); closeEditModal();
         }
 
-        // TEAM ENGINE
         async function saveArea() {
             const name = document.getElementById('area-name').value.trim();
             if(name) { await db.collection("areas").add({ name }); document.getElementById('area-name').value = ''; }
@@ -281,41 +270,36 @@
 
         async function saveDBoy() {
             const name = document.getElementById('dboy-name').value, phone = document.getElementById('dboy-phone').value;
-            if(name && phone) { 
-                // Phone is stored as a String for strict assignment
-                await db.collection("deliveryBoys").add({ name, phone: String(phone), cashInHand: 0 }); 
-                document.getElementById('dboy-name').value = ''; 
-                document.getElementById('dboy-phone').value = ''; 
-            }
+            if(name && phone) { await db.collection("deliveryBoys").add({ name, phone: String(phone), cashInHand: 0 }); document.getElementById('dboy-name').value = ''; document.getElementById('dboy-phone').value = ''; }
         }
 
-        async function resetCash(id) { if(confirm("Confirm cash settlement? Balance will become ₹0.")) await db.collection("deliveryBoys").doc(id).update({ cashInHand: 0 }); }
+        async function resetCash(id) { if(confirm("Cash settled?")) await db.collection("deliveryBoys").doc(id).update({ cashInHand: 0 }); }
 
         // ORDERS & ASSIGNMENT
         async function assign(id, ph) { 
-            if(!ph) return alert("Select a Rider First!"); 
+            if(!ph) return alert("Select Rider!"); 
             await db.collection("orders").doc(id).update({ assignedTo: String(ph), status: 'Out' }); 
-            alert("Rider Assigned & Order Shipped!"); 
+            alert("Assigned!"); 
         }
         async function updateOrder(id, s) { await db.collection("orders").doc(id).update({ status: s }); }
 
         function getRiderDropdown(oid, curr) {
             let h = '<option value="">Select Rider</option>';
             window.allRiders.forEach(r => h += `<option value="${r.phone}" ${String(curr)==String(r.phone)?'selected':''}>${r.name}</option>`);
-            return `<div class="rider-assign-box"><span style="font-size:11px;font-weight:700">ASSIGN RIDER:</span><div style="display:flex;gap:5px;margin-top:5px"><select id="sel-${oid}" style="flex:1;padding:8px;border-radius:10px;font-size:12px;">${h}</select><button onclick="assign('${oid}', document.getElementById('sel-${oid}').value)" style="background:var(--accent);border:none;padding:8px 15px;border-radius:10px;font-weight:800;font-size:11px;cursor:pointer;">ASSIGN</button></div></div>`;
+            return `<div class="rider-assign-box"><span style="font-size:11px;font-weight:700;color:#555">ASSIGN RIDER:</span><div style="display:flex;gap:5px;margin-top:5px"><select id="sel-${oid}" style="flex:1;padding:8px;border-radius:10px;font-size:12px;">${h}</select><button onclick="assign('${oid}', document.getElementById('sel-${oid}').value)" style="background:var(--accent);border:none;padding:8px 15px;border-radius:10px;font-weight:800;font-size:11px;cursor:pointer;">ASSIGN</button></div></div>`;
         }
 
         function printInvoice(id) {
             db.collection("orders").doc(id).get().then(doc => {
                 const o = doc.data(), w = window.open('', '', 'width=600,height=850');
-                w.document.write(`<html><head><title>Fast8bondhu Invoice</title><style>body{font-family:sans-serif;padding:30px;color:#333;}h2{text-align:center;color:#D32F2F;margin-bottom:5px;}p{margin:5px 0;font-size:14px;}.box{border:2px solid #eee;padding:25px;border-radius:15px;}.row{display:flex;justify-content:space-between;margin:10px 0; border-bottom:1px dashed #eee; padding:5px 0;}.total{font-weight:bold;font-size:18px;color:#000;border-top:2px solid #eee;padding-top:10px;}</style></head><body><div class="box"><h2>FAST8BONDHU</h2><p style="text-align:center;font-size:10px;text-transform:uppercase;">Apnar Pashei Shop Somoy</p><hr><p>Order ID: #${id.slice(-5)}</p><p>Date: ${new Date(o.timestamp).toLocaleString()}</p><hr><p><b>Customer:</b> ${o.customerName}</p><p><b>Phone:</b> ${o.customerPhone}</p><p><b>Area:</b> ${o.address}</p><hr><p><b>BILL DETAILS:</b></p><p>${o.itemsSummary}</p><hr><div class="row"><span>Subtotal:</span><span>₹${o.subtotal || 0}</span></div><div class="row"><span>Delivery:</span><span>₹${o.deliveryCharge || 0}</span></div>${o.discountAmt ? `<div class="row" style="color:green;"><span>Discount:</span><span>-₹${o.discountAmt}</span></div>` : ''}<div class="row total"><span>Total Payable:</span><span>₹${o.total}</span></div><p style="text-align:center;margin-top:30px;font-weight:bold;">Thank you for bazar with us!</p></div><script>window.print();setTimeout(()=>window.close(),800);<\/script></body></html>`);
+                w.document.write(`<html><head><title>Fast8bondhu Invoice</title><style>body{font-family:sans-serif;padding:30px;color:#333;}h2{text-align:center;color:#D32F2F;}.box{border:2px solid #eee;padding:25px;border-radius:15px;}.row{display:flex;justify-content:space-between;margin:10px 0; border-bottom:1px dashed #eee; padding:5px 0;}.total{font-weight:bold;font-size:18px;color:#000;padding-top:10px;}</style></head><body><div class="box"><h2>FAST8BONDHU</h2><p style="text-align:center;font-size:10px;">Apnar Pashei Shop Somoy</p><hr><p>Order: #${id.slice(-5)}</p><p>Date: ${new Date(o.timestamp).toLocaleString()}</p><hr><p><b>Customer:</b> ${o.customerName}</p><p><b>Phone:</b> ${o.customerPhone}</p><p><b>Area:</b> ${o.address}</p><hr><p><b>Bill Summary:</b></p><p>${o.itemsSummary}</p><hr><div class="row"><span>Subtotal:</span><span>₹${o.subtotal || 0}</span></div><div class="row"><span>Delivery:</span><span>₹${o.deliveryCharge || 0}</span></div><div class="row total"><span>Total Payable:</span><span>₹${o.total}</span></div><p style="text-align:center;margin-top:30px;">Thank you for shopping!</p></div><script>window.print();setTimeout(()=>window.close(),1000);<\/script></body></html>`);
             });
         }
 
-        // FINANCE ENGINE
+        // FINANCE
         async function fetchAdvancedReport() {
             const startStr = document.getElementById('acc-start-date').value, endStr = document.getElementById('acc-end-date').value;
-            if(!startStr || !endStr) return alert("Select Dates First!");
+            if(!startStr || !endStr) return alert("Select Dates!");
             const start = new Date(startStr).setHours(0,0,0,0), end = new Date(endStr).setHours(23,59,59,999);
             const snap = await db.collection("orders").where("timestamp", ">=", start).where("timestamp", "<=", end).get();
             let s = 0, m = 0, d = 0;
@@ -327,22 +311,22 @@
             document.getElementById('adv-report-box').style.display = 'block';
         }
 
-        // REAL-TIME SYNC
+        // SYNC ENGINE
         function initDataSync() {
             db.collection("areas").onSnapshot(snap => { const l = document.getElementById('area-list'); l.innerHTML = ''; snap.forEach(doc => l.innerHTML += `<span class="badge-area" onclick="deleteDoc('areas','${doc.id}')">${doc.data().name} <i class="fas fa-times"></i></span>`); });
-            db.collection("deliveryBoys").onSnapshot(snap => { window.allRiders = []; const l = document.getElementById('dboy-list'); l.innerHTML = '<h4>Active Delivery Boys</h4>'; snap.forEach(doc => { const b = doc.data(); window.allRiders.push(b); l.innerHTML += `<div class="item-card"><div class="item-info"><b>${b.name}</b><br><span style="font-size:11px">Ph: ${b.phone} | Cash in Hand: <b style="color:green;">₹${b.cashInHand || 0}</b></span></div><div style="text-align:right"><button onclick="resetCash('${doc.id}')" style="font-size:10px;background:green;color:white;border:none;padding:8px 15px;border-radius:10px;font-weight:800;cursor:pointer;">Reset</button><i class="fas fa-trash" style="color:red;margin-left:15px;cursor:pointer" onclick="deleteDoc('deliveryBoys','${doc.id}')"></i></div></div>`; }); });
-            db.collection("products").orderBy("timestamp", "desc").onSnapshot(snap => { const l = document.getElementById('product-list'); l.innerHTML = '<h4>Inventory Hub</h4>'; let low = 0; snap.forEach(doc => { const p = doc.data(); if(p.stock <= 5) low++; l.innerHTML += `<div class="item-card"><div class="item-info"><img src="${p.img}"><div><b>${p.name}</b><br><span style="font-size:11px">Stock: ${p.stock <= 5 ? '<b style="color:red">'+p.stock+'</b>' : p.stock} | Margin: ₹${p.margin.toFixed(2)}</span></div></div><div style="text-align:right"><b>₹${p.sell}</b><br><i class="fas fa-edit" style="color:blue;margin-right:15px;cursor:pointer" onclick="openEdit('${doc.id}','${p.name}',${p.buy},${p.sell},${p.stock})"></i><i class="fas fa-trash" style="color:red;cursor:pointer" onclick="deleteDoc('products','${doc.id}')"></i></div></div>`; }); document.getElementById('low-stock-count').innerText = low; });
+            db.collection("deliveryBoys").onSnapshot(snap => { window.allRiders = []; const l = document.getElementById('dboy-list'); l.innerHTML = '<h4>Riders List</h4>'; snap.forEach(doc => { const b = doc.data(); window.allRiders.push(b); l.innerHTML += `<div class="item-card"><div class="item-info"><b>${b.name}</b><br><span style="font-size:11px">Ph: ${b.phone} | Cash: <b style="color:green;">₹${b.cashInHand || 0}</b></span></div><button onclick="resetCash('${doc.id}')" style="font-size:10px;background:green;color:white;border:none;padding:8px 15px;border-radius:10px;font-weight:800;cursor:pointer;">Reset</button></div>`; }); });
+            db.collection("products").orderBy("timestamp", "desc").onSnapshot(snap => { const l = document.getElementById('product-list'); l.innerHTML = '<h4>Stock Inventory</h4>'; let low = 0; snap.forEach(doc => { const p = doc.data(); if(p.stock <= 5) low++; l.innerHTML += `<div class="item-card"><div class="item-info"><img src="${p.img}"><div><b>${p.name}</b><br><span style="font-size:11px">Stock: ${p.stock <= 5 ? '<b style="color:red">'+p.stock+'</b>' : p.stock} | Margin: ₹${p.margin.toFixed(2)}</span></div></div><div style="text-align:right"><b>₹${p.sell}</b><br><i class="fas fa-edit" style="color:blue;margin-right:15px;cursor:pointer" onclick="openEdit('${doc.id}','${p.name}',${p.buy},${p.sell},${p.stock})"></i><i class="fas fa-trash" style="color:red;cursor:pointer" onclick="deleteDoc('products','${doc.id}')"></i></div></div>`; }); document.getElementById('low-stock-count').innerText = low; });
             db.collection("orders").orderBy("timestamp", "desc").onSnapshot(snap => { const list = document.getElementById('order-list'); list.innerHTML = ''; let s = 0, ord = 0, d = 0, m = 0, today = new Date().toDateString(); snap.forEach(doc => { const o = doc.data(); if(new Date(o.timestamp).toDateString() === today) { if(o.status !== 'Cancelled'){ s += o.total; ord++; d += (o.deliveryCharge || 0); m += (o.totalMargin || 0); } list.innerHTML += `<div class="order-card"><div class="order-header"><b>#${doc.id.slice(-5)}</b><span style="color:var(--primary); font-weight:800;">₹${o.total}</span></div><div style="font-size:12px; margin-bottom:12px;"><i class="fas fa-user-circle"></i> ${o.customerName} | ${o.customerPhone}<br><i class="fas fa-location-dot"></i> ${o.address}<br><i class="fas fa-box-open"></i> ${o.itemsSummary}</div>${o.status !== 'Delivered' ? getRiderDropdown(doc.id, o.assignedTo) : `<span class="badge-area" style="background:#e8f5e9;color:#2e7d32">DELIVERED ✔</span>`}<div style="margin-top:12px; display:flex; gap:5px;">${o.status !== 'Delivered' ? `<button class="status-btn" style="background:#eee" onclick="updateOrder('${doc.id}','Packed')">PACK</button><button class="status-btn" style="background:var(--primary);color:white;" onclick="updateOrder('${doc.id}','Delivered')">FINISH</button>` : ''}<button class="print-btn" onclick="printInvoice('${doc.id}')"><i class="fas fa-print"></i> BILL</button></div></div>`; } }); document.getElementById('stat-orders').innerText = ord; document.getElementById('stat-sales').innerText = '₹' + s.toFixed(2); document.getElementById('stat-delivery').innerText = '₹' + d.toFixed(2); updateDashboardProfit(m, d); });
             db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) document.getElementById('banner-url').value = doc.data().url; });
             db.collection("coupons").onSnapshot(snap => { const l = document.getElementById('coupon-list'); l.innerHTML = ''; snap.forEach(doc => l.innerHTML += `<span class="badge-area" style="background:#e1f5fe;border:1px solid #2196f3;" onclick="deleteDoc('coupons','${doc.id}')">${doc.id} (₹${doc.data().amt}) x</span>`); });
         }
 
         async function updateDashboardProfit(m, d) { const expSnap = await db.collection("expenses").where("date", "==", new Date().toDateString()).get(); let e = 0; expSnap.forEach(doc => e += doc.data().amt); document.getElementById('stat-expenses').innerText = '₹' + e; document.getElementById('stat-profit').innerText = '₹' + (m + d - e).toFixed(2); }
-        async function deleteDoc(c, i) { if(confirm("Confirm Delete? Data will be lost forever.")) await db.collection(c).doc(i).delete(); }
+        async function deleteDoc(c, i) { if(confirm("Permanently Delete?")) await db.collection(c).doc(i).delete(); }
         async function saveExpense() { const r = document.getElementById('exp-reason').value, a = parseFloat(document.getElementById('exp-amt').value); if(r && a) { await db.collection("expenses").add({ reason: r, amt: a, date: new Date().toDateString(), timestamp: Date.now() }); alert("Expense Logged!"); document.getElementById('exp-reason').value=''; document.getElementById('exp-amt').value=''; } }
-        async function updateBanner() { const url = document.getElementById('banner-url').value; if(url) { await db.collection("settings").doc("banner").set({ url }); alert("App Banner Updated!"); } }
-        async function addCoupon() { const c = document.getElementById('coupon-code').value.toUpperCase(), a = parseFloat(document.getElementById('coupon-amt').value); if(c && a) { await db.collection("coupons").doc(c).set({ code: c, amt: a, active: true }); alert("Coupon Active!"); document.getElementById('coupon-code').value=''; document.getElementById('coupon-amt').value=''; } }
-        function downloadReport() { let csv = "ID,Customer,Phone,Amount,Status\n"; db.collection("orders").get().then(snap => { snap.forEach(doc => { const o = doc.data(); csv += `${doc.id},${o.customerName},${o.customerPhone},${o.total},${o.status}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'Fast8_Orders.csv'; link.click(); }); }
+        async function updateBanner() { const url = document.getElementById('banner-url').value; if(url) { await db.collection("settings").doc("banner").set({ url }); alert("Banner Updated!"); } }
+        async function addCoupon() { const c = document.getElementById('coupon-code').value.toUpperCase(), a = parseFloat(document.getElementById('coupon-amt').value); if(c && a) { await db.collection("coupons").doc(c).set({ code: c, amt: a, active: true }); alert("Coupon Created!"); document.getElementById('coupon-code').value=''; document.getElementById('coupon-amt').value=''; } }
+        function downloadReport() { let csv = "ID,Customer,Phone,Amount,Status\n"; db.collection("orders").get().then(snap => { snap.forEach(doc => { const o = doc.data(); csv += `${doc.id},${o.customerName},${o.customerPhone},${o.total},${o.status}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'Fast8_Report.csv'; link.click(); }); }
     </script>
 </body>
 </html>
