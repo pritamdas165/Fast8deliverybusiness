@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fast8bondhu - Grocery & More</title>
     
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
@@ -30,7 +28,13 @@
         .loader { width: 45px; height: 45px; border: 5px solid #eee; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- AUTH SCREEN --- */
+        /* --- PROMPT 2: Modern Status Pill CSS --- */
+        .status-pill { padding: 6px 12px; border-radius: 10px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .status-Pending { background: #FFF4E5; color: #B7791F; }
+        .status-Packed { background: #EBF8FF; color: #2B6CB0; }
+        .status-Out { background: #E6FFFA; color: #2C7A7B; }
+        .status-Delivered { background: #F0FFF4; color: #276749; }
+
         #auth-screen { position: fixed; inset: 0; background: var(--white); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
         .brand-text { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 5px; text-align: center; }
         .brand-text span { color: var(--accent); }
@@ -39,7 +43,6 @@
         .input-box input, .input-box select { width: 100%; padding: 16px; border-radius: 16px; border: 1.5px solid #eee; font-size: 16px; margin-top: 6px; background: #F9FAFB; }
         .btn-main { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 18px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(211,47,47,0.2); transition: 0.3s; }
 
-        /* --- HEADER --- */
         header { background: var(--white); padding: 15px 20px 25px; position: sticky; top: 0; z-index: 1000; border-radius: 0 0 30px 30px; box-shadow: var(--shadow-sm); }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .loc-info { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
@@ -47,7 +50,6 @@
         .search-container { background: #F0F2F5; border-radius: 16px; display: flex; align-items: center; padding: 12px 18px; border: 1px solid #E8E8E8; }
         .search-container input { border: none; background: transparent; width: 100%; margin-left: 10px; font-size: 14px; color: var(--text-dark); }
 
-        /* --- DASHBOARD --- */
         .banner-container { padding: 15px 20px 0; }
         .banner-card { width: 100%; height: 160px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); display: none; }
         .banner-card img { width: 100%; height: 100%; object-fit: cover; }
@@ -60,26 +62,29 @@
         .p-card { background: var(--white); border-radius: var(--radius-md); padding: 12px; position: relative; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
         .p-img-box { text-align: center; margin-bottom: 10px; height: 110px; position: relative; }
         .p-img-box img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* --- PROMPT 6: p-tag CSS Fix --- */
         .p-tag { position: absolute; top: 10px; left: 10px; background: var(--primary); color: white; font-size: 8px; font-weight: 900; padding: 4px 8px; border-radius: 6px; z-index: 10; letter-spacing: 0.5px; }
-
         .p-card h4 { font-size: 14px; height: 38px; overflow: hidden; line-height: 1.3; margin-bottom: 5px; font-weight: 600; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
         .p-price { font-weight: 800; font-size: 16px; }
         .add-btn-premium { background: white; color: #27ae60; border: 1.5px solid #27ae60; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 11px; cursor: pointer; }
 
-        /* --- ORDER HISTORY & TRACKING --- */
-        .order-history-card { background: white; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); }
+        .profile-header { background: white; padding: 40px 20px; border-radius: 0 0 35px 35px; text-align: center; box-shadow: var(--shadow-sm); }
+        .user-avatar { width: 85px; height: 85px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px; border: 3px solid white; box-shadow: var(--shadow-sm); }
+        .stats-row { display: flex; justify-content: space-around; margin: 20px 0; }
+        .stat-item { text-align: center; background: #f9f9f9; padding: 10px 20px; border-radius: 15px; width: 45%; }
+        .stat-item b { display: block; font-size: 18px; color: var(--primary); }
+        .stat-item span { font-size: 11px; color: gray; font-weight: 600; }
+        .menu-item-premium { background: white; padding: 18px; border-radius: 18px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; border: 1px solid #f0f0f0; cursor: pointer; }
+
+        .order-history-card { background: white; border-radius: 22px; padding: 20px; margin-bottom: 15px; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); }
         .tracking-timeline { display: flex; justify-content: space-between; margin: 20px 0; position: relative; padding: 10px 0; }
         .tracking-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2.5px; background: #eee; z-index: 1; }
-        .step { width: 25%; text-align: center; position: relative; z-index: 2; }
+        .step { position: relative; z-index: 2; text-align: center; width: 25%; }
         .dot { width: 14px; height: 14px; background: #ddd; border: 3px solid white; border-radius: 50%; margin: 0 auto 8px; transition: 0.4s; }
         .step.active .dot { background: #27ae60; transform: scale(1.2); box-shadow: 0 0 10px rgba(39,174,96,0.3); }
         .step span { font-size: 9px; font-weight: 700; color: gray; }
         .step.active span { color: #27ae60; }
 
-        /* --- CART & FLOATING --- */
         #floating-cart-bar { position: fixed; bottom: 95px; left: 15px; right: 15px; background: #27ae60; color: white; padding: 15px 20px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 2500; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3); }
         #cart-sheet { position: fixed; bottom: 0; left: 0; width: 100%; height: 85%; background: var(--white); z-index: 3000; border-radius: 35px 35px 0 0; box-shadow: 0 -15px 40px rgba(0,0,0,0.15); transform: translateY(100%); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         #cart-sheet.active { transform: translateY(0); }
@@ -148,11 +153,13 @@
             <div class="product-grid" id="product-grid"></div>
         </main>
 
+        <!-- VIEW: DEDICATED ORDERS TAB -->
         <main id="view-orders" style="display:none; padding: 20px 20px 150px;">
-            <h3 style="margin-bottom: 20px; font-weight: 800; font-size: 22px;">Track Orders</h3>
+            <div class="section-header" style="padding-left:0;"><h3>Track Orders</h3><i class="fas fa-clock-rotate-left"></i></div>
             <div id="order-history-list"></div>
         </main>
 
+        <!-- VIEW: PROFILE TAB -->
         <main id="view-profile" style="display:none;">
             <div class="profile-header">
                 <div class="user-avatar"><i class="fas fa-user-ninja"></i></div>
@@ -166,10 +173,12 @@
             <div style="padding: 20px;">
                 <div class="menu-item-premium" onclick="window.open('tel:919330515650')"><i class="fas fa-headset"></i><b>Call Support</b></div>
                 <div class="menu-item-premium" onclick="window.open('https://wa.me/919330515650')"><i class="fab fa-whatsapp"></i><b>WhatsApp Chat</b></div>
+                <!-- PROMPT 1: logoutUser() -->
                 <button class="btn-main" style="background:white; color:var(--primary); border:1.5px solid var(--primary); margin-top:20px;" onclick="logoutUser()">LOGOUT SESSION</button>
             </div>
         </main>
 
+        <!-- FLOATING CART -->
         <div id="floating-cart-bar" onclick="toggleCartSheet(true)">
             <div style="display: flex; align-items: center; gap: 12px;"><i class="fas fa-shopping-basket"></i><div><span id="float-qty">0 ITEMS</span><small id="float-total" style="display: block;">₹0</small></div></div>
             <div style="font-weight: 800;">VIEW CART <i class="fas fa-chevron-right"></i></div>
@@ -209,7 +218,14 @@
     </div>
 
     <script>
-        // --- CONFIG & STATE ---
+        // --- PROMPT 6: Firestore Error Handling Wrappers ---
+        const safeSync = (collection, callback) => {
+            return db.collection(collection).onSnapshot(callback, (err) => {
+                alert("Network error. Please refresh.");
+                console.error("Firestore sync error:", err);
+            });
+        };
+
         const firebaseConfig = {
             apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
             authDomain: "fast8delivery-business.firebaseapp.com",
@@ -225,7 +241,6 @@
         let user = JSON.parse(localStorage.getItem('fast8_customer')) || null;
         let allProducts = [], cart = [], appliedDiscount = 0, activeCoupon = "";
 
-        // INIT
         window.onload = async () => {
             await fetchAreas();
             if(!user) { document.getElementById('loading-overlay').style.display='none'; document.getElementById('auth-screen').style.display='flex'; } 
@@ -233,10 +248,12 @@
         };
 
         async function fetchAreas() {
-            const snap = await db.collection('areas').get();
-            const select = document.getElementById('user-area');
-            select.innerHTML = '<option value="">Choose neighborhood</option>';
-            snap.forEach(doc => select.innerHTML += `<option value="${doc.data().name}">${doc.data().name}</option>`);
+            try {
+                const snap = await db.collection('areas').get();
+                const select = document.getElementById('user-area');
+                select.innerHTML = '<option value="">Choose neighborhood</option>';
+                snap.forEach(doc => select.innerHTML += `<option value="${doc.data().name}">${doc.data().name}</option>`);
+            } catch(e) { alert("Network error. Please refresh."); }
         }
 
         function initApp() {
@@ -247,8 +264,19 @@
             document.getElementById('p-name').innerText = user.name;
             document.getElementById('p-phone').innerText = "+91 " + user.phone;
 
-            db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) { document.getElementById('app-banner').src = doc.data().url; document.querySelector('.banner-card').style.display = 'block'; } });
-            db.collection("products").onSnapshot(snap => { allProducts = []; snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() })); renderProducts(allProducts); });
+            safeSync("settings", (doc) => {
+                const bannerData = doc.docs.find(d => d.id === "banner");
+                if(bannerData && bannerData.data().url) {
+                    document.getElementById('app-banner').src = bannerData.data().url;
+                    document.querySelector('.banner-card').style.display = 'block';
+                }
+            });
+
+            safeSync("products", (snap) => {
+                allProducts = [];
+                snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
+                renderProducts(allProducts);
+            });
             syncOrderHistory();
         }
 
@@ -268,17 +296,10 @@
             });
         }
 
-        /* --- PROMPT 4: Stock Validation Fix --- */
         function addToCart(id) {
             const p = allProducts.find(prod => prod.id === id);
             const inCart = cart.find(item => item.id === id);
-            const currentQty = inCart ? inCart.qty : 0;
-
-            if (currentQty + 1 > p.stock) {
-                alert("Out of stock! Only " + p.stock + " items available.");
-                return;
-            }
-
+            if ((inCart ? inCart.qty : 0) + 1 > p.stock) return alert("Only " + p.stock + " items in stock.");
             if(inCart) inCart.qty++; else cart.push({...p, qty: 1});
             updateCartUI();
         }
@@ -286,137 +307,104 @@
         function updateQty(i, delta) {
             const item = cart[i];
             const p = allProducts.find(prod => prod.id === item.id);
-            
-            if (delta > 0 && item.qty + 1 > p.stock) {
-                alert("Only " + p.stock + " items in stock.");
-                return;
-            }
-
+            if (delta > 0 && item.qty + 1 > p.stock) return alert("Stock limit reached!");
             item.qty += delta;
             if(item.qty <= 0) cart.splice(i, 1);
             updateCartUI();
         }
 
-        /* --- PROMPT 3: Prevent Negative Grand Total --- */
         function updateCartUI() {
             const list = document.getElementById('cart-items-list'); list.innerHTML = '';
             let sub = 0, count = 0, marginValue = 0;
-            
             cart.forEach((item, i) => {
-                sub += (item.sell * item.qty); 
-                count += item.qty; 
-                /* --- PROMPT 1: Margin Undefined Fix --- */
+                sub += (item.sell * item.qty); count += item.qty; 
                 marginValue += ((item.margin || 0) * item.qty);
-                
                 list.innerHTML += `<div class="cart-item-row"><div style="flex:1;"><b>${item.name}</b><br><small>₹${item.sell}</small></div><div class="cart-qty-ctrl"><i class="fas fa-minus" onclick="updateQty(${i},-1)"></i><span>${item.qty}</span><i class="fas fa-plus" onclick="updateQty(${i},1)"></i></div><div style="width:60px;text-align:right;font-weight:700;">₹${item.sell*item.qty}</div></div>`;
             });
-
             const km = parseFloat(document.getElementById('input-km').value) || 1;
-            /* --- PROMPT 3: Proper Delivery Charge (Exact KM) --- */
             let delFee = (km <= 3) ? 30 : 30 + ((km - 3) * 10);
             
-            // Fix: Prevent Negative Total
+            /* --- PROMPT 3: Prevent Negative Grand Total --- */
             let total = Math.max((sub + delFee) - appliedDiscount, 0);
             
             window.currentOrderCalc = { subtotal: sub, delivery: delFee, total: total, margin: marginValue, distance: km };
-
             document.getElementById('bill-sub').innerText = '₹' + sub;
             document.getElementById('bill-delivery').innerText = '₹' + delFee;
-            document.getElementById('bill-grand').innerText = '₹' + window.currentOrderCalc.total;
-
+            document.getElementById('bill-grand').innerText = '₹' + total;
             const bar = document.getElementById('floating-cart-bar');
-            if(count > 0) { bar.style.display='flex'; document.getElementById('float-qty').innerText = count + ' ITEMS'; document.getElementById('float-total').innerText = 'Total: ₹' + window.currentOrderCalc.total; }
+            if(count > 0) { bar.style.display='flex'; document.getElementById('float-qty').innerText = count + ' ITEMS'; document.getElementById('float-total').innerText = 'Total: ₹' + total; }
             else { bar.style.display='none'; toggleCartSheet(false); }
         }
 
-        /* --- PROMPT 2: Safe Coupon Expiry Check --- */
         async function applyCoupon() {
             const code = document.getElementById('coupon-input').value.toUpperCase();
             if(!code) return;
-            
-            const doc = await db.collection("coupons").doc(code).get();
-            const now = Date.now();
-
-            if(doc.exists) {
-                const c = doc.data();
-                const subtotal = window.currentOrderCalc.subtotal;
-                
-                // Safe check for Firestore Timestamp or Number
-                const expiryTime = (c.expiry && c.expiry.toMillis) ? c.expiry.toMillis() : (c.expiry || 0);
-
-                if (!c.active || c.used) {
-                    alert("Coupon inactive or used.");
-                } else if (subtotal < (c.minOrder || 0)) {
-                    alert("Min order ₹" + c.minOrder + " required.");
-                } else if (expiryTime > 0 && now > expiryTime) {
-                    alert("Coupon expired.");
-                } else {
-                    appliedDiscount = c.amt; activeCoupon = code;
-                    document.getElementById('coupon-display').style.display='flex';
-                    document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
-                    alert("Applied!");
-                    updateCartUI();
-                    return;
-                }
-            } else { alert("Invalid Code"); }
-            appliedDiscount = 0; activeCoupon = "";
-            document.getElementById('coupon-display').style.display='none';
-            updateCartUI();
+            try {
+                const doc = await db.collection("coupons").doc(code).get();
+                const now = Date.now();
+                if(doc.exists) {
+                    const c = doc.data();
+                    const expiry = (c.expiry && c.expiry.toMillis) ? c.expiry.toMillis() : (c.expiry || 0);
+                    if (!c.active || c.used) alert("Coupon inactive or used.");
+                    else if (window.currentOrderCalc.subtotal < (c.minOrder || 0)) alert("Min order ₹" + c.minOrder + " required.");
+                    else if (expiry > 0 && now > expiry) alert("Coupon expired.");
+                    else {
+                        appliedDiscount = c.amt; activeCoupon = code;
+                        document.getElementById('coupon-display').style.display='flex';
+                        document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
+                        alert("Coupon Applied!");
+                        updateCartUI(); return;
+                    }
+                } else alert("Invalid Code");
+            } catch(e) { alert("Network error. Please refresh."); }
+            appliedDiscount=0; activeCoupon=""; updateCartUI();
         }
 
-        /* --- PROMPT 5: Stock Transaction Checkout --- */
+        /* --- PROMPT 5: Transaction Checkout --- */
         async function checkoutOrder() {
             if(!cart.length) return;
+            document.getElementById('loading-overlay').style.display='flex';
             const calc = window.currentOrderCalc;
             const orderData = { customerName: user.name, customerPhone: String(user.phone), address: user.area, itemsSummary: cart.map(i => i.name+' x'+i.qty).join(', '), subtotal: calc.subtotal, deliveryCharge: calc.delivery, total: calc.total, totalMargin: calc.margin, distance: calc.distance, status: 'Pending', timestamp: Date.now(), discountAmt: appliedDiscount };
             
             try {
-                document.getElementById('loading-overlay').style.display='flex';
-                
-                // Firestore Transaction for Safe Stock Deduction
                 await db.runTransaction(async (transaction) => {
                     for(let item of cart) {
                         const pRef = db.collection('products').doc(item.id);
                         const pDoc = await transaction.get(pRef);
-                        if(!pDoc.exists) throw "Product not found";
-                        const currentStock = pDoc.data().stock || 0;
-                        if(currentStock < item.qty) throw `Sorry, ${item.name} is out of stock!`;
-                        transaction.update(pRef, { stock: currentStock - item.qty });
+                        if(pDoc.data().stock < item.qty) throw `Sorry, ${item.name} out of stock!`;
+                        transaction.update(pRef, { stock: pDoc.data().stock - item.qty });
                     }
                 });
 
                 const docRef = await db.collection('orders').add(orderData);
-                window.open(`https://wa.me/919330515650?text=*New Order: Fast8bondhu*%0AID: #${docRef.id.slice(-5)}%0ABill: ₹${orderData.total}`, '_blank');
                 
-                alert("Order Placed Successfully!");
-                cart=[]; appliedDiscount=0; activeCoupon="";
-                updateCartUI(); switchView('orders', document.getElementById('nav-orders'));
-            } catch(e) { 
-                alert(typeof e === 'string' ? e : "Error placing order!"); 
-            } finally { 
-                document.getElementById('loading-overlay').style.display='none'; 
-            }
+                // --- PROMPT 5: Update Coupon Used ---
+                if(activeCoupon) {
+                    await db.collection('coupons').doc(activeCoupon).update({ used: true });
+                }
+
+                window.open(`https://wa.me/919330515650?text=*Order: #${docRef.id.slice(-5)}*%0ABill: ₹${orderData.total}`, '_blank');
+                alert("Order Placed!");
+                cart=[]; appliedDiscount=0; activeCoupon=""; updateCartUI(); switchView('orders', document.getElementById('nav-orders'));
+            } catch(e) { alert(typeof e === 'string' ? e : "Error!"); }
+            finally { document.getElementById('loading-overlay').style.display='none'; }
         }
 
-        /* --- PROMPT 1: Order Tracking UI Fix --- */
+        /* --- PROMPT 1 & 4: Status Fix & UI Timeline --- */
         function syncOrderHistory() {
-            db.collection('orders').where('customerPhone','==',String(user.phone)).orderBy('timestamp','desc').onSnapshot(snap => {
+            const validStatuses = ['Pending', 'Packed', 'Out', 'Delivered'];
+            safeSync('orders', (snap) => {
                 const list = document.getElementById('order-history-list'); list.innerHTML = '';
                 let tSave = 0, count = 0;
-                snap.forEach(doc => {
+                snap.docs.filter(d => d.data().customerPhone === String(user.phone)).forEach(doc => {
                     const o = doc.data(); count++; tSave += (o.discountAmt || 0);
-                    const status = o.status;
-                    const steps = ['Pending','Packed','Out','Delivered'];
-                    const activeIdx = steps.indexOf(status);
+                    const status = validStatuses.includes(o.status) ? o.status : 'Pending';
+                    const activeIdx = validStatuses.indexOf(status);
                     
-                    // Fixed HTML Structure and Class Names
                     let timeline = `<div class="tracking-timeline">`;
-                    steps.forEach((s, i) => { 
-                        timeline += `
-                            <div class="step ${i <= activeIdx ? 'active' : ''}">
-                                <div class="dot"></div>
-                                <span>${s}</span>
-                            </div>`; 
+                    validStatuses.forEach((s, i) => {
+                        timeline += `<div class="step ${i <= activeIdx ? 'active' : ''}"><div class="dot"></div><span>${s}</span></div>`;
                     });
                     timeline += `</div>`;
 
@@ -432,16 +420,42 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('view-' + v).style.display = 'block';
             el.classList.add('active');
-            if(v === 'home') document.getElementById('main-header').style.display='block';
-            else document.getElementById('main-header').style.display='none';
+            document.getElementById('main-header').style.display = (v === 'home') ? 'block' : 'none';
             window.scrollTo(0,0);
         }
         function toggleCartSheet(s) { document.getElementById('cart-sheet').classList.toggle('active', s); document.getElementById('cart-overlay').style.display = s ? 'block' : 'none'; }
         function handleRegister() { const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value; if(!n || p.length < 10 || !a) return alert("Fill data!"); user = { name: n, phone: p, area: a }; localStorage.setItem('fast8_customer', JSON.stringify(user)); location.reload(); }
-        function logoutUser() { if(confirm("Logout?")) { localStorage.clear(); location.reload(); } }
+        
+        /* --- PROMPT 1: logoutUser() --- */
+        function logoutUser() {
+            if(confirm("Logout?")) {
+                localStorage.removeItem('fast8_customer');
+                location.reload();
+            }
+        }
+
         function showAuth() { document.getElementById('auth-screen').style.display='flex'; }
         function handleSearch() { const q = document.getElementById('search-box').value.toLowerCase(); renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q) || (p.cat ? p.cat.toLowerCase() : "").includes(q))); }
-        function filterCat(c) { renderProducts(allProducts.filter(p => p.cat === c)); }
+        function filterCat(c) { renderProducts(allProducts.filter(p => (p.cat || "") === c)); }
     </script>
 </body>
 </html>
+
+<!-- 
+--- PROMPT 4: Secure Firestore Rules ---
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /products/{productId} { allow read: if true; allow write: if false; }
+    match /coupons/{couponId} { allow read: if true; allow write: if false; }
+    match /areas/{areaId} { allow read: if true; allow write: if false; }
+    match /settings/{settingId} { allow read: if true; allow write: if false; }
+
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read: if request.query != null;
+      allow update, delete: if false;
+    }
+  }
+}
+-->
