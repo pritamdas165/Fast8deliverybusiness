@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fast8bondhu - Grocery & More</title>
     
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
@@ -27,19 +25,17 @@
 
         /* --- OVERLAYS --- */
         #loading-overlay { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .loader { width: 45px; height: 45px; border: 5px solid #eee; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader { width: 45px; height: 45px; border: 5px solid #eee; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- AUTH SCREEN --- */
         #auth-screen { position: fixed; inset: 0; background: var(--white); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
         .brand-text { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 5px; text-align: center; }
         .brand-text span { color: var(--accent); }
         .input-box { width: 100%; margin-bottom: 15px; text-align: left; }
         .input-box label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-left: 5px; }
         .input-box input, .input-box select { width: 100%; padding: 16px; border-radius: 16px; border: 1.5px solid #eee; font-size: 16px; margin-top: 6px; background: #F9FAFB; }
-        .btn-main { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 18px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(211,47,47,0.2); }
+        .btn-main { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 18px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(211,47,47,0.2); transition: 0.3s; }
 
-        /* --- HEADER --- */
         header { background: var(--white); padding: 15px 20px 25px; position: sticky; top: 0; z-index: 1000; border-radius: 0 0 30px 30px; box-shadow: var(--shadow-sm); }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .loc-info { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
@@ -47,7 +43,6 @@
         .search-container { background: #F0F2F5; border-radius: 16px; display: flex; align-items: center; padding: 12px 18px; border: 1px solid #E8E8E8; }
         .search-container input { border: none; background: transparent; width: 100%; margin-left: 10px; font-size: 14px; color: var(--text-dark); }
 
-        /* --- DASHBOARD --- */
         .banner-container { padding: 15px 20px 0; }
         .banner-card { width: 100%; height: 160px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); display: none; }
         .banner-card img { width: 100%; height: 100%; object-fit: cover; }
@@ -65,26 +60,23 @@
         .p-price { font-weight: 800; font-size: 16px; }
         .add-btn-premium { background: white; color: #27ae60; border: 1.5px solid #27ae60; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 11px; cursor: pointer; }
 
-        /* --- PROFILE VIEW --- */
         .profile-header { background: white; padding: 40px 20px; border-radius: 0 0 35px 35px; text-align: center; box-shadow: var(--shadow-sm); }
-        .user-avatar { width: 80px; height: 80px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px; border: 3px solid white; box-shadow: var(--shadow-sm); }
+        .user-avatar { width: 85px; height: 85px; background: #FDECEC; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px; border: 3px solid white; box-shadow: var(--shadow-sm); }
         .stats-row { display: flex; justify-content: space-around; margin: 20px 0; }
         .stat-item { text-align: center; background: #f9f9f9; padding: 10px 20px; border-radius: 15px; width: 45%; }
         .stat-item b { display: block; font-size: 18px; color: var(--primary); }
         .stat-item span { font-size: 11px; color: gray; font-weight: 600; }
         .menu-item-premium { background: white; padding: 18px; border-radius: 18px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; border: 1px solid #f0f0f0; cursor: pointer; }
 
-        /* --- ORDER HISTORY TIMELINE --- */
         .order-history-card { background: white; border-radius: 22px; padding: 20px; margin-bottom: 15px; border: 1px solid #f0f0f0; box-shadow: var(--shadow-sm); }
         .tracking-timeline { display: flex; justify-content: space-between; margin-top: 15px; position: relative; padding: 10px 0; }
         .tracking-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2.5px; background: #eee; z-index: 1; }
         .step { position: relative; z-index: 2; text-align: center; width: 25%; }
-        .dot { width: 14px; height: 14px; background: #ddd; border: 3px solid white; border-radius: 50%; margin: 0 auto 8px; transition: 0.3s; }
+        .dot { width: 14px; height: 14px; background: #ddd; border: 3px solid white; border-radius: 50%; margin: 0 auto 5px; transition: 0.3s; }
         .step.active .dot { background: #27ae60; transform: scale(1.2); }
         .step span { font-size: 9px; font-weight: 700; color: gray; }
         .step.active span { color: #27ae60; }
 
-        /* --- CART --- */
         #floating-cart-bar { position: fixed; bottom: 95px; left: 15px; right: 15px; background: #27ae60; color: white; padding: 15px 20px; border-radius: 18px; display: none; justify-content: space-between; align-items: center; z-index: 2500; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3); }
         #cart-sheet { position: fixed; bottom: 0; left: 0; width: 100%; height: 85%; background: var(--white); z-index: 3000; border-radius: 35px 35px 0 0; box-shadow: 0 -15px 40px rgba(0,0,0,0.15); transform: translateY(100%); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         #cart-sheet.active { transform: translateY(0); }
@@ -96,7 +88,6 @@
         .bill-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
         .grand-total { border-top: 1.5px solid #ddd; padding-top: 10px; font-weight: 800; font-size: 17px; }
 
-        /* --- NAV --- */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(255,255,255,0.98); display: flex; justify-content: space-around; padding: 12px 0 28px; border-top: 1px solid #eee; z-index: 2000; border-radius: 25px 25px 0 0; }
         .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; flex: 1; transition: 0.3s; cursor: pointer; }
         .nav-item.active { color: var(--primary); font-weight: 800; }
@@ -108,19 +99,17 @@
 
     <div id="loading-overlay"><div class="loader"></div></div>
 
-    <!-- 1. AUTH SCREEN -->
     <div id="auth-screen">
         <div style="width: 100%; max-width: 380px;">
             <div class="brand-text">Fast8<span>bondhu</span></div>
             <p style="text-align:center; color: var(--text-muted); margin-bottom: 25px; font-size: 13px;">Apnar Pashei Shop Somoy.</p>
             <div class="input-box"><label>Full Name</label><input type="text" id="user-name" placeholder="Enter name"></div>
-            <div class="input-box"><label>Phone Number</label><input type="number" id="user-phone" placeholder="10-digit number"></div>
+            <div class="input-box"><label>Phone Number</label><input type="number" id="user-phone" placeholder="Enter 10-digit number"></div>
             <div class="input-box"><label>Select Area</label><select id="user-area"><option value="">Loading areas...</option></select></div>
             <button class="btn-main" onclick="handleRegister()">START SHOPPING</button>
         </div>
     </div>
 
-    <!-- 2. MAIN APP -->
     <div id="main-app" style="display:none;">
         <header id="main-header">
             <div class="header-top">
@@ -131,7 +120,7 @@
                 <i class="fas fa-location-dot"></i>
                 <div style="text-align: left;">
                     <small style="display:block; font-size:9px; color:gray; font-weight:800; text-transform:uppercase;">Delivering To</small>
-                    <span id="display-area">Pinning...</span>
+                    <span id="display-area">Home</span>
                 </div>
                 <i class="fas fa-chevron-down" style="font-size:10px; margin-left:auto;"></i>
             </div>
@@ -141,9 +130,8 @@
             </div>
         </header>
 
-        <!-- VIEW: HOME -->
         <main id="view-home">
-            <div class="banner-container"><div class="banner-card"><img id="app-banner" src="" onload="this.parentElement.style.display='block'"></div></div>
+            <div class="banner-container"><div class="banner-card"><img id="app-banner" src=""></div></div>
             <div class="cat-scroll">
                 <div class="cat-item" onclick="filterCat('Vegetables')"><div class="cat-icon-box">🥦</div><span>Veggies</span></div>
                 <div class="cat-item" onclick="filterCat('Daily Needs')"><div class="cat-icon-box">🥛</div><span>Daily</span></div>
@@ -155,37 +143,33 @@
             <div class="product-grid" id="product-grid"></div>
         </main>
 
-        <!-- VIEW: DEDICATED ORDERS TAB -->
         <main id="view-orders" style="display:none; padding: 20px 20px 150px;">
             <h3 style="margin-bottom: 20px; font-weight: 800; font-size: 22px;">Track Orders</h3>
             <div id="order-history-list"></div>
         </main>
 
-        <!-- VIEW: PROFILE TAB -->
         <main id="view-profile" style="display:none;">
             <div class="profile-header">
                 <div class="user-avatar"><i class="fas fa-user-ninja"></i></div>
-                <h2 id="p-name">Pritam Das</h2>
-                <p id="p-phone">+91 9330515650</p>
+                <h2 id="p-name">Loading...</h2>
+                <p id="p-phone">+91 0000000000</p>
                 <div class="stats-row">
-                    <div class="stat-item"><b id="stat-order-count">0</b><span>Total Orders</span></div>
+                    <div class="stat-item"><b id="stat-order-count">0</b><span>Orders</span></div>
                     <div class="stat-item"><b id="stat-savings" style="color:#27ae60;">₹0</b><span>Total Saved</span></div>
                 </div>
             </div>
             <div style="padding: 20px;">
                 <div class="menu-item-premium" onclick="window.open('tel:919330515650')"><i class="fas fa-headset"></i><b>Call Support</b></div>
-                <div class="menu-item-premium" onclick="window.open('https://wa.me/919330515650')"><i class="fab fa-whatsapp" style="color:#25D366;"></i><b>WhatsApp Chat</b></div>
+                <div class="menu-item-premium" onclick="window.open('https://wa.me/919330515650')"><i class="fab fa-whatsapp"></i><b>WhatsApp Chat</b></div>
                 <button class="btn-main" style="background:white; color:var(--primary); border:1.5px solid var(--primary); margin-top:20px;" onclick="logoutUser()">LOGOUT SESSION</button>
             </div>
         </main>
 
-        <!-- FLOATING CART -->
         <div id="floating-cart-bar" onclick="toggleCartSheet(true)">
             <div style="display: flex; align-items: center; gap: 12px;"><i class="fas fa-shopping-basket"></i><div><span id="float-qty">0 ITEMS</span><small id="float-total" style="display: block;">₹0</small></div></div>
             <div style="font-weight: 800;">VIEW CART <i class="fas fa-chevron-right"></i></div>
         </div>
 
-        <!-- CART SHEET -->
         <div class="overlay" id="cart-overlay" onclick="toggleCartSheet(false)"></div>
         <div id="cart-sheet">
             <div class="cart-header"><h2>Review Cart</h2><i class="fas fa-times-circle" style="font-size:24px; color:#ccc;" onclick="toggleCartSheet(false)"></i></div>
@@ -193,14 +177,14 @@
             <div style="padding: 20px; background: white; border-radius: 35px 35px 0 0;">
                 <div class="bill-summary">
                     <div class="bill-row"><span>Items Total</span><span id="bill-sub">₹0</span></div>
-                    <div style="margin: 12px 0; border-top: 1px dashed #ddd; padding-top: 12px;">
+                    <div style="margin: 12px 0; border-top: 1px dashed #ddd; padding-top: 10px;">
                         <label style="font-size:10px; font-weight:800; color:gray;">DISTANCE (KM)</label>
                         <div style="display:flex; align-items:center; gap:12px; margin-top:5px;">
                             <input type="number" id="input-km" value="1" min="1" oninput="updateCartUI()" style="width:60px; padding:8px; border-radius:10px; border:1px solid #eee; font-weight:800; text-align:center;">
                             <span style="font-size:11px;">₹30 (3km) + ₹10/km extra</span>
                         </div>
                     </div>
-                    <div class="bill-row" id="coupon-display" style="display:none; color:green; font-weight:700;"><span>Savings</span><span id="bill-discount">-₹0</span></div>
+                    <div class="bill-row" id="coupon-display" style="display:none; color:green; font-weight:700;"><span>Coupon Savings</span><span id="bill-discount">-₹0</span></div>
                     <div class="bill-row"><span>Delivery Fee</span><b style="color:var(--primary);" id="bill-delivery">₹30</b></div>
                     <div class="bill-row grand-total"><span>To Pay</span><span id="bill-grand">₹0</span></div>
                 </div>
@@ -220,7 +204,7 @@
     </div>
 
     <script>
-        // CONFIG
+        // --- CONFIG & STATE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
             authDomain: "fast8delivery-business.firebaseapp.com",
@@ -246,7 +230,7 @@
         async function fetchAreas() {
             const snap = await db.collection('areas').get();
             const select = document.getElementById('user-area');
-            select.innerHTML = '<option value="">Choose Area</option>';
+            select.innerHTML = '<option value="">Choose neighborhood</option>';
             snap.forEach(doc => select.innerHTML += `<option value="${doc.data().name}">${doc.data().name}</option>`);
         }
 
@@ -258,7 +242,7 @@
             document.getElementById('p-name').innerText = user.name;
             document.getElementById('p-phone').innerText = "+91 " + user.phone;
 
-            db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) document.getElementById('app-banner').src = doc.data().url; });
+            db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) { document.getElementById('app-banner').src = doc.data().url; document.querySelector('.banner-card').style.display = 'block'; } });
             db.collection("products").onSnapshot(snap => { allProducts = []; snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() })); renderProducts(allProducts); });
             syncOrderHistory();
         }
@@ -267,43 +251,58 @@
             const grid = document.getElementById('product-grid'); grid.innerHTML = '';
             list.forEach(p => {
                 const isOut = p.stock <= 0;
-                grid.innerHTML += `
-                    <div class="p-card">
-                        <div class="p-tag">FRESH</div>
-                        ${isOut ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.7);z-index:5;display:flex;align-items:center;justify-content:center;border-radius:18px;"><span style="background:#000;color:#fff;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;">SOLD OUT</span></div>' : ''}
-                        <div class="p-img-box"><img src="${p.img || 'https://via.placeholder.com/150'}"></div>
-                        <h4>${p.name}</h4>
-                        <div style="font-size:11px;color:gray;margin-bottom:8px;">${p.cat || 'Essentials'}</div>
-                        <div class="price-row"><span class="p-price">₹${p.sell}</span><button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button></div>
-                    </div>`;
+                grid.innerHTML += `<div class="p-card"><div class="p-tag">FRESH</div>${isOut ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.7);z-index:5;display:flex;align-items:center;justify-content:center;border-radius:18px;"><span style="background:#000;color:#fff;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;">SOLD OUT</span></div>' : ''}<div class="p-img-box"><img src="${p.img || 'https://via.placeholder.com/150'}"></div><h4>${p.name}</h4><div style="font-size:11px;color:gray;margin-bottom:8px;">${p.cat}</div><div class="price-row"><span class="p-price">₹${p.sell}</span><button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button></div></div>`;
             });
         }
 
+        /* --- PROMPT 4: Stock Validation Fix --- */
         function addToCart(id) {
-            const prod = allProducts.find(p => p.id === id);
-            const exist = cart.find(i => i.id === id);
-            if(exist) exist.qty++; else cart.push({...prod, qty: 1});
+            const p = allProducts.find(prod => prod.id === id);
+            const inCart = cart.find(item => item.id === id);
+            const currentQty = inCart ? inCart.qty : 0;
+
+            if (currentQty + 1 > p.stock) {
+                alert("Out of stock! Only " + p.stock + " items available.");
+                return;
+            }
+
+            if(inCart) inCart.qty++; else cart.push({...p, qty: 1});
             updateCartUI();
         }
 
         function updateQty(i, delta) {
-            cart[i].qty += delta;
-            if(cart[i].qty <= 0) cart.splice(i, 1);
+            const item = cart[i];
+            const p = allProducts.find(prod => prod.id === item.id);
+            
+            if (delta > 0 && item.qty + 1 > p.stock) {
+                alert("Only " + p.stock + " items in stock.");
+                return;
+            }
+
+            item.qty += delta;
+            if(item.qty <= 0) cart.splice(i, 1);
             updateCartUI();
         }
 
         function updateCartUI() {
             const list = document.getElementById('cart-items-list'); list.innerHTML = '';
-            let sub = 0, count = 0, margin = 0;
+            let sub = 0, count = 0, marginValue = 0;
+            
             cart.forEach((item, i) => {
-                sub += (item.sell * item.qty); count += item.qty; margin += (item.margin * item.qty);
+                sub += (item.sell * item.qty); 
+                count += item.qty; 
+                /* --- PROMPT 1: Margin Undefined Fix --- */
+                marginValue += ((item.margin || 0) * item.qty);
+                
                 list.innerHTML += `<div class="cart-item-row"><div style="flex:1;"><b>${item.name}</b><br><small>₹${item.sell}</small></div><div class="cart-qty-ctrl"><i class="fas fa-minus" onclick="updateQty(${i},-1)"></i><span>${item.qty}</span><i class="fas fa-plus" onclick="updateQty(${i},1)"></i></div><div style="width:60px;text-align:right;font-weight:700;">₹${item.sell*item.qty}</div></div>`;
             });
 
             const km = parseFloat(document.getElementById('input-km').value) || 1;
-            let delFee = (km > 3) ? 30 + (Math.ceil(km - 3) * 10) : 30;
+            /* --- PROMPT 3: Proper Delivery Charge (No Rounding) --- */
+            let delFee = (km <= 3) ? 30 : 30 + ((km - 3) * 10);
+            
             let total = (sub + delFee) - appliedDiscount;
-            window.currentOrderCalc = { subtotal: sub, delivery: delFee, total: total > 0 ? total : 0, margin: margin, distance: km };
+            window.currentOrderCalc = { subtotal: sub, delivery: delFee, total: total > 0 ? total : 0, margin: marginValue, distance: km };
 
             document.getElementById('bill-sub').innerText = '₹' + sub;
             document.getElementById('bill-delivery').innerText = '₹' + delFee;
@@ -314,29 +313,58 @@
             else { bar.style.display='none'; toggleCartSheet(false); }
         }
 
+        /* --- PROMPT 6: Improved Coupon Validation --- */
         async function applyCoupon() {
             const code = document.getElementById('coupon-input').value.toUpperCase();
             if(!code) return;
+            
             const doc = await db.collection("coupons").doc(code).get();
-            if(doc.exists && doc.data().active) {
-                appliedDiscount = doc.data().amt; activeCoupon = code;
-                document.getElementById('coupon-display').style.display='flex';
-                document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
-                alert("Coupon Applied!");
-            } else { alert("Invalid Code"); appliedDiscount=0; activeCoupon=""; }
+            const now = Date.now();
+
+            if(doc.exists) {
+                const c = doc.data();
+                const subtotal = window.currentOrderCalc.subtotal;
+
+                if (!c.active || c.used) {
+                    alert("Coupon already used or inactive.");
+                } else if (subtotal < (c.minOrder || 0)) {
+                    alert("Minimum order value must be ₹" + c.minOrder);
+                } else if (c.expiry && now > c.expiry.toMillis()) {
+                    alert("Coupon has expired.");
+                } else {
+                    appliedDiscount = c.amt; 
+                    activeCoupon = code;
+                    document.getElementById('coupon-display').style.display='flex';
+                    document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
+                    alert("Coupon Applied Successfully!");
+                    updateCartUI();
+                    return;
+                }
+            } else {
+                alert("Invalid Coupon Code");
+            }
+            
+            appliedDiscount = 0; 
+            activeCoupon = "";
+            document.getElementById('coupon-display').style.display='none';
             updateCartUI();
+        }
+
+        /* --- PROMPT 7: Strict Order Status Mapping --- */
+        function getValidatedStatus(status) {
+            const validStatuses = ['Pending','Packed','Out','Delivered'];
+            return validStatuses.includes(status) ? status : 'Pending';
         }
 
         async function checkoutOrder() {
             if(!cart.length) return;
             const calc = window.currentOrderCalc;
             const orderData = { customerName: user.name, customerPhone: String(user.phone), address: user.area, itemsSummary: cart.map(i => i.name+' x'+i.qty).join(', '), subtotal: calc.subtotal, deliveryCharge: calc.delivery, total: calc.total, totalMargin: calc.margin, distance: calc.distance, status: 'Pending', timestamp: Date.now(), discountAmt: appliedDiscount };
-
             try {
                 document.getElementById('loading-overlay').style.display='flex';
                 const docRef = await db.collection('orders').add(orderData);
                 for(let item of cart) { await db.collection('products').doc(item.id).update({ stock: firebase.firestore.FieldValue.increment(-item.qty) }); }
-                window.open(`https://wa.me/919330515650?text=*New Order: Fast8bondhu*%0A--------------------------%0A*ID:* #${docRef.id.slice(-5)}%0A*Bill:* ₹${orderData.total}`, '_blank');
+                window.open(`https://wa.me/919330515650?text=*New Order: Fast8bondhu*%0A--------------------------%0A*ID:* #${docRef.id.slice(-5)}%0A*Customer:* ${user.name}%0A*Bill:* ₹${orderData.total}%0A*Address:* ${user.area}%0A--------------------------%0A_Apnar bondhu rasta-y asche!_`, '_blank');
                 alert("Order Placed!");
                 cart=[]; appliedDiscount=0; activeCoupon="";
                 updateCartUI(); switchView('orders', document.getElementById('nav-orders'));
@@ -347,37 +375,68 @@
         function syncOrderHistory() {
             db.collection('orders').where('customerPhone','==',String(user.phone)).orderBy('timestamp','desc').onSnapshot(snap => {
                 const list = document.getElementById('order-history-list'); list.innerHTML = '';
-                let totalS = 0, count = 0;
+                let totalSavings = 0, count = 0;
                 snap.forEach(doc => {
-                    const o = doc.data(); count++; totalS += (o.discountAmt || 0);
-                    const status = o.status;
+                    const o = doc.data(); count++; totalSavings += (o.discountAmt || 0);
+                    
+                    const status = getValidatedStatus(o.status);
                     const steps = ['Pending','Packed','Out','Delivered'];
                     const activeIdx = steps.indexOf(status);
-                    let timeline = `<div class="tracking-timeline">`;
-                    steps.forEach((s, i) => { timeline += `<div class="step ${i <= activeIdx ? 'active' : ''}"><div class="dot"></div><span>${s}</span></div>`; });
+                    
+                    let timeline = `<div class="tracking-box">`;
+                    steps.forEach((s, i) => { timeline += `<div class="t-step ${i <= activeIdx ? 'active' : ''}"><div class="t-dot"></div><span>${s}</span></div>`; });
                     timeline += `</div>`;
-                    list.innerHTML += `<div class="order-history-card"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}" style="float:right">${status}</span><p style="font-size:12px;color:gray;margin-top:5px;">${o.itemsSummary}</p>${timeline}<div style="text-align:right;font-weight:800;margin-top:10px;font-size:16px;">₹${o.total}</div></div>`;
+
+                    list.innerHTML += `<div class="order-history-card"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}" style="float:right">${status}</span><p style="font-size:12px;color:gray;margin-top:5px;">${o.itemsSummary}</p>${timeline}<div style="text-align:right;font-weight:800;font-size:16px;">₹${o.total}</div></div>`;
                 });
                 document.getElementById('stat-order-count').innerText = count;
-                document.getElementById('stat-savings').innerText = '₹' + totalS;
+                document.getElementById('stat-savings').innerText = '₹' + totalSavings;
             });
         }
+
+        /* --- PROMPT 2: Safe Category Search Crash Fix --- */
+        function handleSearch() { 
+            const q = document.getElementById('search-box').value.toLowerCase(); 
+            renderProducts(allProducts.filter(p => 
+                p.name.toLowerCase().includes(q) || 
+                (p.cat ? p.cat.toLowerCase() : "").includes(q)
+            )); 
+        }
+
+        function filterCat(c) { renderProducts(allProducts.filter(p => (p.cat || "") === c)); }
 
         function switchView(v, el) {
             document.querySelectorAll('main').forEach(m => m.style.display = 'none');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('view-' + v).style.display = 'block';
             el.classList.add('active');
-            if(v === 'home') document.getElementById('main-header').style.display='block';
-            else document.getElementById('main-header').style.display='none';
             window.scrollTo(0,0);
         }
         function toggleCartSheet(s) { document.getElementById('cart-sheet').classList.toggle('active', s); document.getElementById('cart-overlay').style.display = s ? 'block' : 'none'; }
         function handleRegister() { const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value; if(!n || p.length < 10 || !a) return alert("Fill data!"); user = { name: n, phone: p, area: a }; localStorage.setItem('fast8_customer', JSON.stringify(user)); location.reload(); }
         function logoutUser() { if(confirm("Logout?")) { localStorage.clear(); location.reload(); } }
         function showAuth() { document.getElementById('auth-screen').style.display='flex'; }
-        function handleSearch() { const q = document.getElementById('search-box').value.toLowerCase(); renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q))); }
-        function filterCat(c) { renderProducts(allProducts.filter(p => p.cat === c)); }
     </script>
 </body>
 </html>
+
+<!-- 
+--- PROMPT 5: Secure Firestore Rules ---
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Products & Coupons: Anyone can read, but no frontend write.
+    match /products/{productId} { allow read: if true; allow write: if false; }
+    match /coupons/{couponId} { allow read: if true; allow write: if false; }
+    match /areas/{areaId} { allow read: if true; allow write: if false; }
+    match /settings/{settingId} { allow read: if true; allow write: if false; }
+
+    // 2. Orders: Create allowed, but no update or delete from frontend.
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read: if true; // In production, restrict by phone or auth.
+      allow update, delete: if false;
+    }
+  }
+}
+-->
