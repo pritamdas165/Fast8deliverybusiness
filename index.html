@@ -28,16 +28,14 @@
         .loader { width: 45px; height: 45px; border: 5px solid #eee; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- PROMPT 5: Button Loading State --- */
         .btn-main { position: relative; transition: 0.3s; }
         .btn-main.loading { color: transparent !important; pointer-events: none; }
         .btn-main.loading::after {
             content: ""; position: absolute; width: 20px; height: 20px; top: 50%; left: 50%;
-            margin: -10px 0 0 -10px; border: 3px solid rgba(255,255,255,0.3);
+            margin: -11px 0 0 -11px; border: 3px solid rgba(255,255,255,0.3);
             border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite;
         }
 
-        /* --- PROMPT 6: Improved Tracking Timeline --- */
         .tracking-timeline { display: flex; justify-content: space-between; margin-top: 30px; position: relative; padding: 10px 0; }
         .tracking-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 3px; background: #eee; z-index: 1; border-radius: 10px; }
         .progress-line { position: absolute; top: 18px; left: 12.5%; height: 3px; background: #27ae60; z-index: 2; transition: width 1s ease-in-out; border-radius: 10px; }
@@ -47,12 +45,20 @@
         .step.active span { color: #27ae60; font-weight: 700; }
         .step span { font-size: 9px; color: gray; transition: 0.3s; }
 
-        /* --- PROMPT 8: Prevent Layout Jump --- */
         .p-img-box { text-align: center; margin-bottom: 10px; height: 110px; display: flex; align-items: center; justify-content: center; background: #fdfdfd; overflow: hidden; }
         .p-img-box img { max-height: 100%; max-width: 100%; object-fit: contain; }
-
-        /* --- PROMPT 6: p-tag Styling --- */
         .p-tag { position: absolute; top: 10px; left: 10px; background: var(--primary); color: white; font-size: 8px; font-weight: 900; padding: 3px 7px; border-radius: 6px; z-index: 5; }
+
+        /* --- PROMPT 5: Smooth Cart Sheet Animation --- */
+        #cart-sheet { 
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 85%; 
+            background: var(--white); z-index: 3000; border-radius: 35px 35px 0 0; 
+            box-shadow: 0 -15px 40px rgba(0,0,0,0.15); 
+            transform: translateY(100%); /* Hidden by default */
+            transition: transform 0.3s ease; /* Smooth open/close */
+            display: flex; flex-direction: column; 
+        }
+        #cart-sheet.active { transform: translateY(0); }
 
         #auth-screen { position: fixed; inset: 0; background: var(--white); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
         .brand-text { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 5px; text-align: center; }
@@ -81,7 +87,6 @@
 
         .add-btn-premium { background: white; color: #27ae60; border: 1.5px solid #27ae60; padding: 5px 15px; border-radius: 10px; font-weight: 800; font-size: 11px; cursor: pointer; }
         
-        /* --- PAGINATION BUTTON --- */
         .load-more-container { padding: 0 20px 140px; text-align: center; }
         .btn-load { background: #eee; color: #555; border: none; padding: 10px 25px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
@@ -96,7 +101,6 @@
 
     <div id="loading-overlay"><div class="loader"></div></div>
 
-    <!-- AUTH -->
     <div id="auth-screen">
         <div style="width: 100%; max-width: 380px;">
             <div class="brand-text">Fast8<span>bondhu</span></div>
@@ -139,10 +143,7 @@
             </div>
             <div class="section-header"><h3>Fresh Picks</h3></div>
             <div class="product-grid" id="product-grid"></div>
-            <!-- PROMPT 7: Load More Button -->
-            <div class="load-more-container">
-                <button id="btn-load-more" class="btn-load" onclick="loadProducts()">LOAD MORE</button>
-            </div>
+            <div class="load-more-container"><button id="btn-load-more" class="btn-load" onclick="loadProducts()">LOAD MORE</button></div>
         </main>
 
         <main id="view-orders" style="display:none; padding: 20px 20px 150px;">
@@ -186,7 +187,7 @@
                             <span style="font-size:11px;">₹30 (3km) + ₹10/km extra</span>
                         </div>
                     </div>
-                    <div class="bill-row" id="coupon-display" style="display:none; color:green; font-weight:700;"><span>Savings</span><span id="bill-discount">-₹0</span></div>
+                    <div class="bill-row" id="coupon-display" style="display:none; color:green; font-weight:700;"><span>Coupon Savings</span><span id="bill-discount">-₹0</span></div>
                     <div class="bill-row"><span>Delivery Fee</span><b style="color:var(--primary);" id="bill-delivery">₹30</b></div>
                     <div class="bill-row grand-total"><span>To Pay</span><span id="bill-grand">₹0</span></div>
                 </div>
@@ -246,66 +247,47 @@
             document.getElementById('p-phone').innerText = "+91 " + user.phone;
 
             db.collection("settings").doc("banner").onSnapshot(doc => { if(doc.exists) { document.getElementById('app-banner').src = doc.data().url; document.querySelector('.banner-card').style.display = 'block'; } });
-            
-            // PROMPT 7: Initial Loading
             loadProducts(true);
             syncOrderHistory();
         }
 
-        /* --- PROMPT 7: Pagination Logic --- */
+        /* --- PROMPT 4: Scalable Product Query --- */
         async function loadProducts(isInitial = false) {
-            if(isInitial) {
-                lastVisibleProduct = null;
-                allProducts = [];
-            }
+            if(isInitial) { lastVisibleProduct = null; allProducts = []; }
             
-            let query = db.collection("products").orderBy("name").limit(20);
+            // Scalable: Exclude out of stock, use pagination
+            let query = db.collection("products")
+                .where("stock", ">", 0)
+                .orderBy("stock")
+                .orderBy("name")
+                .limit(20);
+
             if (lastVisibleProduct) query = query.startAfter(lastVisibleProduct);
 
             try {
                 const snap = await query.get();
-                if(snap.empty) {
-                    document.getElementById('btn-load-more').style.display = 'none';
-                    if(isInitial) renderProducts([]);
-                    return;
-                }
-                
+                if(snap.empty) { document.getElementById('btn-load-more').style.display = 'none'; return; }
                 lastVisibleProduct = snap.docs[snap.docs.length - 1];
                 snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
-                
                 renderProducts(allProducts);
                 document.getElementById('btn-load-more').style.display = snap.docs.length < 20 ? 'none' : 'block';
-            } catch(e) { alert("Error loading products."); }
+            } catch(e) { console.error(e); }
         }
 
-        function refreshProducts() { loadProducts(true); document.getElementById('grid-title').innerText = "Fresh Picks"; }
+        function refreshProducts() { loadProducts(true); }
 
         function renderProducts(list) {
             const grid = document.getElementById('product-grid'); grid.innerHTML = '';
             list.forEach(p => {
                 const isOut = p.stock <= 0;
-                /* --- PROMPT 8: Lazy Load & Fallback --- */
-                grid.innerHTML += `
-                    <div class="p-card">
-                        <div class="p-tag">FRESH</div>
-                        ${isOut ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.7);z-index:5;display:flex;align-items:center;justify-content:center;border-radius:18px;"><span style="background:#000;color:#fff;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;">SOLD OUT</span></div>' : ''}
-                        <div class="p-img-box">
-                            <img src="${p.img || 'https://via.placeholder.com/150'}" 
-                                 loading="lazy" 
-                                 onerror="this.src='https://via.placeholder.com/150?text=No+Image'" 
-                                 alt="${p.name}">
-                        </div>
-                        <h4>${p.name}</h4>
-                        <div style="font-size:11px;color:gray;margin-bottom:8px;">${p.cat || 'Essentials'}</div>
-                        <div class="price-row"><span class="p-price">₹${p.sell}</span><button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button></div>
-                    </div>`;
+                grid.innerHTML += `<div class="p-card"><div class="p-tag">FRESH</div>${isOut ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.7);z-index:5;display:flex;align-items:center;justify-content:center;border-radius:18px;"><span style="background:#000;color:#fff;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;">SOLD OUT</span></div>' : ''}<div class="p-img-box"><img src="${p.img || 'https://via.placeholder.com/150'}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Image'"></div><h4>${p.name}</h4><div style="font-size:11px;color:gray;margin-bottom:8px;">${p.cat}</div><div class="price-row"><span class="p-price">₹${p.sell}</span><button class="add-btn-premium" onclick="addToCart('${p.id}')">ADD</button></div></div>`;
             });
         }
 
         function addToCart(id) {
             const p = allProducts.find(prod => prod.id === id);
             const inCart = cart.find(item => item.id === id);
-            if (((inCart ? inCart.qty : 0) + 1) > (p.stock || 0)) return alert("Out of stock!");
+            if (((inCart ? inCart.qty : 0) + 1) > (p.stock || 0)) return alert("Stock limit reached!");
             if(inCart) inCart.qty++; else cart.push({...p, qty: 1});
             updateCartUI();
         }
@@ -313,7 +295,7 @@
         function updateQty(i, delta) {
             const item = cart[i];
             const p = allProducts.find(prod => prod.id === item.id);
-            if (delta > 0 && item.qty + 1 > p.stock) return alert("No more stock!");
+            if (delta > 0 && item.qty + 1 > p.stock) return alert("Stock limit reached!");
             item.qty += delta;
             if(item.qty <= 0) cart.splice(i, 1);
             updateCartUI();
@@ -323,11 +305,14 @@
             const list = document.getElementById('cart-items-list'); list.innerHTML = '';
             let sub = 0, count = 0, marginValue = 0;
             cart.forEach((item, i) => {
-                sub += (item.sell * item.qty); count += item.qty; 
-                marginValue += ((item.margin || 0) * item.qty);
+                sub += (item.sell * item.qty); count += item.qty; marginValue += ((item.margin || 0) * item.qty);
                 list.innerHTML += `<div class="cart-item-row"><div style="flex:1;"><b>${item.name}</b><br><small>₹${item.sell}</small></div><div class="cart-qty-ctrl"><i class="fas fa-minus" onclick="updateQty(${i},-1)"></i><span>${item.qty}</span><i class="fas fa-plus" onclick="updateQty(${i},1)"></i></div><div style="width:60px;text-align:right;font-weight:700;">₹${item.sell*item.qty}</div></div>`;
             });
-            const km = parseFloat(document.getElementById('input-km').value) || 1;
+            
+            /* --- PROMPT 3: Safe KM Logic --- */
+            let rawKm = parseFloat(document.getElementById('input-km').value);
+            let km = (isNaN(rawKm) || rawKm <= 0) ? 1 : rawKm;
+
             let delFee = (km <= 3) ? 30 : 30 + ((km - 3) * 10);
             let total = Math.max((sub + delFee) - appliedDiscount, 0);
             window.currentOrderCalc = { subtotal: sub, delivery: delFee, total: total, margin: marginValue, distance: km };
@@ -345,44 +330,72 @@
                 const now = Date.now();
                 if(doc.exists) {
                     const c = doc.data();
-                    const expiry = (c.expiry && c.expiry.toMillis) ? c.expiry.toMillis() : (c.expiry || 0);
-                    if (!c.active || c.used) alert("Coupon invalid.");
-                    else if (window.currentOrderCalc.subtotal < (c.minOrder || 0)) alert("Min order ₹" + c.minOrder);
-                    else if (expiry > 0 && now > expiry) alert("Expired.");
-                    else { appliedDiscount = c.amt; activeCoupon = code; document.getElementById('coupon-display').style.display='flex'; document.getElementById('bill-discount').innerText='-₹'+appliedDiscount; alert("Applied!"); updateCartUI(); return; }
+                    /* --- PROMPT 1: Race Condition Fix (Read-then-Throw) --- */
+                    const expiryTime = (c.expiry && c.expiry.toMillis) ? c.expiry.toMillis() : (c.expiry || 0);
+                    if (!c.active || c.used) return alert("Coupon used or inactive.");
+                    if (window.currentOrderCalc.subtotal < (c.minOrder || 0)) return alert("Min order ₹" + c.minOrder);
+                    if (expiryTime > 0 && now > expiryTime) return alert("Coupon expired.");
+                    
+                    appliedDiscount = c.amt; activeCoupon = code;
+                    document.getElementById('coupon-display').style.display='flex';
+                    document.getElementById('bill-discount').innerText='-₹'+appliedDiscount;
+                    alert("Applied!"); updateCartUI();
                 } else alert("Invalid Code");
             } catch(e) { alert("Error."); }
-            appliedDiscount=0; activeCoupon=""; updateCartUI();
         }
 
-        /* --- PROMPT 2 & 3 & 4: Transaction & Validation --- */
+        /* --- PROMPT 1 & 2: Combined checkoutOrder with Atomic Transaction --- */
         async function checkoutOrder() {
-            if (!user.name || String(user.phone).length !== 10 || !user.area || cart.length === 0 || !window.currentOrderCalc || window.currentOrderCalc.total <= 0) return alert("Validation failed! Check name, phone and cart.");
+            if (!user || !user.name || String(user.phone).length !== 10 || !user.area || cart.length === 0) return alert("Validation error!");
             
             const btn = document.getElementById('checkout-btn');
             btn.disabled = true; btn.classList.add('loading');
             
+            const calc = window.currentOrderCalc;
+
             try {
                 await db.runTransaction(async (transaction) => {
-                    for(let item of cart) {
+                    // 1. Validate Products & Stocks
+                    const productUpdates = [];
+                    for (let item of cart) {
                         const pRef = db.collection('products').doc(item.id);
                         const pDoc = await transaction.get(pRef);
-                        if(pDoc.data().stock < item.qty) throw `Sorry, ${item.name} out of stock!`;
-                        transaction.update(pRef, { stock: pDoc.data().stock - item.qty });
+                        if (!pDoc.exists) throw "Product not found!";
+                        if (pDoc.data().stock < item.qty) throw `${item.name} is out of stock!`;
+                        productUpdates.push({ ref: pRef, newStock: pDoc.data().stock - item.qty });
                     }
-                    if(activeCoupon) transaction.update(db.collection('coupons').doc(activeCoupon), { used: true });
-                });
 
-                const docRef = await db.collection('orders').add({...window.currentOrderCalc, customerName: user.name, customerPhone: String(user.phone), address: user.area, itemsSummary: cart.map(i => i.name+' x'+i.qty).join(', '), status: 'Pending', timestamp: Date.now(), discountAmt: appliedDiscount});
-                window.open(`https://wa.me/919330515650?text=*Order: #${docRef.id.slice(-5)}*%0ABill: ₹${window.currentOrderCalc.total}`, '_blank');
-                
-                alert("Order Placed!");
-                cart=[]; appliedDiscount=0; activeCoupon=""; updateCartUI(); switchView('orders', document.getElementById('nav-orders'));
-            } catch(e) { alert(typeof e === 'string' ? e : "Error!"); btn.disabled = false; btn.classList.remove('loading'); }
-            finally { btn.classList.remove('loading'); }
+                    // 2. Validate Coupon Race Condition (Prompt 1)
+                    let couponRef = null;
+                    if (activeCoupon) {
+                        const cRef = db.collection('coupons').doc(activeCoupon);
+                        const cDoc = await transaction.get(cRef);
+                        if (!cDoc.exists) throw "Coupon lost!";
+                        if (cDoc.data().used === true) throw "Coupon already used by another user!";
+                        couponRef = cRef;
+                    }
+
+                    // 3. Move Order Creation Inside Transaction (Prompt 2)
+                    const orderRef = db.collection('orders').doc(); // Generate ID
+                    const orderData = { id: orderRef.id, customerName: user.name, customerPhone: String(user.phone), address: user.area, itemsSummary: cart.map(i => i.name+' x'+i.qty).join(', '), subtotal: calc.subtotal, deliveryCharge: calc.delivery, total: calc.total, totalMargin: calc.margin, distance: calc.distance, status: 'Pending', timestamp: Date.now(), discountAmt: appliedDiscount, couponUsed: activeCoupon || "" };
+
+                    // 4. Atomic Writes
+                    productUpdates.forEach(p => transaction.update(p.ref, { stock: p.newStock }));
+                    if (couponRef) transaction.update(couponRef, { used: true });
+                    transaction.set(orderRef, orderData);
+                    
+                    return orderData; // Pass for WhatsApp
+                }).then((finalOrder) => {
+                    window.open(`https://wa.me/919330515650?text=*New Order: #${finalOrder.id.slice(-5)}*%0ABill: ₹${finalOrder.total}`, '_blank');
+                    alert("Order Placed!");
+                    cart=[]; appliedDiscount=0; activeCoupon=""; updateCartUI(); switchView('orders', document.getElementById('nav-orders'));
+                });
+            } catch(e) { 
+                alert(typeof e === 'string' ? e : "Checkout Error!"); 
+                btn.disabled = false; btn.classList.remove('loading');
+            } finally { btn.classList.remove('loading'); }
         }
 
-        /* --- PROMPT 1: Proper Firestore Query Sync --- */
         function syncOrderHistory() {
             if(!user) return;
             const valid = ['Pending','Packed','Out','Delivered'];
@@ -391,32 +404,21 @@
               .orderBy('timestamp','desc')
               .onSnapshot(snap => {
                 const list = document.getElementById('order-history-list'); list.innerHTML = '';
-                let tSave = 0, count = 0;
                 snap.forEach(doc => {
-                    const o = doc.data(); count++; tSave += (o.discountAmt || 0);
+                    const o = doc.data();
                     const status = valid.includes(o.status) ? o.status : 'Pending';
                     const activeIdx = valid.indexOf(status);
                     
-                    /* --- PROMPT 6: Animated Progress Bar --- */
                     let timeline = `<div class="tracking-timeline"><div class="progress-line" style="width: ${activeIdx * 33.33}%"></div>`;
                     valid.forEach((s, i) => { timeline += `<div class="step ${i <= activeIdx ? 'active' : ''}"><div class="dot"></div><span>${s}</span></div>`; });
                     timeline += `</div>`;
 
-                    list.innerHTML += `<div class="order-history-card"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}" style="float:right">${status}</span><p style="font-size:11px;color:gray;margin-top:12px;">${o.itemsSummary}</p>${timeline}<div style="text-align:right;font-weight:800;font-size:16px;margin-top:15px;border-top:1px dashed #eee;padding-top:10px;">₹${o.total}</div></div>`;
-                });
-                document.getElementById('stat-order-count').innerText = count;
-                document.getElementById('stat-savings').innerText = '₹' + tSave;
-            }, (err) => alert("Network error."));
+                    list.innerHTML += `<div class="order-history-card"><b>#${doc.id.slice(-5)}</b><span class="status-pill status-${status}" style="float:right">${status}</span><p style="font-size:12px;color:gray;margin-top:12px; border-bottom:1px solid #eee; padding-bottom:10px;">${o.itemsSummary}</p>${timeline}<div style="text-align:right;font-weight:800;font-size:16px;margin-top:10px;">₹${o.total}</div></div>`;
+                }, (err) => alert("Network error."));
+            });
         }
 
-        function switchView(v, el) {
-            document.querySelectorAll('main').forEach(m => m.style.display = 'none');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('view-' + v).style.display = 'block';
-            el.classList.add('active');
-            document.getElementById('main-header').style.display = (v === 'home') ? 'block' : 'none';
-            window.scrollTo(0,0);
-        }
+        function switchView(v, el) { document.querySelectorAll('main').forEach(m => m.style.display = 'none'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('view-' + v).style.display = 'block'; el.classList.add('active'); if(v === 'home') document.getElementById('main-header').style.display='block'; else document.getElementById('main-header').style.display='none'; window.scrollTo(0,0); }
         function toggleCartSheet(s) { document.getElementById('cart-sheet').classList.toggle('active', s); document.getElementById('cart-overlay').style.display = s ? 'block' : 'none'; }
         function handleRegister() { const n = document.getElementById('user-name').value, p = document.getElementById('user-phone').value, a = document.getElementById('user-area').value; if(!n || String(p).length !== 10 || !a) return alert("Fill data!"); user = { name: n, phone: p, area: a }; localStorage.setItem('fast8_customer', JSON.stringify(user)); location.reload(); }
         function logoutUser() { if(confirm("Logout?")) { localStorage.removeItem('fast8_customer'); location.reload(); } }
@@ -426,22 +428,3 @@
     </script>
 </body>
 </html>
-
-<!-- 
---- PROMPT 4: Secure Firestore Rules ---
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /products/{productId} { allow read: if true; allow write: if false; }
-    match /coupons/{couponId} { allow read: if true; allow write: if false; }
-    match /areas/{areaId} { allow read: if true; allow write: if false; }
-    match /settings/{settingId} { allow read: if true; allow write: if false; }
-
-    match /orders/{orderId} {
-      allow create: if true;
-      allow read: if request.query != null;
-      allow update, delete: if false;
-    }
-  }
-}
--->
