@@ -27,7 +27,8 @@
         /* --- LOGIN SCREEN --- */
         #login-screen { position: fixed; inset: 0; background: var(--primary); display: flex; align-items: center; justify-content: center; z-index: 10000; }
         .login-card { background: var(--white); width: 85%; max-width: 380px; padding: 40px 30px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
-        .login-card h2 { color: var(--primary); font-weight: 800; font-size: 26px; }
+        .brand-text { font-size: 26px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+        .brand-text span { color: var(--accent); }
         .login-card p { font-size: 13px; color: var(--text-light); margin-bottom: 25px; }
         .login-card input { width: 100%; padding: 16px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 15px; text-align: center; font-size: 20px; font-weight: 700; background: #F9FAFB; }
         .login-btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; font-weight: 800; cursor: pointer; color: #000; }
@@ -37,7 +38,7 @@
         .rider-status { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; }
         .status-dot { width: 8px; height: 8px; background: #4CAF50; border-radius: 50%; box-shadow: 0 0 8px #4CAF50; }
 
-        /* --- TABS & SECTIONS --- */
+        /* --- SECTIONS --- */
         .section { display: none; padding: 20px; padding-bottom: 110px; animation: fadeIn 0.4s ease-out; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -46,7 +47,7 @@
         .order-card { background: var(--white); border-radius: 24px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); border-left: 8px solid var(--accent); position: relative; }
         .order-header { display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: 800; font-size: 16px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
         .cust-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; display: block; }
-        .items-info { background: #F8F9FA; padding: 12px; border-radius: 12px; font-size: 12px; color: #555; margin: 10px 0; border: 1px solid #f0f0f0; }
+        .items-info { background: #F8F9FA; padding: 12px; border-radius: 12px; font-size: 12px; color: #555; margin: 10px 0; border: 1px solid #f0f0f0; line-height: 1.5; }
         
         .action-btns { display: flex; gap: 10px; margin-top: 15px; }
         .btn { flex: 1; padding: 14px; border: none; border-radius: 14px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
@@ -67,24 +68,24 @@
 
         /* --- BOTTOM NAV --- */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--white); display: flex; justify-content: space-around; padding: 15px 0 35px; border-top: 1px solid #eee; z-index: 1000; border-radius: 30px 30px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
-        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; transition: 0.3s; }
+        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; transition: 0.3s; cursor: pointer; }
         .nav-item.active { color: var(--primary); font-weight: 800; }
         .nav-item i { font-size: 22px; margin-bottom: 5px; display: block; }
 
         #loader { position: fixed; inset: 0; background: rgba(255,255,255,0.8); display: none; align-items: center; justify-content: center; z-index: 11000; }
+        .loader-spin { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div id="loader"><div style="border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div></div>
-    <style> @keyframes spin { 100% { transform: rotate(360deg); } } </style>
+    <div id="loader"><div class="loader-spin"></div></div>
 
     <!-- 1. LOGIN SCREEN -->
     <div id="login-screen">
         <div class="login-card">
-            <img src="https://i.ibb.co/WW1MLXjH/IMG-20260226-175336.png" width="80" alt="logo" style="margin-bottom:15px; border-radius: 15px;">
-            <h2>Fast8<span>bondhu</span></h2>
-            <p>Rider Partner Portal</p>
+            <div class="brand-text">Fast8<span>bondhu</span></div>
+            <p>Rider Delivery Partner</p>
             <input type="number" id="login-phone" placeholder="9876543210">
             <button class="login-btn" onclick="handleLogin()">START SHIFT</button>
         </div>
@@ -102,23 +103,23 @@
 
         <!-- VIEW: TASKS -->
         <div id="view-tasks" class="section active">
-            <h4 style="margin-bottom: 15px; font-size: 16px;"><i class="fas fa-motorcycle" style="color:var(--primary)"></i> Assigned to Me</h4>
+            <h4 style="margin-bottom: 15px; font-size: 16px;"><i class="fas fa-clipboard-list" style="color:var(--primary)"></i> Assigned to Me</h4>
             <div id="task-list">
-                <!-- Live Orders for specific Rider -->
+                <!-- Orders will be injected here -->
             </div>
         </div>
 
-        <!-- VIEW: CASH & EARNINGS -->
+        <!-- VIEW: CASH & SUMMARY -->
         <div id="view-cash" class="section">
             <div class="summary-card">
                 <span>Total Cash in Hand</span>
                 <h1 id="cash-balance">₹0</h1>
-                <p style="font-size: 11px; opacity: 0.8; margin-top: 10px;">Visit Store to settle Daily Collection</p>
+                <p style="font-size: 11px; opacity: 0.8; margin-top: 10px;">Submit this collection to Admin daily</p>
             </div>
 
             <div class="stat-grid">
                 <div class="small-stat">
-                    <span id="date-label">Today's Done</span>
+                    <span>Delivered Today</span>
                     <h3 id="stat-count">0</h3>
                 </div>
                 <div class="small-stat">
@@ -132,28 +133,28 @@
             </div>
         </div>
 
-        <!-- VIEW: PROFILE -->
+        <!-- VIEW: ACCOUNT -->
         <div id="view-profile" class="section">
             <div class="small-stat" style="margin-top:20px; padding:40px 20px;">
                 <i class="fas fa-user-astronaut fa-4x" style="color: var(--primary); margin-bottom: 20px;"></i>
                 <h3 id="profile-name">Rider Name</h3>
-                <p id="profile-phone" style="color: var(--text-light); margin-bottom: 30px;">Phone</p>
+                <p id="profile-phone" style="color: var(--text-light); margin-bottom: 30px;">+91 0000000000</p>
                 <button class="btn" style="background: #FFF0F0; color: #D32F2F; width: 100%; border: 1.5px solid #FFDCDC;" onclick="logout()">
                     <i class="fas fa-power-off"></i> LOGOUT FROM SHIFT
                 </button>
             </div>
         </div>
 
-        <!-- NAVIGATION -->
+        <!-- BOTTOM NAVIGATION -->
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="switchView('view-tasks', this)"><i class="fas fa-route"></i>Tasks</div>
             <div class="nav-item" onclick="switchView('view-cash', this)"><i class="fas fa-wallet"></i>Finance</div>
-            <div class="nav-item" onclick="switchView('view-profile', this)"><i class="fas fa-id-card"></i>Account</div>
+            <div class="nav-item" onclick="switchView('view-profile', this)"><i class="fas fa-id-card"></i>Profile</div>
         </nav>
     </div>
 
     <script>
-        // --- CONFIG ---
+        // FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
             authDomain: "fast8delivery-business.firebaseapp.com",
@@ -168,37 +169,35 @@
 
         let riderData = null;
 
-        // --- AUTH ---
+        // AUTH LOGIC
         async function handleLogin() {
             let phoneInput = document.getElementById('login-phone').value.trim();
-            if(!phoneInput) return alert("Please enter registered phone number");
+            if(!phoneInput) return alert("Please enter registered phone!");
 
             const phoneStr = String(phoneInput);
             showLoader(true);
 
             // Fetch Rider with strict String check
             let snap = await db.collection('deliveryBoys').where('phone', '==', phoneStr).get();
-            
             if(snap.empty) {
-                // Check if stored as Number in older records
                 snap = await db.collection('deliveryBoys').where('phone', '==', Number(phoneStr)).get();
             }
 
             if(snap.empty) {
-                alert("Account not found! Registration missing in Admin Panel.");
+                alert("Account not found! Admin needs to register this phone.");
                 showLoader(false);
             } else {
                 snap.forEach(doc => {
                     riderData = { id: doc.id, ...doc.data() };
                     riderData.phone = String(riderData.phone);
                 });
-                localStorage.setItem('fast8bondhu_rider_session', JSON.stringify(riderData));
+                localStorage.setItem('f8b_rider_session', JSON.stringify(riderData));
                 initApp();
             }
         }
 
         function initApp() {
-            const stored = localStorage.getItem('fast8bondhu_rider_session');
+            const stored = localStorage.getItem('f8b_rider_session');
             if(stored) {
                 riderData = JSON.parse(stored);
                 document.getElementById('login-screen').style.display = 'none';
@@ -211,7 +210,7 @@
             }
         }
 
-        // --- LIVE WALLET SYNC ---
+        // REAL-TIME WALLET
         function syncRiderWallet() {
             db.collection('deliveryBoys').doc(riderData.id).onSnapshot(doc => {
                 if(doc.exists) {
@@ -221,11 +220,10 @@
             });
         }
 
-        // --- TASK MANAGEMENT ---
+        // REAL-TIME ASSIGNED ORDERS
         function syncOrders() {
             const myRiderPhone = String(riderData.phone);
 
-            // Real-time listener for orders assigned to this specific rider
             db.collection('orders')
               .where('assignedTo', '==', myRiderPhone)
               .onSnapshot(snap => {
@@ -244,14 +242,14 @@
                             <div class="order-card">
                                 <div class="order-header">
                                     <span>#${doc.id.slice(-5)}</span>
-                                    <span style="color:var(--primary)">₹${o.total}</span>
+                                    <span style="color:var(--primary)">COD: ₹${o.total}</span>
                                 </div>
                                 <span class="cust-name">${o.customerName}</span>
-                                <div style="font-size:12px; color:gray; line-height:1.4;">
+                                <div style="font-size:12px; color:gray; line-height:1.4; margin-bottom:10px;">
                                     <i class="fas fa-location-dot"></i> ${o.address}
                                 </div>
                                 <div class="items-info">
-                                    <b>Bag Contents:</b><br>${o.itemsSummary}
+                                    <b>Items to Deliver:</b><br>${o.itemsSummary}
                                 </div>
                                 <div class="action-btns">
                                     <button class="btn btn-call" onclick="window.open('tel:${o.customerPhone}')">
@@ -279,30 +277,30 @@
                 if(list.innerHTML === '') {
                     list.innerHTML = `<div style="text-align:center; padding:70px; color:#ccc;">
                         <i class="fas fa-clipboard-check fa-3x" style="margin-bottom:15px; opacity:0.3"></i><br>
-                        <span style="font-size:13px; font-weight:600;">No active tasks.</span><br>
-                        <span style="font-size:11px;">Waiting for new assignments...</span></div>`;
+                        <span style="font-size:13px; font-weight:600;">No assignments</span><br>
+                        <span style="font-size:11px;">Admin will notify you soon.</span></div>`;
                 }
                 showLoader(false);
             }, err => {
-                console.log("Firebase sync error:", err);
+                console.error("Order Sync Error:", err);
                 showLoader(false);
             });
         }
 
         async function markDelivered(id, amt) {
-            if(confirm("Collect ₹" + amt + " and mark as successful?")) {
+            if(confirm("Confirm collection of ₹" + amt + " and delivery?")) {
                 showLoader(true);
-                // 1. Update Order status
+                // Update Order status
                 await db.collection('orders').doc(id).update({ status: 'Delivered' });
-                // 2. Increment Rider's cash balance
+                // Increment Rider's cash balance
                 await db.collection('deliveryBoys').doc(riderData.id).update({
                     cashInHand: firebase.firestore.FieldValue.increment(amt)
                 });
-                alert("Order Delivered! Keep it up.");
+                alert("Order Successful!");
             }
         }
 
-        // --- NAVIGATION ---
+        // HELPERS
         function switchView(id, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -314,8 +312,8 @@
         function showLoader(s) { document.getElementById('loader').style.display = s ? 'flex' : 'none'; }
 
         function logout() {
-            if(confirm("Logout and end shift?")) {
-                localStorage.removeItem('fast8bondhu_rider_session');
+            if(confirm("End current shift?")) {
+                localStorage.removeItem('f8b_rider_session');
                 location.reload();
             }
         }
