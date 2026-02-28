@@ -1,324 +1,1684 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fast8bondhu - Delivery Partner Console</title>
-    
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#D32F2F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Fast8 – Delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary: #D32F2F;
+  --primary-dark: #B71C1C;
+  --primary-light: #EF5350;
+  --accent: #FFC107;
+  --accent-dark: #FF8F00;
+  --bg: #F4F5F8;
+  --surface: #FFFFFF;
+  --border: #E8E8F0;
+  --text: #151520;
+  --text2: #4A4A60;
+  --text3: #9898B0;
+  --green: #16A34A;
+  --green-bg: #DCFCE7;
+  --green-dark: #14532D;
+  --orange: #EA580C;
+  --orange-bg: #FFF0E8;
+  --blue: #1D4ED8;
+  --blue-bg: #EFF6FF;
+  --shadow-sm: 0 1px 8px rgba(0,0,0,0.06);
+  --shadow: 0 4px 16px rgba(0,0,0,0.09);
+  --shadow-md: 0 8px 28px rgba(0,0,0,0.13);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.18);
+  --radius: 20px;
+  --radius-sm: 14px;
+  --bottom-nav: 68px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  max-width:480px;
+  margin:0 auto;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5 { font-family:'Nunito',sans-serif; }
 
-    <style>
-        :root {
-            --primary: #D32F2F; --accent: #FFC107; --bg: #F4F4F9;
-            --white: #FFFFFF; --text-dark: #2D3436; --text-light: #636E72;
-            --shadow: 0 8px 20px rgba(0,0,0,0.1); --radius: 22px;
-        }
+/* ══ SCREENS ══ */
+.screen { display:none; min-height:100vh; }
+.screen.active { display:block; animation:fadeIn 0.3s ease; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+/* ══ LOGIN SCREEN ══ */
+#loginScreen {
+  background:linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 50%, #FF7043 100%);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+#loginScreen::before {
+  content:'';position:absolute;
+  width:300px;height:300px;
+  background:rgba(255,193,7,0.1);
+  border-radius:50%;top:-100px;right:-80px;
+}
+#loginScreen::after {
+  content:'';position:absolute;
+  width:200px;height:200px;
+  background:rgba(255,255,255,0.06);
+  border-radius:50%;bottom:120px;left:-60px;
+}
 
-        /* --- LOGIN SCREEN --- */
-        #login-screen { position: fixed; inset: 0; background: var(--primary); display: flex; align-items: center; justify-content: center; z-index: 10000; }
-        .login-card { background: var(--white); width: 85%; max-width: 380px; padding: 40px 30px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
-        .brand-text { font-size: 26px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
-        .brand-text span { color: var(--accent); }
-        .login-card p { font-size: 13px; color: var(--text-light); margin-bottom: 25px; }
-        .login-card input { width: 100%; padding: 16px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 15px; text-align: center; font-size: 20px; font-weight: 700; background: #F9FAFB; }
-        .login-btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; font-weight: 800; cursor: pointer; color: #000; }
+.login-top {
+  flex:1;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:48px 24px 32px;
+  text-align:center;
+  position:relative;z-index:1;
+}
+.login-icon-wrap {
+  width:90px;height:90px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(12px);
+  border-radius:26px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+  border:2px solid rgba(255,255,255,0.25);
+  box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+.login-icon-wrap i { font-size:40px;color:var(--accent); }
+.login-top h1 { font-size:30px;font-weight:900;color:white;letter-spacing:-0.5px; }
+.login-top p { font-size:14px;color:rgba(255,255,255,0.72);margin-top:8px; }
+.login-badge {
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.15);
+  color:white;font-size:12px;font-weight:700;
+  padding:6px 14px;border-radius:20px;
+  margin-top:12px;
+  border:1px solid rgba(255,255,255,0.2);
+}
 
-        /* --- HEADER --- */
-        header { background: var(--primary); color: white; padding: 25px 20px; border-radius: 0 0 35px 35px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .rider-status { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-        .status-dot { width: 8px; height: 8px; background: #4CAF50; border-radius: 50%; box-shadow: 0 0 8px #4CAF50; }
+.login-card {
+  background:white;
+  border-radius:32px 32px 0 0;
+  padding:32px 24px 40px;
+  position:relative;z-index:1;
+}
+.login-card h3 { font-size:18px;font-weight:800;margin-bottom:20px;color:var(--text); }
 
-        /* --- SECTIONS --- */
-        .section { display: none; padding: 20px; padding-bottom: 110px; animation: fadeIn 0.4s ease-out; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.form-field { margin-bottom:16px; }
+.form-field label {
+  display:block;font-size:11px;font-weight:700;
+  color:var(--text3);margin-bottom:7px;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.input-wrap { position:relative; }
+.input-wrap i {
+  position:absolute;left:15px;top:50%;
+  transform:translateY(-50%);
+  color:var(--text3);font-size:16px;
+  pointer-events:none;
+}
+.input-wrap input {
+  width:100%;padding:14px 14px 14px 44px;
+  border:2px solid var(--border);
+  border-radius:13px;
+  font-size:15px;font-family:'DM Sans',sans-serif;
+  outline:none;transition:all 0.2s;
+  background:var(--bg);color:var(--text);
+}
+.input-wrap input:focus {
+  border-color:var(--primary);
+  background:white;
+  box-shadow:0 0 0 4px rgba(211,47,47,0.1);
+}
+.login-err {
+  background:#FEF2F2;color:var(--primary);
+  padding:11px 14px;border-radius:11px;
+  font-size:13px;font-weight:600;
+  margin-bottom:14px;display:none;
+  border:1px solid #FECACA;
+}
+.btn-login {
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:white;border:none;border-radius:13px;
+  font-size:16px;font-weight:800;
+  font-family:'Nunito',sans-serif;
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 6px 20px rgba(211,47,47,0.35);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-login:hover { transform:translateY(-2px);box-shadow:0 10px 28px rgba(211,47,47,0.45); }
+.btn-login:active { transform:scale(0.98); }
 
-        /* --- TASK CARDS --- */
-        .order-card { background: var(--white); border-radius: 24px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); border-left: 8px solid var(--accent); position: relative; }
-        .order-header { display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: 800; font-size: 16px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
-        .cust-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; display: block; }
-        .items-info { background: #F8F9FA; padding: 12px; border-radius: 12px; font-size: 12px; color: #555; margin: 10px 0; border: 1px solid #f0f0f0; line-height: 1.5; }
-        
-        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 14px; border: none; border-radius: 14px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
-        .btn-call { background: #E3F2FD; color: #1976D2; }
-        .btn-nav { background: #FFF3E0; color: #E65100; }
-        .btn-deliver { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2); }
-        .btn:active { transform: scale(0.95); }
+/* ══ APP SCREEN ══ */
+#appScreen {
+  background:var(--bg);
+  padding-bottom:calc(var(--bottom-nav) + 12px);
+}
 
-        /* --- DASHBOARD STATS --- */
-        .summary-card { background: linear-gradient(135deg, #D32F2F, #B71C1C); color: white; padding: 35px 20px; border-radius: 30px; margin-bottom: 25px; text-align: center; box-shadow: 0 10px 25px rgba(211,47,47,0.3); }
-        .summary-card h1 { font-size: 42px; color: var(--accent); margin-top: 5px; }
-        .summary-card span { font-size: 12px; font-weight: 600; text-transform: uppercase; opacity: 0.9; }
+/* TOPBAR */
+.topbar {
+  position:sticky;top:0;z-index:80;
+  background:white;
+  padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:var(--shadow-sm);
+  border-bottom:1px solid var(--border);
+}
+.topbar-left { display:flex;align-items:center;gap:10px; }
+.topbar-brand-icon {
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-size:16px;
+  box-shadow:0 4px 12px rgba(211,47,47,0.25);
+}
+.topbar h2 { font-size:17px;font-weight:800;color:var(--text); }
+.topbar p { font-size:11px;color:var(--text3);margin-top:1px; }
+.online-pill {
+  display:flex;align-items:center;gap:6px;
+  padding:7px 13px;
+  border-radius:20px;
+  font-size:12px;font-weight:700;
+  cursor:pointer;
+  transition:all 0.2s;
+  border:2px solid var(--border);
+  background:var(--bg);
+  color:var(--text3);
+}
+.online-pill.online {
+  background:var(--green-bg);
+  border-color:var(--green);
+  color:var(--green);
+}
+.online-dot {
+  width:8px;height:8px;border-radius:50%;
+  background:var(--text3);
+  transition:all 0.2s;
+}
+.online-pill.online .online-dot {
+  background:var(--green);
+  box-shadow:0 0 0 3px rgba(22,163,74,0.25);
+  animation:pulse 1.5s ease infinite;
+}
 
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .small-stat { background: white; padding: 20px; border-radius: 20px; text-align: center; box-shadow: var(--shadow); border: 1px solid #f0f0f0; }
-        .small-stat h3 { font-size: 20px; color: var(--primary); }
-        .small-stat span { font-size: 10px; font-weight: 700; color: gray; text-transform: uppercase; }
+/* BOTTOM NAV */
+.bottom-nav {
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;
+  height:var(--bottom-nav);
+  background:white;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;
+  z-index:100;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.07);
+}
+.nav-btn {
+  flex:1;height:100%;border:none;background:none;
+  cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  color:var(--text3);font-size:10px;font-weight:700;
+  font-family:'Nunito',sans-serif;
+  transition:all 0.2s;
+  text-transform:uppercase;letter-spacing:0.5px;
+  position:relative;
+}
+.nav-btn i { font-size:20px;transition:all 0.2s; }
+.nav-btn.active { color:var(--primary); }
+.nav-btn.active i { transform:scale(1.1); }
+.nav-btn::after {
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:0;height:3px;background:var(--primary);
+  border-radius:0 0 4px 4px;transition:width 0.2s;
+}
+.nav-btn.active::after { width:32px; }
+.nav-badge {
+  position:absolute;top:7px;right:calc(50% - 20px);
+  background:var(--primary);color:white;
+  font-size:9px;font-weight:800;
+  padding:1px 5px;border-radius:20px;
+  min-width:16px;text-align:center;
+}
 
-        /* --- BOTTOM NAV --- */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--white); display: flex; justify-content: space-around; padding: 15px 0 35px; border-top: 1px solid #eee; z-index: 1000; border-radius: 30px 30px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
-        .nav-item { text-align: center; color: var(--text-light); font-size: 11px; flex: 1; transition: 0.3s; cursor: pointer; }
-        .nav-item.active { color: var(--primary); font-weight: 800; }
-        .nav-item i { font-size: 22px; margin-bottom: 5px; display: block; }
+/* PAGES */
+.page { display:none;animation:fadeIn 0.25s ease; }
+.page.active { display:block; }
 
-        #loader { position: fixed; inset: 0; background: rgba(255,255,255,0.8); display: none; align-items: center; justify-content: center; z-index: 11000; }
-        .loader-spin { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-    </style>
+/* ══════════════ DASHBOARD PAGE ══════════════ */
+.dash-hero {
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  padding:20px 18px 28px;
+  position:relative;overflow:hidden;
+}
+.dash-hero::before {
+  content:'';position:absolute;
+  width:180px;height:180px;
+  background:rgba(255,255,255,0.07);
+  border-radius:50%;top:-60px;right:-40px;
+}
+.dash-hero::after {
+  content:'';position:absolute;
+  width:120px;height:120px;
+  background:rgba(255,193,7,0.12);
+  border-radius:50%;bottom:-40px;left:20px;
+}
+.dash-greeting { position:relative;z-index:1; }
+.dash-greeting .hey { font-size:13px;color:rgba(255,255,255,0.7);font-weight:600;margin-bottom:4px; }
+.dash-greeting h2 { font-size:22px;font-weight:900;color:white; }
+.dash-greeting .area-tag {
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.15);
+  color:white;font-size:11px;font-weight:700;
+  padding:5px 12px;border-radius:20px;
+  margin-top:8px;
+}
+.dash-stats {
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  padding:0 16px;
+  margin-top:-18px;
+  position:relative;z-index:2;
+}
+.dash-stat {
+  background:white;border-radius:var(--radius-sm);
+  padding:14px 16px;
+  box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:12px;
+}
+.stat-icon {
+  width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.stat-val { font-size:22px;font-weight:900;font-family:'Nunito',sans-serif; }
+.stat-lbl { font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:1px; }
+
+/* SECTION HEADER */
+.sec-hdr { display:flex;align-items:center;justify-content:space-between;padding:18px 16px 10px; }
+.sec-hdr h3 { font-size:16px;font-weight:800; }
+.sec-hdr span { font-size:12px;color:var(--text3);font-weight:600; }
+
+/* ══════════════ ORDER CARDS ══════════════ */
+.orders-list { padding:0 16px 12px;display:flex;flex-direction:column;gap:12px; }
+.order-card {
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  overflow:hidden;
+  border:1px solid var(--border);
+  transition:all 0.2s;
+  animation:slideUp 0.3s ease;
+}
+.order-card:hover { box-shadow:var(--shadow); }
+.order-card-top {
+  padding:14px 16px;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:8px;
+}
+.order-num { font-size:16px;font-weight:900;color:var(--text); }
+.order-time { font-size:11px;color:var(--text3);margin-top:2px; }
+.order-items-text { font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5; }
+.order-amount {
+  font-size:20px;font-weight:900;
+  color:var(--primary);font-family:'Nunito',sans-serif;
+  white-space:nowrap;
+}
+.order-del-charge { font-size:11px;color:var(--text3);text-align:right;margin-top:2px; }
+
+.customer-row {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  background:#FAFAFA;
+  border-top:1px solid var(--border);
+}
+.customer-info { display:flex;align-items:center;gap:10px; }
+.customer-avatar {
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-weight:800;font-size:14px;
+  flex-shrink:0;
+}
+.customer-name { font-size:14px;font-weight:700; }
+.customer-addr { font-size:11px;color:var(--text3);margin-top:1px; }
+.call-btn {
+  width:40px;height:40px;
+  background:var(--green-bg);color:var(--green);
+  border:none;border-radius:12px;
+  font-size:17px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+  box-shadow:0 2px 8px rgba(22,163,74,0.2);
+  text-decoration:none;
+}
+.call-btn:hover { background:var(--green);color:white;transform:scale(1.08); }
+
+.order-actions {
+  padding:12px 16px;
+  border-top:1px solid var(--border);
+  display:flex;gap:8px;
+}
+.btn {
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 16px;
+  border-radius:11px;font-size:13px;font-weight:700;
+  cursor:pointer;border:none;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s;white-space:nowrap;
+}
+.btn-green { background:var(--green);color:white;flex:1;justify-content:center; box-shadow:0 4px 12px rgba(22,163,74,0.3); }
+.btn-green:hover { background:var(--green-dark);transform:translateY(-1px); }
+.btn-outline { background:white;color:var(--text2);border:2px solid var(--border); }
+.btn-outline:hover { border-color:var(--primary);color:var(--primary); }
+.btn-primary { background:var(--primary);color:white; box-shadow:0 4px 12px rgba(211,47,47,0.25); }
+.btn-primary:hover { background:var(--primary-dark);transform:translateY(-1px); }
+.btn-yellow { background:var(--accent);color:var(--text);flex:1;justify-content:center; }
+.btn-yellow:hover { background:var(--accent-dark);transform:translateY(-1px); }
+.btn-full { width:100%;justify-content:center; }
+.btn-sm { padding:7px 12px;font-size:12px; }
+.btn:disabled { opacity:0.5;cursor:not-allowed;transform:none; }
+
+/* STATUS BADGE */
+.status-pill {
+  padding:4px 11px;border-radius:20px;
+  font-size:10px;font-weight:800;
+  text-transform:uppercase;letter-spacing:0.5px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.sp-pending { background:#FFF8E1;color:#F59E0B; }
+.sp-accepted { background:var(--blue-bg);color:var(--blue); }
+.sp-packed { background:var(--orange-bg);color:var(--orange); }
+.sp-out_for_delivery { background:#FEF2F2;color:var(--primary-light); }
+.sp-delivered { background:var(--green-bg);color:var(--green); }
+
+/* PAYMENT TAG */
+.payment-tag {
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:700;
+  padding:3px 9px;border-radius:20px;
+}
+.pt-cod { background:var(--orange-bg);color:var(--orange); }
+.pt-upi { background:var(--blue-bg);color:var(--blue); }
+.pt-paid { background:var(--green-bg);color:var(--green); }
+
+/* NO ORDERS */
+.no-orders {
+  text-align:center;padding:60px 24px;
+  animation:fadeIn 0.3s ease;
+}
+.no-orders .icon-wrap {
+  width:90px;height:90px;
+  background:white;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;margin:0 auto 20px;
+  box-shadow:var(--shadow);
+}
+.no-orders h3 { font-size:18px;font-weight:800;color:var(--text); }
+.no-orders p { font-size:13px;color:var(--text3);margin-top:8px; }
+
+/* ══════════════ CASH SUBMISSION ══════════════ */
+.cash-section { padding:0 16px; }
+.cash-card {
+  background:white;border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow-sm);
+  margin-bottom:14px;
+}
+.cash-card h4 { font-size:15px;font-weight:800;margin-bottom:14px;color:var(--text); }
+.cash-input {
+  position:relative;margin-bottom:10px;
+}
+.cash-input span {
+  position:absolute;left:15px;top:50%;transform:translateY(-50%);
+  font-size:18px;font-weight:800;color:var(--text3);
+}
+.cash-input input {
+  width:100%;padding:16px 16px 16px 34px;
+  border:2px solid var(--border);border-radius:13px;
+  font-size:20px;font-weight:800;
+  font-family:'Nunito',sans-serif;
+  outline:none;transition:all 0.2s;
+  background:var(--bg);color:var(--text);
+}
+.cash-input input:focus {
+  border-color:var(--green);background:white;
+  box-shadow:0 0 0 4px rgba(22,163,74,0.1);
+}
+.note-input {
+  width:100%;padding:12px 14px;
+  border:2px solid var(--border);border-radius:12px;
+  font-size:14px;font-family:'DM Sans',sans-serif;
+  outline:none;transition:all 0.2s;
+  background:var(--bg);
+  margin-bottom:14px;
+}
+.note-input:focus { border-color:var(--green);background:white; }
+.cash-info-row {
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;font-size:13px;
+  border-bottom:1px solid var(--border);
+}
+.cash-info-row:last-child { border-bottom:none; }
+.cash-info-row span:first-child { color:var(--text3); }
+.cash-info-row span:last-child { font-weight:700; }
+
+.pending-tag {
+  display:inline-flex;align-items:center;gap:4px;
+  background:#FEF2F2;color:var(--primary);
+  font-size:11px;font-weight:800;
+  padding:3px 9px;border-radius:20px;
+}
+.submissions-list { display:flex;flex-direction:column;gap:10px;margin-top:4px; }
+.sub-item {
+  background:var(--bg);border-radius:12px;
+  padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  border:1px solid var(--border);
+}
+.sub-item .sub-amt { font-size:18px;font-weight:900;color:var(--green);font-family:'Nunito',sans-serif; }
+.sub-item .sub-time { font-size:11px;color:var(--text3);margin-top:2px; }
+.sub-item .sub-note { font-size:12px;color:var(--text2);margin-top:2px; }
+
+/* ══════════════ DAILY REPORT ══════════════ */
+.report-section { padding:0 16px; }
+.report-hero {
+  background:linear-gradient(135deg,#1A237E,#1D4ED8);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.report-hero::before {
+  content:'';position:absolute;
+  width:150px;height:150px;
+  background:rgba(255,255,255,0.06);
+  border-radius:50%;right:-40px;top:-40px;
+}
+.report-hero h3 { font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:4px; }
+.report-hero .big-num { font-size:36px;font-weight:900;color:white;font-family:'Nunito',sans-serif; }
+.report-hero .sub { font-size:12px;color:rgba(255,255,255,0.65);margin-top:4px; }
+.report-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px; }
+.report-item {
+  background:white;border-radius:var(--radius-sm);
+  padding:16px;box-shadow:var(--shadow-sm);
+  text-align:center;
+}
+.report-item .r-icon { font-size:22px;margin-bottom:8px; }
+.report-item .r-val { font-size:22px;font-weight:900;font-family:'Nunito',sans-serif; }
+.report-item .r-lbl { font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:3px; }
+
+.history-card {
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);overflow:hidden;
+  margin-bottom:14px;
+}
+.history-header {
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.history-header h4 { font-size:14px;font-weight:800; }
+.history-row {
+  padding:12px 16px;
+  border-bottom:1px solid #F5F5F8;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.history-row:last-child { border-bottom:none; }
+.h-id { font-size:13px;font-weight:700;color:var(--text); }
+.h-name { font-size:11px;color:var(--text3);margin-top:2px; }
+.h-amt { font-size:14px;font-weight:800;color:var(--green);font-family:'Nunito',sans-serif; }
+.h-time { font-size:10px;color:var(--text3);text-align:right;margin-top:2px; }
+
+/* ══════════════ PROFILE PAGE ══════════════ */
+.profile-hero {
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  padding:36px 20px 28px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.profile-hero::before {
+  content:'';position:absolute;width:200px;height:200px;
+  background:rgba(255,255,255,0.07);
+  border-radius:50%;top:-80px;right:-60px;
+}
+.profile-avatar {
+  width:76px;height:76px;
+  background:rgba(255,255,255,0.2);
+  border-radius:50%;border:3px solid rgba(255,255,255,0.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;font-weight:900;color:white;
+  font-family:'Nunito',sans-serif;
+  margin:0 auto 12px;position:relative;z-index:1;
+}
+.profile-name { font-size:22px;font-weight:900;color:white;position:relative;z-index:1; }
+.profile-phone { font-size:14px;color:rgba(255,255,255,0.72);margin-top:4px;position:relative;z-index:1; }
+.profile-area-tag {
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.15);color:white;
+  font-size:12px;font-weight:700;
+  padding:5px 14px;border-radius:20px;
+  margin-top:10px;position:relative;z-index:1;
+}
+
+.profile-section {
+  background:white;border-radius:var(--radius-sm);
+  margin:16px 16px 0;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.profile-item {
+  display:flex;align-items:center;
+  padding:15px 16px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background 0.15s;
+}
+.profile-item:last-child { border-bottom:none; }
+.profile-item:hover { background:var(--bg); }
+.pi-icon {
+  width:38px;height:38px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;margin-right:13px;flex-shrink:0;
+}
+.profile-item h4 { font-size:14px;font-weight:700; }
+.profile-item p { font-size:12px;color:var(--text3);margin-top:1px; }
+.pi-arrow { margin-left:auto;color:var(--text3);font-size:13px; }
+
+.logout-btn {
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:calc(100% - 32px);margin:16px;
+  padding:15px;
+  background:var(--bg);color:var(--primary);
+  border:2px solid var(--primary);border-radius:13px;
+  font-size:15px;font-weight:800;
+  font-family:'Nunito',sans-serif;cursor:pointer;transition:all 0.2s;
+}
+.logout-btn:hover { background:var(--primary);color:white; }
+
+/* ══ MODAL / BOTTOM SHEET ══ */
+.overlay {
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:300;display:none;
+  align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.overlay.open { display:flex;animation:fadeIn 0.2s ease; }
+.sheet {
+  background:white;border-radius:24px 24px 0 0;
+  width:100%;max-width:480px;
+  max-height:85vh;overflow-y:auto;
+  padding:24px;
+  animation:slideUp 0.3s ease;
+}
+.sheet-handle {
+  width:40px;height:4px;background:var(--border);
+  border-radius:4px;margin:0 auto 20px;
+}
+
+/* CONFIRM DELIVERED SHEET */
+.confirm-order-preview {
+  background:var(--bg);border-radius:12px;
+  padding:14px;margin-bottom:16px;
+}
+.confirm-row {
+  display:flex;justify-content:space-between;
+  font-size:13px;padding:5px 0;
+}
+.confirm-row span:first-child { color:var(--text3); }
+.confirm-row span:last-child { font-weight:700; }
+.amount-box {
+  background:linear-gradient(135deg,var(--green),#22C55E);
+  border-radius:14px;padding:16px;
+  text-align:center;margin:14px 0;
+  box-shadow:0 6px 20px rgba(22,163,74,0.3);
+}
+.amount-box .label { font-size:12px;color:rgba(255,255,255,0.8);font-weight:600;margin-bottom:4px; }
+.amount-box .value { font-size:28px;font-weight:900;color:white;font-family:'Nunito',sans-serif; }
+
+/* PENDING CASH INDICATOR */
+.pending-banner {
+  background:linear-gradient(135deg,var(--orange-bg),#FFF7ED);
+  border:1.5px solid #FED7AA;
+  border-radius:14px;padding:14px 16px;
+  margin:0 16px 14px;
+  display:flex;align-items:center;gap:12px;
+}
+.pending-banner .p-icon { font-size:24px; }
+.pending-banner h4 { font-size:14px;font-weight:800;color:var(--orange); }
+.pending-banner p { font-size:12px;color:var(--text3);margin-top:2px; }
+.pending-banner .collect-btn {
+  margin-left:auto;
+  padding:8px 14px;background:var(--orange);color:white;
+  border:none;border-radius:10px;font-size:12px;font-weight:700;
+  cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;
+}
+
+/* TOAST */
+#toastWrap {
+  position:fixed;bottom:calc(var(--bottom-nav)+16px);left:50%;transform:translateX(-50%);
+  z-index:999;width:calc(100% - 32px);max-width:420px;
+  display:flex;flex-direction:column;gap:8px;
+  pointer-events:none;
+}
+.toast {
+  background:var(--text);color:white;
+  padding:12px 18px;border-radius:12px;
+  font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:var(--shadow-md);
+  animation:slideUp 0.3s ease;
+  pointer-events:all;
+}
+.toast.success { background:var(--green); }
+.toast.error { background:var(--primary); }
+.toast.warning { background:var(--accent-dark);color:var(--text); }
+
+/* LOADING */
+#loadingWrap {
+  position:fixed;inset:0;background:rgba(255,255,255,0.92);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;
+}
+.spinner {
+  width:42px;height:42px;
+  border:4px solid var(--border);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin 0.7s linear infinite;
+}
+#loadingWrap p { margin-top:14px;font-size:14px;font-weight:600;color:var(--text3); }
+
+/* SUCCESS OVERLAY */
+.success-screen {
+  position:fixed;inset:0;background:white;
+  z-index:500;display:none;
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:32px;text-align:center;
+}
+.success-screen.open { display:flex;animation:fadeIn 0.3s ease; }
+.success-icon-wrap {
+  width:96px;height:96px;
+  background:var(--green-bg);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:46px;margin-bottom:22px;
+  animation:popIn 0.4s ease;
+}
+.success-screen h2 { font-size:24px;font-weight:900; }
+.success-screen p { font-size:14px;color:var(--text3);margin-top:10px;line-height:1.6; }
+.success-id {
+  background:var(--bg);border-radius:12px;padding:12px 24px;
+  margin:18px 0;font-size:20px;font-weight:900;
+  color:var(--green);letter-spacing:2px;font-family:'Nunito',sans-serif;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn { from{opacity:0}to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+@keyframes popIn { from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1} }
+@keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.2)} }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:5px;height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border);border-radius:10px; }
+
+/* DIVIDER */
+.divider { height:1px;background:var(--border);margin:8px 0; }
+
+/* PICKUP CONFIRM */
+.pickup-steps {
+  display:flex;flex-direction:column;gap:10px;margin-bottom:18px;
+}
+.pickup-step {
+  display:flex;align-items:center;gap:12px;
+  background:var(--bg);border-radius:12px;padding:12px 14px;
+}
+.pickup-step .step-num {
+  width:28px;height:28px;border-radius:50%;
+  background:var(--primary);color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;flex-shrink:0;
+}
+.pickup-step .step-text { font-size:13px;font-weight:600;color:var(--text2); }
+</style>
 </head>
 <body>
 
-    <div id="loader"><div class="loader-spin"></div></div>
+<!-- LOADING -->
+<div id="loadingWrap">
+  <div class="spinner"></div>
+  <p>Loading Fast8 Delivery...</p>
+</div>
 
-    <!-- 1. LOGIN SCREEN -->
-    <div id="login-screen">
-        <div class="login-card">
-            <div class="brand-text">Fast8<span>bondhu</span></div>
-            <p>Rider Delivery Partner</p>
-            <input type="number" id="login-phone" placeholder="9876543210">
-            <button class="login-btn" onclick="handleLogin()">START SHIFT</button>
-        </div>
+<!-- ══════════ LOGIN SCREEN ══════════ -->
+<div class="screen active" id="loginScreen">
+  <div class="login-top">
+    <div class="login-icon-wrap"><i class="fas fa-motorcycle"></i></div>
+    <h1>Fast8 Delivery</h1>
+    <p>Delivery Partner Portal</p>
+    <div class="login-badge"><i class="fas fa-shield-alt"></i> Secure Login</div>
+  </div>
+  <div class="login-card">
+    <h3>👋 Welcome Back!</h3>
+    <div class="login-err" id="loginErr"></div>
+    <div class="form-field">
+      <label>Delivery Boy ID</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" id="loginId" placeholder="Enter your login ID" autocomplete="off">
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPass" placeholder="Enter your password">
+      </div>
+    </div>
+    <button class="btn-login" onclick="doLogin()">
+      <i class="fas fa-sign-in-alt"></i> Login
+    </button>
+  </div>
+</div>
+
+<!-- ══════════ APP SCREEN ══════════ -->
+<div class="screen" id="appScreen">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-brand-icon"><i class="fas fa-bolt"></i></div>
+      <div>
+        <h2 id="topbarName">Fast8</h2>
+        <p>Delivery Partner</p>
+      </div>
+    </div>
+    <div class="online-pill" id="onlinePill" onclick="toggleOnline()">
+      <div class="online-dot" id="onlineDot"></div>
+      <span id="onlineText">Offline</span>
+    </div>
+  </div>
+
+  <!-- PAGES -->
+
+  <!-- ────────── DASHBOARD PAGE ────────── -->
+  <div class="page active" id="page-dashboard">
+    <!-- Hero -->
+    <div class="dash-hero">
+      <div class="dash-greeting">
+        <div class="hey" id="greetingText">Good morning,</div>
+        <h2 id="dboyDisplayName">Delivery Boy</h2>
+        <div class="area-tag"><i class="fas fa-map-marker-alt"></i><span id="dboyAreaTag">—</span></div>
+      </div>
     </div>
 
-    <!-- 2. MAIN APP -->
-    <div id="main-app" style="display:none;">
-        <header>
-            <div>
-                <span id="rider-name-display" style="font-size: 12px; opacity: 0.9; font-weight: 600;">Fast8 Rider</span>
-                <h3 style="font-size: 18px; letter-spacing: -0.5px;">Active Duty</h3>
-            </div>
-            <div class="rider-status"><div class="status-dot"></div> ONLINE</div>
-        </header>
-
-        <!-- VIEW: TASKS -->
-        <div id="view-tasks" class="section active">
-            <h4 style="margin-bottom: 15px; font-size: 16px;"><i class="fas fa-clipboard-list" style="color:var(--primary)"></i> Assigned to Me</h4>
-            <div id="task-list">
-                <!-- Orders will be injected here -->
-            </div>
+    <!-- Stats -->
+    <div class="dash-stats">
+      <div class="dash-stat">
+        <div class="stat-icon" style="background:var(--green-bg)"><i class="fas fa-check-circle" style="color:var(--green)"></i></div>
+        <div>
+          <div class="stat-val" id="stat-delivered" style="color:var(--green)">0</div>
+          <div class="stat-lbl">Delivered</div>
         </div>
-
-        <!-- VIEW: CASH & SUMMARY -->
-        <div id="view-cash" class="section">
-            <div class="summary-card">
-                <span>Total Cash in Hand</span>
-                <h1 id="cash-balance">₹0</h1>
-                <p style="font-size: 11px; opacity: 0.8; margin-top: 10px;">Submit this collection to Admin daily</p>
-            </div>
-
-            <div class="stat-grid">
-                <div class="small-stat">
-                    <span>Delivered Today</span>
-                    <h3 id="stat-count">0</h3>
-                </div>
-                <div class="small-stat">
-                    <span>Today's Cash</span>
-                    <h3 id="stat-today-cash">₹0</h3>
-                </div>
-            </div>
-
-            <div class="small-stat" style="margin-top:20px; background:#FFFDE7; border: 1px dashed var(--accent);">
-                <p style="font-size:12px; font-weight:700; color:#555;">"Apnar dorkare shop somoy pashei."</p>
-            </div>
+      </div>
+      <div class="dash-stat">
+        <div class="stat-icon" style="background:var(--orange-bg)"><i class="fas fa-clock" style="color:var(--orange)"></i></div>
+        <div>
+          <div class="stat-val" id="stat-pending" style="color:var(--orange)">0</div>
+          <div class="stat-lbl">Pending</div>
         </div>
-
-        <!-- VIEW: ACCOUNT -->
-        <div id="view-profile" class="section">
-            <div class="small-stat" style="margin-top:20px; padding:40px 20px;">
-                <i class="fas fa-user-astronaut fa-4x" style="color: var(--primary); margin-bottom: 20px;"></i>
-                <h3 id="profile-name">Rider Name</h3>
-                <p id="profile-phone" style="color: var(--text-light); margin-bottom: 30px;">+91 0000000000</p>
-                <button class="btn" style="background: #FFF0F0; color: #D32F2F; width: 100%; border: 1.5px solid #FFDCDC;" onclick="logout()">
-                    <i class="fas fa-power-off"></i> LOGOUT FROM SHIFT
-                </button>
-            </div>
+      </div>
+      <div class="dash-stat">
+        <div class="stat-icon" style="background:#FFF8E1"><i class="fas fa-rupee-sign" style="color:var(--accent-dark)"></i></div>
+        <div>
+          <div class="stat-val" id="stat-cashCollected" style="color:var(--accent-dark)">₹0</div>
+          <div class="stat-lbl">Cash Held</div>
         </div>
-
-        <!-- BOTTOM NAVIGATION -->
-        <nav class="bottom-nav">
-            <div class="nav-item active" onclick="switchView('view-tasks', this)"><i class="fas fa-route"></i>Tasks</div>
-            <div class="nav-item" onclick="switchView('view-cash', this)"><i class="fas fa-wallet"></i>Finance</div>
-            <div class="nav-item" onclick="switchView('view-profile', this)"><i class="fas fa-id-card"></i>Profile</div>
-        </nav>
+      </div>
+      <div class="dash-stat">
+        <div class="stat-icon" style="background:var(--blue-bg)"><i class="fas fa-motorcycle" style="color:var(--blue)"></i></div>
+        <div>
+          <div class="stat-val" id="stat-earning" style="color:var(--blue)">₹0</div>
+          <div class="stat-lbl">Del. Income</div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        // FIREBASE CONFIG
-        const firebaseConfig = {
-            apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
-            authDomain: "fast8delivery-business.firebaseapp.com",
-            projectId: "fast8delivery-business",
-            storageBucket: "fast8delivery-business.firebasestorage.app",
-            messagingSenderId: "968616663472",
-            appId: "1:968616663472:web:5ef89accec468344cd9e75",
-            measurementId: "G-WFHEXCC70P"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+    <!-- Pending Cash Banner -->
+    <div class="pending-banner hidden" id="pendingCashBanner">
+      <div class="p-icon">💰</div>
+      <div>
+        <h4>Cash Pending Submission</h4>
+        <p id="pendingCashAmt">₹0 to be submitted</p>
+      </div>
+      <button class="collect-btn" onclick="showPage('cash');switchNav('cash')">Submit Now</button>
+    </div>
 
-        let riderData = null;
+    <!-- Active Deliveries -->
+    <div class="sec-hdr">
+      <h3>🏍 Active Deliveries</h3>
+      <span id="activeCount">0 orders</span>
+    </div>
+    <div class="orders-list" id="activeOrdersList">
+      <div class="no-orders">
+        <div class="icon-wrap">🏍️</div>
+        <h3>No active deliveries</h3>
+        <p>Assigned orders will appear here</p>
+      </div>
+    </div>
+  </div>
 
-        // AUTH LOGIC
-        async function handleLogin() {
-            let phoneInput = document.getElementById('login-phone').value.trim();
-            if(!phoneInput) return alert("Please enter registered phone!");
+  <!-- ────────── ALL ORDERS PAGE ────────── -->
+  <div class="page" id="page-orders">
+    <div style="background:white;padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <h2 style="font-size:18px;font-weight:900">My Orders</h2>
+      <div style="display:flex;gap:8px">
+        <select id="ordersFilter" onchange="filterMyOrders()" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer">
+          <option value="">All</option>
+          <option value="out_for_delivery">Active</option>
+          <option value="delivered">Delivered</option>
+        </select>
+        <button class="btn btn-outline btn-sm" onclick="loadMyOrders()"><i class="fas fa-sync-alt"></i></button>
+      </div>
+    </div>
+    <div class="orders-list" style="padding-top:14px" id="allOrdersList">
+      <div class="no-orders">
+        <div class="icon-wrap">📋</div>
+        <h3>No orders yet</h3>
+        <p>Your assigned orders appear here</p>
+      </div>
+    </div>
+  </div>
 
-            const phoneStr = String(phoneInput);
-            showLoader(true);
+  <!-- ────────── CASH SUBMISSION PAGE ────────── -->
+  <div class="page" id="page-cash">
+    <div style="background:white;padding:16px 18px;border-bottom:1px solid var(--border)">
+      <h2 style="font-size:18px;font-weight:900">Cash Submission</h2>
+      <p style="font-size:12px;color:var(--text3);margin-top:3px">Submit collected cash to admin</p>
+    </div>
+    <div class="cash-section" style="margin-top:16px">
 
-            // Fetch Rider with strict String check
-            let snap = await db.collection('deliveryBoys').where('phone', '==', phoneStr).get();
-            if(snap.empty) {
-                snap = await db.collection('deliveryBoys').where('phone', '==', Number(phoneStr)).get();
-            }
+      <!-- Cash Summary Card -->
+      <div class="cash-card">
+        <h4><i class="fas fa-wallet" style="color:var(--orange);margin-right:8px"></i>Today's Cash Summary</h4>
+        <div class="cash-info-row"><span>COD Orders Delivered</span><span id="cashCodDelivered">0</span></div>
+        <div class="cash-info-row"><span>Total COD Collected</span><span id="cashCodTotal" style="color:var(--green);font-weight:800">₹0</span></div>
+        <div class="cash-info-row"><span>Already Submitted</span><span id="cashSubmitted" style="color:var(--blue)">₹0</span></div>
+        <div class="divider"></div>
+        <div class="cash-info-row">
+          <span style="font-weight:700;color:var(--text)">Pending to Submit</span>
+          <span id="cashPending" style="font-size:18px;font-weight:900;color:var(--primary);font-family:'Nunito',sans-serif">₹0</span>
+        </div>
+      </div>
 
-            if(snap.empty) {
-                alert("Account not found! Admin needs to register this phone.");
-                showLoader(false);
-            } else {
-                snap.forEach(doc => {
-                    riderData = { id: doc.id, ...doc.data() };
-                    riderData.phone = String(riderData.phone);
-                });
-                localStorage.setItem('f8b_rider_session', JSON.stringify(riderData));
-                initApp();
-            }
-        }
+      <!-- Submit Form -->
+      <div class="cash-card">
+        <h4><i class="fas fa-hand-holding-usd" style="color:var(--green);margin-right:8px"></i>Submit Cash</h4>
+        <div class="cash-input">
+          <span>₹</span>
+          <input type="number" id="submitAmount" placeholder="0" inputmode="numeric">
+        </div>
+        <input type="text" class="note-input" id="submitNote" placeholder="Note (optional) — e.g. Short by ₹10...">
+        <button class="btn btn-green btn-full" onclick="submitCash()">
+          <i class="fas fa-paper-plane"></i> Submit Cash to Admin
+        </button>
+      </div>
 
-        function initApp() {
-            const stored = localStorage.getItem('f8b_rider_session');
-            if(stored) {
-                riderData = JSON.parse(stored);
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                document.getElementById('rider-name-display').innerText = riderData.name;
-                document.getElementById('profile-name').innerText = riderData.name;
-                document.getElementById('profile-phone').innerText = "+91 " + riderData.phone;
-                syncOrders();
-                syncRiderWallet(); 
-            }
-        }
+      <!-- Pending Entries -->
+      <div class="cash-card">
+        <h4><i class="fas fa-exclamation-triangle" style="color:var(--orange);margin-right:8px"></i>Pending / Short Entries</h4>
+        <button class="btn btn-outline btn-sm" style="margin-bottom:12px" onclick="openPendingModal()"><i class="fas fa-plus"></i> Add Pending Entry</button>
+        <div id="pendingEntriesList">
+          <p style="font-size:13px;color:var(--text3);text-align:center;padding:16px">No pending entries</p>
+        </div>
+      </div>
 
-        // REAL-TIME WALLET
-        function syncRiderWallet() {
-            db.collection('deliveryBoys').doc(riderData.id).onSnapshot(doc => {
-                if(doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('cash-balance').innerText = '₹' + (data.cashInHand || 0);
-                }
-            });
-        }
+      <!-- Today's Submissions Log -->
+      <div class="cash-card">
+        <h4><i class="fas fa-history" style="color:var(--blue);margin-right:8px"></i>Today's Submissions</h4>
+        <div class="submissions-list" id="submissionsList">
+          <p style="font-size:13px;color:var(--text3);text-align:center;padding:12px">No submissions yet today</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // REAL-TIME ASSIGNED ORDERS
-        function syncOrders() {
-            const myRiderPhone = String(riderData.phone);
+  <!-- ────────── DAILY REPORT PAGE ────────── -->
+  <div class="page" id="page-report">
+    <div style="background:white;padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h2 style="font-size:18px;font-weight:900">Daily Report</h2>
+        <p style="font-size:12px;color:var(--text3);margin-top:2px" id="reportDateLabel">Today</p>
+      </div>
+      <input type="date" id="reportDate" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none" onchange="loadReport()">
+    </div>
+    <div class="report-section" style="margin-top:16px">
+      <!-- Big Number -->
+      <div class="report-hero">
+        <div style="position:relative;z-index:1">
+          <h3>Total Deliveries</h3>
+          <div class="big-num" id="rpt-total">0</div>
+          <div class="sub" id="rpt-subtitle">No deliveries yet</div>
+        </div>
+      </div>
+      <!-- Grid -->
+      <div class="report-grid">
+        <div class="report-item">
+          <div class="r-icon">💰</div>
+          <div class="r-val" id="rpt-codAmt" style="color:var(--green)">₹0</div>
+          <div class="r-lbl">COD Collected</div>
+        </div>
+        <div class="report-item">
+          <div class="r-icon">🚴</div>
+          <div class="r-val" id="rpt-delIncome" style="color:var(--blue)">₹0</div>
+          <div class="r-lbl">Del. Income</div>
+        </div>
+        <div class="report-item">
+          <div class="r-icon">📤</div>
+          <div class="r-val" id="rpt-submitted" style="color:var(--orange)">₹0</div>
+          <div class="r-lbl">Submitted</div>
+        </div>
+        <div class="report-item">
+          <div class="r-icon">⏳</div>
+          <div class="r-val" id="rpt-pendingAmt" style="color:var(--primary)">₹0</div>
+          <div class="r-lbl">Pending</div>
+        </div>
+      </div>
+      <!-- History -->
+      <div class="history-card">
+        <div class="history-header">
+          <h4>Delivered Orders</h4>
+          <span style="font-size:12px;color:var(--text3)" id="rpt-count">0 orders</span>
+        </div>
+        <div id="rpt-history">
+          <div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No deliveries for selected date</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            db.collection('orders')
-              .where('assignedTo', '==', myRiderPhone)
-              .onSnapshot(snap => {
-                const list = document.getElementById('task-list');
-                list.innerHTML = '';
-                let deliveredCount = 0;
-                let cashCollectedToday = 0;
-                const today = new Date().toDateString();
+  <!-- ────────── PROFILE PAGE ────────── -->
+  <div class="page" id="page-profile">
+    <div class="profile-hero">
+      <div class="profile-avatar" id="profileInitials">D</div>
+      <div class="profile-name" id="profileName">Delivery Boy</div>
+      <div class="profile-phone" id="profilePhone">—</div>
+      <div class="profile-area-tag"><i class="fas fa-map-marker-alt"></i><span id="profileArea">—</span></div>
+    </div>
 
-                snap.forEach(doc => {
-                    const o = doc.data();
-                    const isToday = new Date(o.timestamp).toDateString() === today;
+    <div class="profile-section">
+      <div class="profile-item" onclick="showPage('report');switchNav('report');loadReport()">
+        <div class="pi-icon" style="background:var(--blue-bg);color:var(--blue)"><i class="fas fa-chart-bar"></i></div>
+        <div><h4>Daily Report</h4><p>View your delivery performance</p></div>
+        <i class="fas fa-chevron-right pi-arrow"></i>
+      </div>
+      <div class="profile-item" onclick="showPage('cash');switchNav('cash')">
+        <div class="pi-icon" style="background:var(--green-bg);color:var(--green)"><i class="fas fa-wallet"></i></div>
+        <div><h4>Cash Submission</h4><p>Submit collected cash</p></div>
+        <i class="fas fa-chevron-right pi-arrow"></i>
+      </div>
+      <div class="profile-item">
+        <div class="pi-icon" style="background:var(--orange-bg);color:var(--orange)"><i class="fas fa-headset"></i></div>
+        <div><h4>Contact Admin</h4><p id="adminContactInfo">Reach out for help</p></div>
+        <i class="fas fa-chevron-right pi-arrow"></i>
+      </div>
+    </div>
 
-                    if(o.status === 'Out') {
-                        list.innerHTML += `
-                            <div class="order-card">
-                                <div class="order-header">
-                                    <span>#${doc.id.slice(-5)}</span>
-                                    <span style="color:var(--primary)">COD: ₹${o.total}</span>
-                                </div>
-                                <span class="cust-name">${o.customerName}</span>
-                                <div style="font-size:12px; color:gray; line-height:1.4; margin-bottom:10px;">
-                                    <i class="fas fa-location-dot"></i> ${o.address}
-                                </div>
-                                <div class="items-info">
-                                    <b>Items to Deliver:</b><br>${o.itemsSummary}
-                                </div>
-                                <div class="action-btns">
-                                    <button class="btn btn-call" onclick="window.open('tel:${o.customerPhone}')">
-                                        <i class="fas fa-phone"></i> CALL
-                                    </button>
-                                    <button class="btn btn-nav" onclick="window.open('https://www.google.com/maps/search/${encodeURIComponent(o.address)}')">
-                                        <i class="fas fa-map-location"></i> MAP
-                                    </button>
-                                    <button class="btn btn-deliver" onclick="markDelivered('${doc.id}', ${o.total})">
-                                        FINISH
-                                    </button>
-                                </div>
-                            </div>`;
-                    }
+    <div style="background:white;border-radius:var(--radius-sm);margin:12px 16px 0;padding:16px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">Today's Quick Stats</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+        <div><div style="font-size:20px;font-weight:900;color:var(--green);font-family:'Nunito',sans-serif" id="pf-delivered">0</div><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase">Delivered</div></div>
+        <div><div style="font-size:20px;font-weight:900;color:var(--orange);font-family:'Nunito',sans-serif" id="pf-pending">0</div><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase">Active</div></div>
+        <div><div style="font-size:20px;font-weight:900;color:var(--blue);font-family:'Nunito',sans-serif" id="pf-income">₹0</div><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase">Income</div></div>
+      </div>
+    </div>
 
-                    if(o.status === 'Delivered' && isToday) {
-                        deliveredCount++;
-                        cashCollectedToday += o.total;
-                    }
-                });
+    <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    <div style="height:20px"></div>
+  </div>
 
-                document.getElementById('stat-count').innerText = deliveredCount;
-                document.getElementById('stat-today-cash').innerText = '₹' + cashCollectedToday;
-                
-                if(list.innerHTML === '') {
-                    list.innerHTML = `<div style="text-align:center; padding:70px; color:#ccc;">
-                        <i class="fas fa-clipboard-check fa-3x" style="margin-bottom:15px; opacity:0.3"></i><br>
-                        <span style="font-size:13px; font-weight:600;">No assignments</span><br>
-                        <span style="font-size:11px;">Admin will notify you soon.</span></div>`;
-                }
-                showLoader(false);
-            }, err => {
-                console.error("Order Sync Error:", err);
-                showLoader(false);
-            });
-        }
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-dashboard" onclick="showPage('dashboard');switchNav('dashboard')">
+      <i class="fas fa-home"></i>Home
+    </button>
+    <button class="nav-btn" id="nav-orders" onclick="showPage('orders');switchNav('orders');loadMyOrders()">
+      <i class="fas fa-list-ul"></i>Orders
+      <span class="nav-badge hidden" id="navOrdersBadge">0</span>
+    </button>
+    <button class="nav-btn" id="nav-cash" onclick="showPage('cash');switchNav('cash');loadCashPage()">
+      <i class="fas fa-wallet"></i>Cash
+    </button>
+    <button class="nav-btn" id="nav-report" onclick="showPage('report');switchNav('report');loadReport()">
+      <i class="fas fa-chart-bar"></i>Report
+    </button>
+    <button class="nav-btn" id="nav-profile" onclick="showPage('profile');switchNav('profile')">
+      <i class="fas fa-user"></i>Profile
+    </button>
+  </nav>
+</div>
 
-        async function markDelivered(id, amt) {
-            if(confirm("Confirm collection of ₹" + amt + " and delivery?")) {
-                showLoader(true);
-                // Update Order status
-                await db.collection('orders').doc(id).update({ status: 'Delivered' });
-                // Increment Rider's cash balance
-                await db.collection('deliveryBoys').doc(riderData.id).update({
-                    cashInHand: firebase.firestore.FieldValue.increment(amt)
-                });
-                alert("Order Successful!");
-            }
-        }
+<!-- ══ CONFIRM DELIVERY SHEET ══ -->
+<div class="overlay" id="confirmDeliveryOverlay" onclick="closeSheet(event,'confirmDeliveryOverlay')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3 style="font-size:17px;font-weight:900;margin-bottom:4px">✅ Confirm Delivery</h3>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Make sure you have collected cash (if COD)</p>
 
-        // HELPERS
-        function switchView(id, el) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-            window.scrollTo(0,0);
-        }
+    <div class="confirm-order-preview" id="confirmOrderPreview"></div>
 
-        function showLoader(s) { document.getElementById('loader').style.display = s ? 'flex' : 'none'; }
+    <div class="amount-box" id="confirmAmountBox">
+      <div class="label">COLLECT FROM CUSTOMER</div>
+      <div class="value" id="confirmAmountVal">₹0</div>
+    </div>
 
-        function logout() {
-            if(confirm("End current shift?")) {
-                localStorage.removeItem('f8b_rider_session');
-                location.reload();
-            }
-        }
+    <div class="pickup-steps">
+      <div class="pickup-step"><div class="step-num">1</div><div class="step-text">Hand over all items to customer</div></div>
+      <div class="pickup-step"><div class="step-num">2</div><div class="step-text">Collect cash if payment is COD</div></div>
+      <div class="pickup-step"><div class="step-num">3</div><div class="step-text">Tap confirm to complete delivery</div></div>
+    </div>
 
-        window.onload = initApp;
-    </script>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="flex:1" onclick="closeSheet(null,'confirmDeliveryOverlay')">Cancel</button>
+      <button class="btn btn-green" style="flex:2" id="confirmDeliveryBtn" onclick="confirmDelivery()">
+        <i class="fas fa-check-circle"></i> Confirm Delivered
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PENDING ENTRY SHEET ══ -->
+<div class="overlay" id="pendingOverlay" onclick="closeSheet(event,'pendingOverlay')">
+  <div class="sheet" style="max-height:60vh">
+    <div class="sheet-handle"></div>
+    <h3 style="font-size:17px;font-weight:900;margin-bottom:14px">⚠️ Add Pending Entry</h3>
+    <div class="form-field">
+      <label>Reason</label>
+      <div class="input-wrap">
+        <i class="fas fa-comment"></i>
+        <input type="text" id="pendingReason" placeholder="e.g. Short change, customer unavailable...">
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Amount (₹)</label>
+      <div class="input-wrap">
+        <i class="fas fa-rupee-sign"></i>
+        <input type="number" id="pendingAmount" placeholder="0">
+      </div>
+    </div>
+    <button class="btn btn-yellow btn-full" onclick="savePendingEntry()">
+      <i class="fas fa-save"></i> Save Pending Entry
+    </button>
+  </div>
+</div>
+
+<!-- ══ ORDER DETAIL SHEET ══ -->
+<div class="overlay" id="orderDetailOverlay" onclick="closeSheet(event,'orderDetailOverlay')">
+  <div class="sheet" style="max-height:88vh">
+    <div class="sheet-handle"></div>
+    <div id="orderDetailContent"></div>
+  </div>
+</div>
+
+<!-- ══ SUCCESS SCREEN ══ -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon-wrap">✅</div>
+  <h2>Delivery Complete!</h2>
+  <p id="successMsg">Order delivered successfully.</p>
+  <div class="success-id" id="successId">#000000</div>
+  <button class="btn btn-green btn-full" onclick="closeSuccess()" style="max-width:280px">
+    <i class="fas fa-home"></i> Back to Dashboard
+  </button>
+</div>
+
+<!-- TOAST -->
+<div id="toastWrap"></div>
+
+<!-- ══════════════ FIREBASE + JS ══════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, getDoc, getDocs, addDoc, updateDoc, query, orderBy, where, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
+  authDomain: "fast8delivery-business.firebaseapp.com",
+  projectId: "fast8delivery-business",
+  storageBucket: "fast8delivery-business.firebasestorage.app",
+  messagingSenderId: "968616663472",
+  appId: "1:968616663472:web:5ef89accec468344cd9e75",
+  measurementId: "G-WFHEXCC70P"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ─── STATE ───
+let currentDboy = null;
+let myOrders = [];
+let allAreas = [];
+let pendingEntries = [];
+let submissionsToday = [];
+let confirmOrderId = null;
+let ordersUnsub = null;
+let isOnline = false;
+
+// ─── HELPERS ───
+const today = () => new Date().toISOString().split('T')[0];
+const fmt = v => '₹' + (parseFloat(v)||0).toLocaleString('en-IN', {minimumFractionDigits:0, maximumFractionDigits:2});
+const fmtTime = ts => {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+};
+const fmtDate = ts => {
+  if (!ts) return '-';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+};
+const greet = () => {
+  const h = new Date().getHours();
+  if (h<12) return 'Good morning,';
+  if (h<17) return 'Good afternoon,';
+  return 'Good evening,';
+};
+
+// ─── TOAST ───
+window.showToast = (msg, type='success') => {
+  const c = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  const icons = {success:'fas fa-check-circle',error:'fas fa-times-circle',warning:'fas fa-exclamation-circle'};
+  el.innerHTML = `<i class="${icons[type]||'fas fa-info-circle'}"></i><span>${msg}</span>`;
+  c.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(8px)';el.style.transition='all 0.3s';setTimeout(()=>el.remove(),300);},3000);
+};
+
+// ─── LOADING ───
+const showLoad = v => document.getElementById('loadingWrap').style.display = v ? 'flex' : 'none';
+
+// ─── LOGIN ───
+window.doLogin = async () => {
+  const id = document.getElementById('loginId').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginErr');
+  errEl.style.display = 'none';
+  if (!id||!pass) { errEl.textContent='Please enter ID and password'; errEl.style.display='block'; return; }
+  showLoad(true);
+  try {
+    const snap = await getDocs(query(collection(db,'deliveryBoys'),where('loginId','==',id),where('password','==',pass)));
+    if (snap.empty) { errEl.textContent='❌ Invalid login ID or password'; errEl.style.display='block'; }
+    else {
+      currentDboy = {id: snap.docs[0].id, ...snap.docs[0].data()};
+      localStorage.setItem('fast8dboy', JSON.stringify(currentDboy));
+      enterApp();
+    }
+  } catch(e) { errEl.textContent='Error: '+e.message; errEl.style.display='block'; }
+  showLoad(false);
+};
+
+document.getElementById('loginId').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginPass').focus();});
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+window.doLogout = () => {
+  if (ordersUnsub) ordersUnsub();
+  currentDboy = null; myOrders = [];
+  localStorage.removeItem('fast8dboy');
+  document.getElementById('appScreen').classList.remove('active');
+  document.getElementById('loginScreen').classList.add('active');
+};
+
+function enterApp() {
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('appScreen').classList.add('active');
+  initApp();
+}
+
+// ─── INIT ───
+async function initApp() {
+  showLoad(true);
+  updateProfileUI();
+  listenMyOrders();
+  await loadAreas();
+  loadCashPage();
+  const today_dt = new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('reportDateLabel').textContent = today_dt;
+  document.getElementById('reportDate').value = today();
+  showLoad(false);
+}
+
+function updateProfileUI() {
+  if (!currentDboy) return;
+  const initials = currentDboy.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('profileInitials').textContent = initials;
+  document.getElementById('profileName').textContent = currentDboy.name;
+  document.getElementById('profilePhone').textContent = '📞 '+currentDboy.phone;
+  document.getElementById('topbarName').textContent = currentDboy.name.split(' ')[0];
+  document.getElementById('dboyDisplayName').textContent = currentDboy.name;
+  document.getElementById('greetingText').textContent = greet();
+}
+
+async function loadAreas() {
+  const snap = await getDocs(collection(db,'areas'));
+  allAreas = snap.docs.map(d=>({id:d.id,...d.data()}));
+  const area = allAreas.find(a=>a.id===currentDboy?.areaId);
+  const areaName = area?.name || '—';
+  document.getElementById('dboyAreaTag').textContent = areaName;
+  document.getElementById('profileArea').textContent = areaName;
+}
+
+// ─── REALTIME ORDERS LISTENER ───
+function listenMyOrders() {
+  if (ordersUnsub) ordersUnsub();
+  if (!currentDboy) return;
+  // Listen to orders assigned to this delivery boy
+  const q = query(collection(db,'orders'), where('deliveryBoyId','==',currentDboy.id), orderBy('createdAt','desc'));
+  ordersUnsub = onSnapshot(q, snap => {
+    myOrders = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderDashboard();
+  });
+}
+
+// ─── NAVIGATION ───
+window.showPage = name => {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg = document.getElementById('page-'+name);
+  if (pg) { pg.classList.add('active'); window.scrollTo(0,0); }
+};
+window.switchNav = name => {
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const btn = document.getElementById('nav-'+name);
+  if (btn) btn.classList.add('active');
+};
+
+// ─── ONLINE TOGGLE ───
+window.toggleOnline = () => {
+  isOnline = !isOnline;
+  const pill = document.getElementById('onlinePill');
+  const text = document.getElementById('onlineText');
+  if (isOnline) { pill.classList.add('online'); text.textContent='Online'; showToast('You are now online 🟢'); }
+  else { pill.classList.remove('online'); text.textContent='Offline'; showToast('You are now offline 🔴','warning'); }
+};
+
+// ─── DASHBOARD ───
+function renderDashboard() {
+  const todayStr = today();
+  const active = myOrders.filter(o=>o.status==='out_for_delivery');
+  const deliveredToday = myOrders.filter(o=>{
+    const d = o.deliveredAt?.toDate ? o.deliveredAt.toDate() : o.createdAt?.toDate ? o.createdAt.toDate() : new Date(0);
+    return d.toISOString().split('T')[0]===todayStr && o.status==='delivered';
+  });
+  const codCollected = deliveredToday.filter(o=>o.payment==='cod').reduce((s,o)=>s+(o.total||0),0);
+  const delIncome = deliveredToday.reduce((s,o)=>s+(o.deliveryCharge||0),0);
+  const submittedAmt = submissionsToday.reduce((s,sub)=>s+(sub.amount||0),0);
+  const pendingCash = codCollected - submittedAmt;
+
+  document.getElementById('stat-delivered').textContent = deliveredToday.length;
+  document.getElementById('stat-pending').textContent = active.length;
+  document.getElementById('stat-cashCollected').textContent = fmt(pendingCash > 0 ? pendingCash : 0);
+  document.getElementById('stat-earning').textContent = fmt(delIncome);
+  document.getElementById('activeCount').textContent = active.length + ' order'+(active.length!==1?'s':'');
+
+  // Profile quick stats
+  document.getElementById('pf-delivered').textContent = deliveredToday.length;
+  document.getElementById('pf-pending').textContent = active.length;
+  document.getElementById('pf-income').textContent = fmt(delIncome);
+
+  // Pending Cash Banner
+  const banner = document.getElementById('pendingCashBanner');
+  if (pendingCash > 0) {
+    banner.classList.remove('hidden');
+    document.getElementById('pendingCashAmt').textContent = fmt(pendingCash) + ' to be submitted';
+  } else { banner.classList.add('hidden'); }
+
+  // Nav badge
+  const badge = document.getElementById('navOrdersBadge');
+  if (active.length > 0) { badge.textContent = active.length; badge.classList.remove('hidden'); }
+  else { badge.classList.add('hidden'); }
+
+  renderActiveOrders(active);
+}
+
+function renderActiveOrders(orders) {
+  const c = document.getElementById('activeOrdersList');
+  if (!orders.length) {
+    c.innerHTML = `<div class="no-orders">
+      <div class="icon-wrap">🏍️</div>
+      <h3>No active deliveries</h3>
+      <p>You'll see assigned orders here</p>
+    </div>`;
+    return;
+  }
+  c.innerHTML = orders.map(o => buildOrderCard(o, true)).join('');
+}
+
+function buildOrderCard(o, isActive) {
+  const items = (o.items||[]).slice(0,2).map(i=>i.name).join(', ')+(o.items?.length>2?` +${o.items.length-2} more`:'');
+  const isPaid = o.payment==='upi' || o.paymentStatus==='paid';
+  const custInitial = (o.customerName||'?')[0].toUpperCase();
+  return `<div class="order-card">
+    <div class="order-card-top">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="order-num">#${o.id.slice(-6).toUpperCase()}</div>
+          <span class="status-pill sp-${o.status}">${o.status?.replace(/_/g,' ')}</span>
+          <span class="payment-tag ${isPaid?'pt-paid':'pt-cod'}">${isPaid?'✅ Paid':'💵 COD'}</span>
+        </div>
+        <div class="order-time">${fmtDate(o.createdAt)} • ${fmtTime(o.createdAt)}</div>
+        <div class="order-items-text">📦 ${items}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px">📍 ${o.address||o.area||'—'}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="order-amount">${fmt(o.total)}</div>
+        <div class="order-del-charge">🚴 +${fmt(o.deliveryCharge)} del.</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i> View</button>
+      </div>
+    </div>
+    <div class="customer-row">
+      <div class="customer-info">
+        <div class="customer-avatar">${custInitial}</div>
+        <div>
+          <div class="customer-name">${o.customerName||'Customer'}</div>
+          <div class="customer-addr">${o.area||'—'} • ${o.km||0} km away</div>
+        </div>
+      </div>
+      <a href="tel:${o.customerPhone}" class="call-btn" title="Call Customer"><i class="fas fa-phone"></i></a>
+    </div>
+    ${isActive ? `<div class="order-actions">
+      <button class="btn btn-outline" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-map-marker-alt"></i> Details</button>
+      <button class="btn btn-green" style="flex:1" onclick="openConfirmDelivery('${o.id}')">
+        <i class="fas fa-check-circle"></i> Mark Delivered
+      </button>
+    </div>` : `<div class="order-actions">
+      <button class="btn btn-outline btn-full" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i> View Details</button>
+    </div>`}
+  </div>`;
+}
+
+// ─── ALL ORDERS ───
+window.loadMyOrders = async () => {
+  // Use cached myOrders first, just re-render
+  filterMyOrders();
+};
+
+window.filterMyOrders = () => {
+  const filter = document.getElementById('ordersFilter').value;
+  const filtered = filter ? myOrders.filter(o=>o.status===filter) : myOrders;
+  const c = document.getElementById('allOrdersList');
+  if (!filtered.length) {
+    c.innerHTML = `<div class="no-orders"><div class="icon-wrap">📋</div><h3>No orders yet</h3><p>Your assigned orders appear here</p></div>`;
+    return;
+  }
+  const isActive = o => o.status === 'out_for_delivery';
+  c.innerHTML = filtered.map(o => buildOrderCard(o, isActive(o))).join('');
+};
+
+// ─── ORDER DETAIL ───
+window.viewOrderDetail = id => {
+  const o = myOrders.find(x=>x.id===id);
+  if (!o) return;
+  const itemsHtml = (o.items||[]).map(i=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+      ${i.imageUrl?`<img src="${i.imageUrl}" style="width:40px;height:40px;border-radius:9px;object-fit:cover">`:`<div style="width:40px;height:40px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text3)"><i class="fas fa-box"></i></div>`}
+      <div style="flex:1"><div style="font-weight:700;font-size:13px">${i.name}</div><div style="font-size:11px;color:var(--text3)">${fmt(i.price)} × ${i.qty}</div></div>
+      <div style="font-weight:800;font-size:14px;color:var(--primary);font-family:'Nunito',sans-serif">${fmt(i.price*i.qty)}</div>
+    </div>`).join('');
+  const isPaid = o.payment==='upi'||o.paymentStatus==='paid';
+  document.getElementById('orderDetailContent').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <h3 style="font-size:18px;font-weight:900">#${o.id.slice(-6).toUpperCase()}</h3>
+      <span class="status-pill sp-${o.status}">${o.status?.replace(/_/g,' ')}</span>
+    </div>
+    <div style="background:var(--bg);border-radius:13px;padding:14px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:white">${(o.customerName||'?')[0].toUpperCase()}</div>
+        <div><div style="font-weight:700;font-size:15px">${o.customerName||'—'}</div><div style="font-size:12px;color:var(--text3)">${o.customerPhone||'—'}</div></div>
+        <a href="tel:${o.customerPhone}" class="call-btn" style="margin-left:auto"><i class="fas fa-phone"></i></a>
+      </div>
+      <div style="font-size:12px;color:var(--text2)"><i class="fas fa-map-marker-alt" style="color:var(--primary)"></i> ${o.address||o.area||'—'}</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:4px"><i class="fas fa-road"></i> ${o.km||0} km from hub</div>
+    </div>
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text3);margin-bottom:8px">Items</div>
+    ${itemsHtml}
+    <div style="margin-top:14px;background:${isPaid?'var(--green-bg)':'var(--orange-bg)'};border-radius:13px;padding:14px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px">
+        <span style="color:var(--text3)">Sub Total</span><span style="font-weight:700">${fmt(o.subTotal)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px">
+        <span style="color:var(--text3)">Delivery</span><span style="font-weight:700">${fmt(o.deliveryCharge)}</span>
+      </div>
+      ${o.discount?`<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:var(--green)">Discount</span><span style="font-weight:700;color:var(--green)">-${fmt(o.discount)}</span></div>`:''}
+      <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid rgba(0,0,0,0.08)">
+        <span style="font-size:15px;font-weight:800;color:${isPaid?'var(--green)':'var(--orange)'}">${isPaid?'💳 UPI Paid':'💵 Collect COD'}</span>
+        <span style="font-size:20px;font-weight:900;color:${isPaid?'var(--green)':'var(--orange)'};font-family:'Nunito',sans-serif">${fmt(o.total)}</span>
+      </div>
+    </div>
+    ${o.status==='out_for_delivery'?`<div style="display:flex;gap:10px;margin-top:16px">
+      <a href="tel:${o.customerPhone}" class="btn btn-outline" style="flex:1;text-decoration:none;justify-content:center"><i class="fas fa-phone"></i> Call</a>
+      <button class="btn btn-green" style="flex:2" onclick="document.getElementById('orderDetailOverlay').classList.remove('open');openConfirmDelivery('${o.id}')">
+        <i class="fas fa-check-circle"></i> Mark Delivered
+      </button>
+    </div>`:'<div style="height:8px"></div>'}
+  `;
+  document.getElementById('orderDetailOverlay').classList.add('open');
+};
+
+// ─── CONFIRM DELIVERY ───
+window.openConfirmDelivery = id => {
+  const o = myOrders.find(x=>x.id===id);
+  if (!o) return;
+  confirmOrderId = id;
+  const isPaid = o.payment==='upi'||o.paymentStatus==='paid';
+  document.getElementById('confirmOrderPreview').innerHTML = `
+    <div class="confirm-row"><span>Order</span><span>#${o.id.slice(-6).toUpperCase()}</span></div>
+    <div class="confirm-row"><span>Customer</span><span>${o.customerName||'—'}</span></div>
+    <div class="confirm-row"><span>Items</span><span>${(o.items||[]).length} item(s)</span></div>
+    <div class="confirm-row"><span>Payment</span><span><span class="payment-tag ${isPaid?'pt-paid':'pt-cod'}">${isPaid?'✅ UPI Paid':'💵 COD'}</span></span></div>
+  `;
+  const amtBox = document.getElementById('confirmAmountBox');
+  if (isPaid) {
+    amtBox.style.background='linear-gradient(135deg,var(--blue),#3B82F6)';
+    document.getElementById('confirmAmountVal').textContent = '✅ Already Paid via UPI';
+    document.querySelector('#confirmAmountBox .label').textContent = 'PAYMENT STATUS';
+  } else {
+    amtBox.style.background='linear-gradient(135deg,var(--green),#22C55E)';
+    document.getElementById('confirmAmountVal').textContent = fmt(o.total);
+    document.querySelector('#confirmAmountBox .label').textContent = 'COLLECT FROM CUSTOMER';
+  }
+  document.getElementById('confirmDeliveryOverlay').classList.add('open');
+};
+
+window.confirmDelivery = async () => {
+  if (!confirmOrderId) return;
+  const btn = document.getElementById('confirmDeliveryBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  try {
+    await updateDoc(doc(db,'orders',confirmOrderId), {
+      status:'delivered',
+      paymentStatus:'paid',
+      deliveredAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+    document.getElementById('confirmDeliveryOverlay').classList.remove('open');
+    const o = myOrders.find(x=>x.id===confirmOrderId);
+    document.getElementById('successId').textContent = '#'+confirmOrderId.slice(-6).toUpperCase();
+    document.getElementById('successMsg').innerHTML = `
+      <strong>${o?.customerName||'Customer'}</strong> received their order.<br>
+      ${o?.payment==='cod'?`<span style="color:var(--green);font-weight:700">Remember to submit cash: ${fmt(o.total)}</span>`:'Payment was via UPI ✅'}
+    `;
+    document.getElementById('successScreen').classList.add('open');
+    confirmOrderId = null;
+    setTimeout(loadCashPage, 1000);
+  } catch(e) { showToast('Error: '+e.message, 'error'); }
+  btn.disabled=false; btn.innerHTML='<i class="fas fa-check-circle"></i> Confirm Delivered';
+};
+
+window.closeSuccess = () => {
+  document.getElementById('successScreen').classList.remove('open');
+  showPage('dashboard'); switchNav('dashboard');
+};
+
+// ─── CASH PAGE ───
+window.loadCashPage = async () => {
+  if (!currentDboy) return;
+  const todayStr = today();
+  // Load today's submitted cash
+  const subSnap = await getDocs(query(collection(db,'cashSubmissions'),where('dboyId','==',currentDboy.id),where('date','==',todayStr)));
+  submissionsToday = subSnap.docs.map(d=>({id:d.id,...d.data()}));
+  // Load pending entries
+  const penSnap = await getDocs(query(collection(db,'pendingEntries'),where('dboyId','==',currentDboy.id),where('resolved','==',false)));
+  pendingEntries = penSnap.docs.map(d=>({id:d.id,...d.data()}));
+  // Calculate
+  const deliveredToday = myOrders.filter(o=>{
+    const d = o.deliveredAt?.toDate?o.deliveredAt.toDate():o.updatedAt?.toDate?o.updatedAt.toDate():new Date(0);
+    return d.toISOString().split('T')[0]===todayStr && o.status==='delivered';
+  });
+  const codOrders = deliveredToday.filter(o=>o.payment==='cod');
+  const codTotal = codOrders.reduce((s,o)=>s+(o.total||0),0);
+  const submitted = submissionsToday.reduce((s,sub)=>s+(sub.amount||0),0);
+  const pending = codTotal - submitted;
+  document.getElementById('cashCodDelivered').textContent = codOrders.length;
+  document.getElementById('cashCodTotal').textContent = fmt(codTotal);
+  document.getElementById('cashSubmitted').textContent = fmt(submitted);
+  document.getElementById('cashPending').textContent = fmt(pending > 0 ? pending : 0);
+  if (pending > 0) document.getElementById('submitAmount').placeholder = (pending > 0 ? pending : 0).toString();
+  renderSubmissions();
+  renderPendingEntries();
+  // Also update dashboard
+  renderDashboard();
+};
+
+function renderSubmissions() {
+  const el = document.getElementById('submissionsList');
+  if (!submissionsToday.length) { el.innerHTML='<p style="font-size:13px;color:var(--text3);text-align:center;padding:12px">No submissions yet today</p>'; return; }
+  el.innerHTML = submissionsToday.map(s=>`
+    <div class="sub-item">
+      <div>
+        <div class="sub-amt">${fmt(s.amount)}</div>
+        <div class="sub-time">${s.time||fmtTime(s.createdAt)}</div>
+        ${s.note?`<div class="sub-note">${s.note}</div>`:''}
+      </div>
+      <span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px">✅ Received</span>
+    </div>`).join('');
+}
+
+function renderPendingEntries() {
+  const el = document.getElementById('pendingEntriesList');
+  if (!pendingEntries.length) { el.innerHTML='<p style="font-size:13px;color:var(--text3);text-align:center;padding:12px">No pending entries</p>'; return; }
+  el.innerHTML = pendingEntries.map(e=>`
+    <div class="sub-item" style="background:var(--orange-bg);border-color:#FED7AA">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--orange)">${e.reason||'Pending'}</div>
+        <div style="font-size:18px;font-weight:900;color:var(--primary);font-family:'Nunito',sans-serif">${fmt(e.amount)}</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px">${fmtDate(e.createdAt)}</div>
+      </div>
+      <span class="pending-tag">⏳ Pending</span>
+    </div>`).join('');
+}
+
+window.submitCash = async () => {
+  const amount = parseFloat(document.getElementById('submitAmount').value)||0;
+  const note = document.getElementById('submitNote').value.trim();
+  if (!amount||amount<=0) { showToast('Enter a valid amount','error'); return; }
+  if (!currentDboy) return;
+  const now = new Date();
+  try {
+    await addDoc(collection(db,'cashSubmissions'),{
+      dboyId: currentDboy.id,
+      dboyName: currentDboy.name,
+      amount, note,
+      date: today(),
+      time: now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('submitAmount').value='';
+    document.getElementById('submitNote').value='';
+    await loadCashPage();
+    showToast(`₹${amount} submitted to admin! ✅`);
+  } catch(e) { showToast('Error: '+e.message,'error'); }
+};
+
+window.openPendingModal = () => {
+  document.getElementById('pendingReason').value='';
+  document.getElementById('pendingAmount').value='';
+  document.getElementById('pendingOverlay').classList.add('open');
+};
+
+window.savePendingEntry = async () => {
+  const reason=document.getElementById('pendingReason').value.trim();
+  const amount=parseFloat(document.getElementById('pendingAmount').value)||0;
+  if(!reason||!amount){showToast('Fill all fields','error');return;}
+  await addDoc(collection(db,'pendingEntries'),{dboyId:currentDboy.id,dboyName:currentDboy.name,reason,amount,resolved:false,createdAt:serverTimestamp()});
+  document.getElementById('pendingOverlay').classList.remove('open');
+  await loadCashPage();
+  showToast('Pending entry saved','warning');
+};
+
+// ─── REPORT ───
+window.loadReport = async () => {
+  if (!currentDboy) return;
+  const date = document.getElementById('reportDate').value || today();
+  document.getElementById('reportDateLabel').textContent = new Date(date).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  // Delivered orders on that date
+  const delivered = myOrders.filter(o=>{
+    const d = o.deliveredAt?.toDate?o.deliveredAt.toDate():o.updatedAt?.toDate?o.updatedAt.toDate():new Date(0);
+    return d.toISOString().split('T')[0]===date && o.status==='delivered';
+  });
+  const codAmt = delivered.filter(o=>o.payment==='cod').reduce((s,o)=>s+(o.total||0),0);
+  const delIncome = delivered.reduce((s,o)=>s+(o.deliveryCharge||0),0);
+  // Submissions for that date
+  const subSnap = await getDocs(query(collection(db,'cashSubmissions'),where('dboyId','==',currentDboy.id),where('date','==',date)));
+  const submitted = subSnap.docs.reduce((s,d)=>s+(d.data().amount||0),0);
+  const pendingAmt = codAmt - submitted;
+  document.getElementById('rpt-total').textContent = delivered.length;
+  document.getElementById('rpt-subtitle').textContent = delivered.length + ' order'+(delivered.length!==1?'s':'')+' completed';
+  document.getElementById('rpt-codAmt').textContent = fmt(codAmt);
+  document.getElementById('rpt-delIncome').textContent = fmt(delIncome);
+  document.getElementById('rpt-submitted').textContent = fmt(submitted);
+  document.getElementById('rpt-pendingAmt').textContent = fmt(pendingAmt>0?pendingAmt:0);
+  document.getElementById('rpt-count').textContent = delivered.length+' orders';
+  const hist = document.getElementById('rpt-history');
+  if (!delivered.length) { hist.innerHTML='<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No deliveries for selected date</div>'; return; }
+  hist.innerHTML = delivered.map(o=>`
+    <div class="history-row">
+      <div>
+        <div class="h-id">#${o.id.slice(-6).toUpperCase()}</div>
+        <div class="h-name">${o.customerName||'—'} • ${o.area||'—'}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="h-amt">${fmt(o.total)}</div>
+        <div class="h-time">${fmtTime(o.deliveredAt||o.updatedAt)}</div>
+      </div>
+    </div>`).join('');
+};
+
+// ─── SHEET HELPERS ───
+window.closeSheet = (e, id) => { if(!e||e.target===document.getElementById(id)) document.getElementById(id).classList.remove('open'); };
+
+// ─── INIT ───
+async function boot() {
+  showLoad(true);
+  const saved = localStorage.getItem('fast8dboy');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      const snap = await getDoc(doc(db,'deliveryBoys',parsed.id));
+      if (snap.exists()) {
+        currentDboy = {id:snap.id,...snap.data()};
+        localStorage.setItem('fast8dboy',JSON.stringify(currentDboy));
+        enterApp(); return;
+      } else { localStorage.removeItem('fast8dboy'); }
+    } catch(e) { localStorage.removeItem('fast8dboy'); }
+  }
+  showLoad(false);
+}
+
+boot();
+</script>
 </body>
 </html>
