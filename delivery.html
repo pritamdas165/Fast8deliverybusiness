@@ -2,1683 +2,894 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#D32F2F">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>Fast8 – Delivery</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Fast8Bondhu — Delivery Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root {
-  --primary: #D32F2F;
-  --primary-dark: #B71C1C;
-  --primary-light: #EF5350;
-  --accent: #FFC107;
-  --accent-dark: #FF8F00;
-  --bg: #F4F5F8;
-  --surface: #FFFFFF;
-  --border: #E8E8F0;
-  --text: #151520;
-  --text2: #4A4A60;
-  --text3: #9898B0;
-  --green: #16A34A;
-  --green-bg: #DCFCE7;
-  --green-dark: #14532D;
-  --orange: #EA580C;
-  --orange-bg: #FFF0E8;
-  --blue: #1D4ED8;
-  --blue-bg: #EFF6FF;
-  --shadow-sm: 0 1px 8px rgba(0,0,0,0.06);
-  --shadow: 0 4px 16px rgba(0,0,0,0.09);
-  --shadow-md: 0 8px 28px rgba(0,0,0,0.13);
-  --shadow-lg: 0 16px 48px rgba(0,0,0,0.18);
-  --radius: 20px;
-  --radius-sm: 14px;
-  --bottom-nav: 68px;
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--primary:#D32F2F;--primary-dark:#B71C1C;--primary-light:#FFCDD2;
+--accent:#FFC107;--accent-dark:#FFA000;
+--bg:#F0F2F5;--card:#FFF;--text:#1A1A2E;--text-sec:#6B7280;--border:#E5E7EB;
+--success:#10B981;--warning:#F59E0B;--danger:#EF4444;--info:#3B82F6;--purple:#8B5CF6;
+--shadow:0 2px 8px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.1);
+--radius:16px;--radius-sm:10px;--radius-xs:6px;
+--transition:all .3s cubic-bezier(.4,0,.2,1)
 }
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { scroll-behavior:smooth; }
-body {
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  max-width:480px;
-  margin:0 auto;
-  overflow-x:hidden;
-}
-h1,h2,h3,h4,h5 { font-family:'Nunito',sans-serif; }
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:4px}
 
-/* ══ SCREENS ══ */
-.screen { display:none; min-height:100vh; }
-.screen.active { display:block; animation:fadeIn 0.3s ease; }
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#1B5E20,#2E7D32,#43A047);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-card{background:#fff;border-radius:24px;padding:40px 28px;width:92%;max-width:400px;box-shadow:0 8px 32px rgba(0,0,0,.2);text-align:center;animation:slideUp .6s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.login-logo{width:80px;height:80px;background:linear-gradient(135deg,#2E7D32,var(--accent));border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:#fff}
+.login-card h2{font-size:22px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.login-card>p{font-size:12px;color:var(--text-sec);margin-bottom:28px}
+.login-error{color:var(--danger);font-size:12px;margin-bottom:10px;display:none;text-align:center;font-weight:600}
 
-/* ══ LOGIN SCREEN ══ */
-#loginScreen {
-  background:linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 50%, #FF7043 100%);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  position:relative;
-  overflow:hidden;
-}
-#loginScreen::before {
-  content:'';position:absolute;
-  width:300px;height:300px;
-  background:rgba(255,193,7,0.1);
-  border-radius:50%;top:-100px;right:-80px;
-}
-#loginScreen::after {
-  content:'';position:absolute;
-  width:200px;height:200px;
-  background:rgba(255,255,255,0.06);
-  border-radius:50%;bottom:120px;left:-60px;
-}
+/* FORMS */
+.form-group{margin-bottom:16px;text-align:left}
+.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text-sec);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Inter';transition:var(--transition);background:#FAFAFA;color:var(--text)}
+.form-group input:focus{border-color:#2E7D32;outline:none;background:#fff;box-shadow:0 0 0 3px rgba(46,125,50,.15)}
 
-.login-top {
-  flex:1;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:48px 24px 32px;
-  text-align:center;
-  position:relative;z-index:1;
-}
-.login-icon-wrap {
-  width:90px;height:90px;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(12px);
-  border-radius:26px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:20px;
-  border:2px solid rgba(255,255,255,0.25);
-  box-shadow:0 8px 32px rgba(0,0,0,0.2);
-}
-.login-icon-wrap i { font-size:40px;color:var(--accent); }
-.login-top h1 { font-size:30px;font-weight:900;color:white;letter-spacing:-0.5px; }
-.login-top p { font-size:14px;color:rgba(255,255,255,0.72);margin-top:8px; }
-.login-badge {
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,0.15);
-  color:white;font-size:12px;font-weight:700;
-  padding:6px 14px;border-radius:20px;
-  margin-top:12px;
-  border:1px solid rgba(255,255,255,0.2);
-}
+/* BUTTONS */
+.btn{padding:13px 24px;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:'Poppins';cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.btn-green{background:linear-gradient(135deg,#2E7D32,#1B5E20);color:#fff;box-shadow:0 4px 16px rgba(46,125,50,.3)}
+.btn-green:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff}
+.btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#1A1A2E}
+.btn-success{background:linear-gradient(135deg,var(--success),#059669);color:#fff}
+.btn-danger{background:linear-gradient(135deg,var(--danger),#DC2626);color:#fff}
+.btn-info{background:linear-gradient(135deg,var(--info),#1D4ED8);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text)}
+.btn-sm{padding:8px 16px;font-size:12px}
+.btn-xs{padding:6px 12px;font-size:11px;border-radius:var(--radius-xs)}
+.btn-icon{width:44px;height:44px;padding:0;border-radius:12px;border:none;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-size:16px}
 
-.login-card {
-  background:white;
-  border-radius:32px 32px 0 0;
-  padding:32px 24px 40px;
-  position:relative;z-index:1;
-}
-.login-card h3 { font-size:18px;font-weight:800;margin-bottom:20px;color:var(--text); }
-
-.form-field { margin-bottom:16px; }
-.form-field label {
-  display:block;font-size:11px;font-weight:700;
-  color:var(--text3);margin-bottom:7px;
-  text-transform:uppercase;letter-spacing:1px;
-}
-.input-wrap { position:relative; }
-.input-wrap i {
-  position:absolute;left:15px;top:50%;
-  transform:translateY(-50%);
-  color:var(--text3);font-size:16px;
-  pointer-events:none;
-}
-.input-wrap input {
-  width:100%;padding:14px 14px 14px 44px;
-  border:2px solid var(--border);
-  border-radius:13px;
-  font-size:15px;font-family:'DM Sans',sans-serif;
-  outline:none;transition:all 0.2s;
-  background:var(--bg);color:var(--text);
-}
-.input-wrap input:focus {
-  border-color:var(--primary);
-  background:white;
-  box-shadow:0 0 0 4px rgba(211,47,47,0.1);
-}
-.login-err {
-  background:#FEF2F2;color:var(--primary);
-  padding:11px 14px;border-radius:11px;
-  font-size:13px;font-weight:600;
-  margin-bottom:14px;display:none;
-  border:1px solid #FECACA;
-}
-.btn-login {
-  width:100%;padding:16px;
-  background:linear-gradient(135deg,var(--primary),var(--primary-light));
-  color:white;border:none;border-radius:13px;
-  font-size:16px;font-weight:800;
-  font-family:'Nunito',sans-serif;
-  cursor:pointer;transition:all 0.2s;
-  box-shadow:0 6px 20px rgba(211,47,47,0.35);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
-.btn-login:hover { transform:translateY(-2px);box-shadow:0 10px 28px rgba(211,47,47,0.45); }
-.btn-login:active { transform:scale(0.98); }
-
-/* ══ APP SCREEN ══ */
-#appScreen {
-  background:var(--bg);
-  padding-bottom:calc(var(--bottom-nav) + 12px);
-}
-
-/* TOPBAR */
-.topbar {
-  position:sticky;top:0;z-index:80;
-  background:white;
-  padding:14px 18px;
-  display:flex;align-items:center;justify-content:space-between;
-  box-shadow:var(--shadow-sm);
-  border-bottom:1px solid var(--border);
-}
-.topbar-left { display:flex;align-items:center;gap:10px; }
-.topbar-brand-icon {
-  width:38px;height:38px;
-  background:linear-gradient(135deg,var(--primary),var(--primary-light));
-  border-radius:11px;
-  display:flex;align-items:center;justify-content:center;
-  color:white;font-size:16px;
-  box-shadow:0 4px 12px rgba(211,47,47,0.25);
-}
-.topbar h2 { font-size:17px;font-weight:800;color:var(--text); }
-.topbar p { font-size:11px;color:var(--text3);margin-top:1px; }
-.online-pill {
-  display:flex;align-items:center;gap:6px;
-  padding:7px 13px;
-  border-radius:20px;
-  font-size:12px;font-weight:700;
-  cursor:pointer;
-  transition:all 0.2s;
-  border:2px solid var(--border);
-  background:var(--bg);
-  color:var(--text3);
-}
-.online-pill.online {
-  background:var(--green-bg);
-  border-color:var(--green);
-  color:var(--green);
-}
-.online-dot {
-  width:8px;height:8px;border-radius:50%;
-  background:var(--text3);
-  transition:all 0.2s;
-}
-.online-pill.online .online-dot {
-  background:var(--green);
-  box-shadow:0 0 0 3px rgba(22,163,74,0.25);
-  animation:pulse 1.5s ease infinite;
-}
-
-/* BOTTOM NAV */
-.bottom-nav {
-  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:100%;max-width:480px;
-  height:var(--bottom-nav);
-  background:white;
-  border-top:1px solid var(--border);
-  display:flex;align-items:center;
-  z-index:100;
-  box-shadow:0 -4px 20px rgba(0,0,0,0.07);
-}
-.nav-btn {
-  flex:1;height:100%;border:none;background:none;
-  cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-  color:var(--text3);font-size:10px;font-weight:700;
-  font-family:'Nunito',sans-serif;
-  transition:all 0.2s;
-  text-transform:uppercase;letter-spacing:0.5px;
-  position:relative;
-}
-.nav-btn i { font-size:20px;transition:all 0.2s; }
-.nav-btn.active { color:var(--primary); }
-.nav-btn.active i { transform:scale(1.1); }
-.nav-btn::after {
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:0;height:3px;background:var(--primary);
-  border-radius:0 0 4px 4px;transition:width 0.2s;
-}
-.nav-btn.active::after { width:32px; }
-.nav-badge {
-  position:absolute;top:7px;right:calc(50% - 20px);
-  background:var(--primary);color:white;
-  font-size:9px;font-weight:800;
-  padding:1px 5px;border-radius:20px;
-  min-width:16px;text-align:center;
-}
+/* APP BAR */
+.app-bar{position:fixed;top:0;left:0;right:0;height:58px;background:linear-gradient(135deg,#2E7D32,#1B5E20);display:flex;align-items:center;padding:0 14px;z-index:100;box-shadow:0 2px 12px rgba(46,125,50,.3)}
+.app-bar .brand{display:flex;align-items:center;gap:8px;color:#fff}
+.app-bar .brand-icon{width:34px;height:34px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.app-bar .brand h1{font-size:15px;font-weight:700}
+.app-bar .brand span{font-size:8px;background:var(--accent);color:#1A1A2E;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:4px}
+.app-bar-right{margin-left:auto;display:flex;gap:6px}
+.app-bar-right button{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
 /* PAGES */
-.page { display:none;animation:fadeIn 0.25s ease; }
-.page.active { display:block; }
+.pages{margin-top:58px;margin-bottom:68px;min-height:calc(100vh - 126px)}
+.pg{display:none;padding:14px;animation:fadeIn .3s ease}
+.pg.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ══════════════ DASHBOARD PAGE ══════════════ */
-.dash-hero {
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
-  padding:20px 18px 28px;
-  position:relative;overflow:hidden;
-}
-.dash-hero::before {
-  content:'';position:absolute;
-  width:180px;height:180px;
-  background:rgba(255,255,255,0.07);
-  border-radius:50%;top:-60px;right:-40px;
-}
-.dash-hero::after {
-  content:'';position:absolute;
-  width:120px;height:120px;
-  background:rgba(255,193,7,0.12);
-  border-radius:50%;bottom:-40px;left:20px;
-}
-.dash-greeting { position:relative;z-index:1; }
-.dash-greeting .hey { font-size:13px;color:rgba(255,255,255,0.7);font-weight:600;margin-bottom:4px; }
-.dash-greeting h2 { font-size:22px;font-weight:900;color:white; }
-.dash-greeting .area-tag {
-  display:inline-flex;align-items:center;gap:5px;
-  background:rgba(255,255,255,0.15);
-  color:white;font-size:11px;font-weight:700;
-  padding:5px 12px;border-radius:20px;
-  margin-top:8px;
-}
-.dash-stats {
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  padding:0 16px;
-  margin-top:-18px;
-  position:relative;z-index:2;
-}
-.dash-stat {
-  background:white;border-radius:var(--radius-sm);
-  padding:14px 16px;
-  box-shadow:var(--shadow);
-  display:flex;align-items:center;gap:12px;
-}
-.stat-icon {
-  width:42px;height:42px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;flex-shrink:0;
-}
-.stat-val { font-size:22px;font-weight:900;font-family:'Nunito',sans-serif; }
-.stat-lbl { font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:1px; }
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;display:flex;align-items:center;justify-content:space-around;z-index:100;box-shadow:0 -2px 12px rgba(0,0,0,.06);border-top:1px solid var(--border)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:6px 16px;border-radius:8px;transition:var(--transition);position:relative}
+.nav-item i{font-size:18px;color:var(--text-sec);transition:var(--transition)}
+.nav-item span{font-size:9px;font-weight:600;color:var(--text-sec)}
+.nav-item.active i{color:#2E7D32}
+.nav-item.active span{color:#2E7D32}
+.nav-item.active::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:20px;height:3px;background:#2E7D32;border-radius:0 0 3px 3px}
+.nav-badge{position:absolute;top:0;right:4px;background:var(--danger);color:#fff;font-size:7px;font-weight:700;padding:1px 5px;border-radius:10px;min-width:14px;text-align:center}
 
-/* SECTION HEADER */
-.sec-hdr { display:flex;align-items:center;justify-content:space-between;padding:18px 16px 10px; }
-.sec-hdr h3 { font-size:16px;font-weight:800; }
-.sec-hdr span { font-size:12px;color:var(--text3);font-weight:600; }
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.stat-mini{padding:14px 10px;border-radius:var(--radius);text-align:center;color:#fff;position:relative;overflow:hidden}
+.stat-mini::after{content:'';position:absolute;top:-15px;right:-15px;width:50px;height:50px;background:rgba(255,255,255,.1);border-radius:50%}
+.stat-mini .sm-val{font-size:22px;font-weight:800;font-family:'Poppins';line-height:1}
+.stat-mini .sm-lab{font-size:9px;opacity:.85;margin-top:3px;font-weight:500}
 
-/* ══════════════ ORDER CARDS ══════════════ */
-.orders-list { padding:0 16px 12px;display:flex;flex-direction:column;gap:12px; }
-.order-card {
-  background:white;border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);
-  overflow:hidden;
-  border:1px solid var(--border);
-  transition:all 0.2s;
-  animation:slideUp 0.3s ease;
-}
-.order-card:hover { box-shadow:var(--shadow); }
-.order-card-top {
-  padding:14px 16px;
-  display:flex;align-items:flex-start;justify-content:space-between;
-  gap:8px;
-}
-.order-num { font-size:16px;font-weight:900;color:var(--text); }
-.order-time { font-size:11px;color:var(--text3);margin-top:2px; }
-.order-items-text { font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5; }
-.order-amount {
-  font-size:20px;font-weight:900;
-  color:var(--primary);font-family:'Nunito',sans-serif;
-  white-space:nowrap;
-}
-.order-del-charge { font-size:11px;color:var(--text3);text-align:right;margin-top:2px; }
+/* GREETING */
+.greeting-card{background:linear-gradient(135deg,#2E7D32,#43A047);border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.greeting-card::after{content:'🏍️';position:absolute;right:14px;bottom:10px;font-size:40px;opacity:.2}
+.greeting-card h2{font-size:17px;font-weight:700;margin-bottom:2px}
+.greeting-card p{font-size:11px;opacity:.9}
+.greeting-card .area-tag{margin-top:8px;display:inline-block;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
 
-.customer-row {
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px;
-  background:#FAFAFA;
-  border-top:1px solid var(--border);
-}
-.customer-info { display:flex;align-items:center;gap:10px; }
-.customer-avatar {
-  width:38px;height:38px;border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--accent));
-  display:flex;align-items:center;justify-content:center;
-  color:white;font-weight:800;font-size:14px;
-  flex-shrink:0;
-}
-.customer-name { font-size:14px;font-weight:700; }
-.customer-addr { font-size:11px;color:var(--text3);margin-top:1px; }
-.call-btn {
-  width:40px;height:40px;
-  background:var(--green-bg);color:var(--green);
-  border:none;border-radius:12px;
-  font-size:17px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all 0.2s;
-  box-shadow:0 2px 8px rgba(22,163,74,0.2);
-  text-decoration:none;
-}
-.call-btn:hover { background:var(--green);color:white;transform:scale(1.08); }
+/* CARD */
+.card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-header h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}
+.badge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;display:inline-block}
+.badge-success{background:#D1FAE5;color:#065F46}
+.badge-danger{background:#FEE2E2;color:#991B1B}
+.badge-warning{background:#FEF3C7;color:#92400E}
+.badge-info{background:#DBEAFE;color:#1E40AF}
+.badge-purple{background:#EDE9FE;color:#5B21B6}
+.badge-accent{background:#FFF8E1;color:#F57F17}
 
-.order-actions {
-  padding:12px 16px;
-  border-top:1px solid var(--border);
-  display:flex;gap:8px;
-}
-.btn {
-  display:inline-flex;align-items:center;gap:6px;
-  padding:10px 16px;
-  border-radius:11px;font-size:13px;font-weight:700;
-  cursor:pointer;border:none;
-  font-family:'DM Sans',sans-serif;
-  transition:all 0.2s;white-space:nowrap;
-}
-.btn-green { background:var(--green);color:white;flex:1;justify-content:center; box-shadow:0 4px 12px rgba(22,163,74,0.3); }
-.btn-green:hover { background:var(--green-dark);transform:translateY(-1px); }
-.btn-outline { background:white;color:var(--text2);border:2px solid var(--border); }
-.btn-outline:hover { border-color:var(--primary);color:var(--primary); }
-.btn-primary { background:var(--primary);color:white; box-shadow:0 4px 12px rgba(211,47,47,0.25); }
-.btn-primary:hover { background:var(--primary-dark);transform:translateY(-1px); }
-.btn-yellow { background:var(--accent);color:var(--text);flex:1;justify-content:center; }
-.btn-yellow:hover { background:var(--accent-dark);transform:translateY(-1px); }
-.btn-full { width:100%;justify-content:center; }
-.btn-sm { padding:7px 12px;font-size:12px; }
-.btn:disabled { opacity:0.5;cursor:not-allowed;transform:none; }
+/* ORDER CARD */
+.order-card{background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);border-left:4px solid var(--warning);transition:var(--transition)}
+.order-card.st-assigned{border-left-color:var(--info)}
+.order-card.st-delivered{border-left-color:var(--success)}
+.oc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.oc-id{font-size:14px;font-weight:700;font-family:'Poppins'}
+.oc-time{font-size:10px;color:var(--text-sec)}
+.oc-customer{background:#F8F9FA;padding:10px;border-radius:var(--radius-sm);margin-bottom:8px}
+.oc-customer .cust-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.oc-customer .cust-detail{font-size:11px;color:var(--text-sec);display:flex;align-items:center;gap:4px;margin-top:2px}
+.oc-items{font-size:11px;color:var(--text-sec);margin-bottom:6px;line-height:1.6;padding:8px;background:#FFFBEB;border-radius:var(--radius-xs)}
+.oc-bottom{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.oc-total{font-size:20px;font-weight:800;color:var(--primary);font-family:'Poppins'}
+.oc-pay{font-size:10px;font-weight:600}
+.oc-actions{display:flex;gap:6px;flex-wrap:wrap}
 
-/* STATUS BADGE */
-.status-pill {
-  padding:4px 11px;border-radius:20px;
-  font-size:10px;font-weight:800;
-  text-transform:uppercase;letter-spacing:0.5px;
-  display:inline-flex;align-items:center;gap:4px;
-}
-.sp-pending { background:#FFF8E1;color:#F59E0B; }
-.sp-accepted { background:var(--blue-bg);color:var(--blue); }
-.sp-packed { background:var(--orange-bg);color:var(--orange); }
-.sp-out_for_delivery { background:#FEF2F2;color:var(--primary-light); }
-.sp-delivered { background:var(--green-bg);color:var(--green); }
+/* CALL BUTTON */
+.call-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;background:#E8F5E9;color:#2E7D32;border:2px solid #C8E6C9;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);font-family:'Inter';width:100%;margin-bottom:8px;text-decoration:none}
+.call-btn:active{background:#C8E6C9}
+.call-btn i{font-size:16px}
 
-/* PAYMENT TAG */
-.payment-tag {
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:11px;font-weight:700;
-  padding:3px 9px;border-radius:20px;
-}
-.pt-cod { background:var(--orange-bg);color:var(--orange); }
-.pt-upi { background:var(--blue-bg);color:var(--blue); }
-.pt-paid { background:var(--green-bg);color:var(--green); }
+/* CASH SUBMIT */
+.cash-card{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.cash-stat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.cash-box{padding:12px 8px;border-radius:var(--radius-sm);text-align:center}
+.cash-box .cb-val{font-size:18px;font-weight:800;font-family:'Poppins'}
+.cash-box .cb-lab{font-size:9px;color:var(--text-sec);margin-top:2px}
 
-/* NO ORDERS */
-.no-orders {
-  text-align:center;padding:60px 24px;
-  animation:fadeIn 0.3s ease;
-}
-.no-orders .icon-wrap {
-  width:90px;height:90px;
-  background:white;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:40px;margin:0 auto 20px;
-  box-shadow:var(--shadow);
-}
-.no-orders h3 { font-size:18px;font-weight:800;color:var(--text); }
-.no-orders p { font-size:13px;color:var(--text3);margin-top:8px; }
+/* SUMMARY CARD */
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.summary-row:last-child{border-bottom:none}
+.summary-row .sr-label{color:var(--text-sec)}
+.summary-row .sr-value{font-weight:700;font-family:'Poppins'}
 
-/* ══════════════ CASH SUBMISSION ══════════════ */
-.cash-section { padding:0 16px; }
-.cash-card {
-  background:white;border-radius:var(--radius);
-  padding:20px;box-shadow:var(--shadow-sm);
-  margin-bottom:14px;
-}
-.cash-card h4 { font-size:15px;font-weight:800;margin-bottom:14px;color:var(--text); }
-.cash-input {
-  position:relative;margin-bottom:10px;
-}
-.cash-input span {
-  position:absolute;left:15px;top:50%;transform:translateY(-50%);
-  font-size:18px;font-weight:800;color:var(--text3);
-}
-.cash-input input {
-  width:100%;padding:16px 16px 16px 34px;
-  border:2px solid var(--border);border-radius:13px;
-  font-size:20px;font-weight:800;
-  font-family:'Nunito',sans-serif;
-  outline:none;transition:all 0.2s;
-  background:var(--bg);color:var(--text);
-}
-.cash-input input:focus {
-  border-color:var(--green);background:white;
-  box-shadow:0 0 0 4px rgba(22,163,74,0.1);
-}
-.note-input {
-  width:100%;padding:12px 14px;
-  border:2px solid var(--border);border-radius:12px;
-  font-size:14px;font-family:'DM Sans',sans-serif;
-  outline:none;transition:all 0.2s;
-  background:var(--bg);
-  margin-bottom:14px;
-}
-.note-input:focus { border-color:var(--green);background:white; }
-.cash-info-row {
-  display:flex;justify-content:space-between;align-items:center;
-  padding:8px 0;font-size:13px;
-  border-bottom:1px solid var(--border);
-}
-.cash-info-row:last-child { border-bottom:none; }
-.cash-info-row span:first-child { color:var(--text3); }
-.cash-info-row span:last-child { font-weight:700; }
+/* DELIVERED SUCCESS */
+.delivered-badge{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#D1FAE5;color:#065F46;border-radius:var(--radius-sm);font-size:12px;font-weight:600}
 
-.pending-tag {
-  display:inline-flex;align-items:center;gap:4px;
-  background:#FEF2F2;color:var(--primary);
-  font-size:11px;font-weight:800;
-  padding:3px 9px;border-radius:20px;
-}
-.submissions-list { display:flex;flex-direction:column;gap:10px;margin-top:4px; }
-.sub-item {
-  background:var(--bg);border-radius:12px;
-  padding:12px 14px;
-  display:flex;align-items:center;justify-content:space-between;
-  border:1px solid var(--border);
-}
-.sub-item .sub-amt { font-size:18px;font-weight:900;color:var(--green);font-family:'Nunito',sans-serif; }
-.sub-item .sub-time { font-size:11px;color:var(--text3);margin-top:2px; }
-.sub-item .sub-note { font-size:12px;color:var(--text2);margin-top:2px; }
-
-/* ══════════════ DAILY REPORT ══════════════ */
-.report-section { padding:0 16px; }
-.report-hero {
-  background:linear-gradient(135deg,#1A237E,#1D4ED8);
-  border-radius:var(--radius);
-  padding:20px;
-  margin-bottom:14px;
-  position:relative;overflow:hidden;
-}
-.report-hero::before {
-  content:'';position:absolute;
-  width:150px;height:150px;
-  background:rgba(255,255,255,0.06);
-  border-radius:50%;right:-40px;top:-40px;
-}
-.report-hero h3 { font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:4px; }
-.report-hero .big-num { font-size:36px;font-weight:900;color:white;font-family:'Nunito',sans-serif; }
-.report-hero .sub { font-size:12px;color:rgba(255,255,255,0.65);margin-top:4px; }
-.report-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px; }
-.report-item {
-  background:white;border-radius:var(--radius-sm);
-  padding:16px;box-shadow:var(--shadow-sm);
-  text-align:center;
-}
-.report-item .r-icon { font-size:22px;margin-bottom:8px; }
-.report-item .r-val { font-size:22px;font-weight:900;font-family:'Nunito',sans-serif; }
-.report-item .r-lbl { font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:3px; }
-
-.history-card {
-  background:white;border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);overflow:hidden;
-  margin-bottom:14px;
-}
-.history-header {
-  padding:14px 16px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.history-header h4 { font-size:14px;font-weight:800; }
-.history-row {
-  padding:12px 16px;
-  border-bottom:1px solid #F5F5F8;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.history-row:last-child { border-bottom:none; }
-.h-id { font-size:13px;font-weight:700;color:var(--text); }
-.h-name { font-size:11px;color:var(--text3);margin-top:2px; }
-.h-amt { font-size:14px;font-weight:800;color:var(--green);font-family:'Nunito',sans-serif; }
-.h-time { font-size:10px;color:var(--text3);text-align:right;margin-top:2px; }
-
-/* ══════════════ PROFILE PAGE ══════════════ */
-.profile-hero {
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
-  padding:36px 20px 28px;text-align:center;
-  position:relative;overflow:hidden;
-}
-.profile-hero::before {
-  content:'';position:absolute;width:200px;height:200px;
-  background:rgba(255,255,255,0.07);
-  border-radius:50%;top:-80px;right:-60px;
-}
-.profile-avatar {
-  width:76px;height:76px;
-  background:rgba(255,255,255,0.2);
-  border-radius:50%;border:3px solid rgba(255,255,255,0.4);
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;font-weight:900;color:white;
-  font-family:'Nunito',sans-serif;
-  margin:0 auto 12px;position:relative;z-index:1;
-}
-.profile-name { font-size:22px;font-weight:900;color:white;position:relative;z-index:1; }
-.profile-phone { font-size:14px;color:rgba(255,255,255,0.72);margin-top:4px;position:relative;z-index:1; }
-.profile-area-tag {
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,0.15);color:white;
-  font-size:12px;font-weight:700;
-  padding:5px 14px;border-radius:20px;
-  margin-top:10px;position:relative;z-index:1;
-}
-
-.profile-section {
-  background:white;border-radius:var(--radius-sm);
-  margin:16px 16px 0;overflow:hidden;
-  box-shadow:var(--shadow-sm);
-}
-.profile-item {
-  display:flex;align-items:center;
-  padding:15px 16px;
-  border-bottom:1px solid var(--border);
-  cursor:pointer;transition:background 0.15s;
-}
-.profile-item:last-child { border-bottom:none; }
-.profile-item:hover { background:var(--bg); }
-.pi-icon {
-  width:38px;height:38px;border-radius:11px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;margin-right:13px;flex-shrink:0;
-}
-.profile-item h4 { font-size:14px;font-weight:700; }
-.profile-item p { font-size:12px;color:var(--text3);margin-top:1px; }
-.pi-arrow { margin-left:auto;color:var(--text3);font-size:13px; }
-
-.logout-btn {
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:calc(100% - 32px);margin:16px;
-  padding:15px;
-  background:var(--bg);color:var(--primary);
-  border:2px solid var(--primary);border-radius:13px;
-  font-size:15px;font-weight:800;
-  font-family:'Nunito',sans-serif;cursor:pointer;transition:all 0.2s;
-}
-.logout-btn:hover { background:var(--primary);color:white; }
-
-/* ══ MODAL / BOTTOM SHEET ══ */
-.overlay {
-  position:fixed;inset:0;
-  background:rgba(0,0,0,0.5);
-  z-index:300;display:none;
-  align-items:flex-end;justify-content:center;
-  backdrop-filter:blur(4px);
-}
-.overlay.open { display:flex;animation:fadeIn 0.2s ease; }
-.sheet {
-  background:white;border-radius:24px 24px 0 0;
-  width:100%;max-width:480px;
-  max-height:85vh;overflow-y:auto;
-  padding:24px;
-  animation:slideUp 0.3s ease;
-}
-.sheet-handle {
-  width:40px;height:4px;background:var(--border);
-  border-radius:4px;margin:0 auto 20px;
-}
-
-/* CONFIRM DELIVERED SHEET */
-.confirm-order-preview {
-  background:var(--bg);border-radius:12px;
-  padding:14px;margin-bottom:16px;
-}
-.confirm-row {
-  display:flex;justify-content:space-between;
-  font-size:13px;padding:5px 0;
-}
-.confirm-row span:first-child { color:var(--text3); }
-.confirm-row span:last-child { font-weight:700; }
-.amount-box {
-  background:linear-gradient(135deg,var(--green),#22C55E);
-  border-radius:14px;padding:16px;
-  text-align:center;margin:14px 0;
-  box-shadow:0 6px 20px rgba(22,163,74,0.3);
-}
-.amount-box .label { font-size:12px;color:rgba(255,255,255,0.8);font-weight:600;margin-bottom:4px; }
-.amount-box .value { font-size:28px;font-weight:900;color:white;font-family:'Nunito',sans-serif; }
-
-/* PENDING CASH INDICATOR */
-.pending-banner {
-  background:linear-gradient(135deg,var(--orange-bg),#FFF7ED);
-  border:1.5px solid #FED7AA;
-  border-radius:14px;padding:14px 16px;
-  margin:0 16px 14px;
-  display:flex;align-items:center;gap:12px;
-}
-.pending-banner .p-icon { font-size:24px; }
-.pending-banner h4 { font-size:14px;font-weight:800;color:var(--orange); }
-.pending-banner p { font-size:12px;color:var(--text3);margin-top:2px; }
-.pending-banner .collect-btn {
-  margin-left:auto;
-  padding:8px 14px;background:var(--orange);color:white;
-  border:none;border-radius:10px;font-size:12px;font-weight:700;
-  cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;
-}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:var(--radius);width:100%;max-width:420px;max-height:85vh;overflow-y:auto;animation:modalIn .3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.modal-header{padding:18px 18px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:16px;font-weight:700}
+.modal-close{width:34px;height:34px;border-radius:50%;border:none;background:#F5F5F5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:18px}
+.modal-footer{padding:0 18px 18px;display:flex;gap:8px}
+.modal-footer .btn{flex:1}
 
 /* TOAST */
-#toastWrap {
-  position:fixed;bottom:calc(var(--bottom-nav)+16px);left:50%;transform:translateX(-50%);
-  z-index:999;width:calc(100% - 32px);max-width:420px;
-  display:flex;flex-direction:column;gap:8px;
-  pointer-events:none;
-}
-.toast {
-  background:var(--text);color:white;
-  padding:12px 18px;border-radius:12px;
-  font-size:13px;font-weight:600;
-  display:flex;align-items:center;gap:10px;
-  box-shadow:var(--shadow-md);
-  animation:slideUp 0.3s ease;
-  pointer-events:all;
-}
-.toast.success { background:var(--green); }
-.toast.error { background:var(--primary); }
-.toast.warning { background:var(--accent-dark);color:var(--text); }
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:#323232;color:#fff;padding:10px 20px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;z-index:999;opacity:0;transition:all .3s ease;pointer-events:none;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.t-success{background:var(--success)}
+.toast.t-error{background:var(--danger)}
+.toast.t-warning{background:var(--warning);color:#1A1A2E}
 
-/* LOADING */
-#loadingWrap {
-  position:fixed;inset:0;background:rgba(255,255,255,0.92);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;
-}
-.spinner {
-  width:42px;height:42px;
-  border:4px solid var(--border);
-  border-top-color:var(--primary);
-  border-radius:50%;
-  animation:spin 0.7s linear infinite;
-}
-#loadingWrap p { margin-top:14px;font-size:14px;font-weight:600;color:var(--text3); }
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px}
+.empty-state i{font-size:44px;color:var(--border);margin-bottom:10px}
+.empty-state h3{font-size:15px;color:var(--text-sec);margin-bottom:4px}
+.empty-state p{font-size:11px;color:var(--text-sec)}
 
-/* SUCCESS OVERLAY */
-.success-screen {
-  position:fixed;inset:0;background:white;
-  z-index:500;display:none;
-  flex-direction:column;align-items:center;justify-content:center;
-  padding:32px;text-align:center;
-}
-.success-screen.open { display:flex;animation:fadeIn 0.3s ease; }
-.success-icon-wrap {
-  width:96px;height:96px;
-  background:var(--green-bg);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:46px;margin-bottom:22px;
-  animation:popIn 0.4s ease;
-}
-.success-screen h2 { font-size:24px;font-weight:900; }
-.success-screen p { font-size:14px;color:var(--text3);margin-top:10px;line-height:1.6; }
-.success-id {
-  background:var(--bg);border-radius:12px;padding:12px 24px;
-  margin:18px 0;font-size:20px;font-weight:900;
-  color:var(--green);letter-spacing:2px;font-family:'Nunito',sans-serif;
-}
+/* LOADER */
+.loader{display:flex;align-items:center;justify-content:center;padding:30px}
+.spinner{width:28px;height:28px;border:3px solid #C8E6C9;border-top-color:#2E7D32;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ANIMATIONS */
-@keyframes fadeIn { from{opacity:0}to{opacity:1} }
-@keyframes slideUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
-@keyframes popIn { from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1} }
-@keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.2)} }
-@keyframes spin { to{transform:rotate(360deg)} }
+/* SECTION */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sec-header h3{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px}
 
-/* SCROLLBAR */
-::-webkit-scrollbar { width:5px;height:5px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--border);border-radius:10px; }
+/* FILTER */
+.filter-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;-webkit-overflow-scrolling:touch}
+.filter-tabs::-webkit-scrollbar{display:none}
+.filter-tab{padding:7px 16px;border-radius:50px;font-size:12px;font-weight:600;border:2px solid var(--border);background:#fff;cursor:pointer;white-space:nowrap;transition:var(--transition);font-family:'Inter'}
+.filter-tab.active{background:#2E7D32;color:#fff;border-color:#2E7D32}
 
-/* DIVIDER */
-.divider { height:1px;background:var(--border);margin:8px 0; }
-
-/* PICKUP CONFIRM */
-.pickup-steps {
-  display:flex;flex-direction:column;gap:10px;margin-bottom:18px;
+@media(min-width:768px){
+.pages{max-width:500px;margin-left:auto;margin-right:auto}
+.bottom-nav{max-width:500px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0}
 }
-.pickup-step {
-  display:flex;align-items:center;gap:12px;
-  background:var(--bg);border-radius:12px;padding:12px 14px;
-}
-.pickup-step .step-num {
-  width:28px;height:28px;border-radius:50%;
-  background:var(--primary);color:white;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:800;flex-shrink:0;
-}
-.pickup-step .step-text { font-size:13px;font-weight:600;color:var(--text2); }
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div id="loadingWrap">
-  <div class="spinner"></div>
-  <p>Loading Fast8 Delivery...</p>
+<!-- ========== LOGIN ========== -->
+<div class="login-screen" id="loginScreen">
+<div class="login-card">
+<div class="login-logo"><i class="fas fa-motorcycle"></i></div>
+<h2>Fast8Bondhu</h2>
+<p>Delivery Boy Panel — ডেলিভারি স্টাফ লগইন</p>
+<div class="login-error" id="loginError"></div>
+<div class="form-group"><label>ফোন নম্বর</label><input type="tel" id="loginPhone" placeholder="01XXXXXXXXX" maxlength="11"></div>
+<div class="form-group"><label>পাসওয়ার্ড</label><input type="password" id="loginPass" placeholder="পাসওয়ার্ড দাও"></div>
+<button class="btn btn-green" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> লগইন</button>
+</div>
 </div>
 
-<!-- ══════════ LOGIN SCREEN ══════════ -->
-<div class="screen active" id="loginScreen">
-  <div class="login-top">
-    <div class="login-icon-wrap"><i class="fas fa-motorcycle"></i></div>
-    <h1>Fast8 Delivery</h1>
-    <p>Delivery Partner Portal</p>
-    <div class="login-badge"><i class="fas fa-shield-alt"></i> Secure Login</div>
-  </div>
-  <div class="login-card">
-    <h3>👋 Welcome Back!</h3>
-    <div class="login-err" id="loginErr"></div>
-    <div class="form-field">
-      <label>Delivery Boy ID</label>
-      <div class="input-wrap">
-        <i class="fas fa-user"></i>
-        <input type="text" id="loginId" placeholder="Enter your login ID" autocomplete="off">
-      </div>
-    </div>
-    <div class="form-field">
-      <label>Password</label>
-      <div class="input-wrap">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="loginPass" placeholder="Enter your password">
-      </div>
-    </div>
-    <button class="btn-login" onclick="doLogin()">
-      <i class="fas fa-sign-in-alt"></i> Login
-    </button>
-  </div>
+<!-- ========== MAIN APP ========== -->
+<div id="mainApp" style="display:none">
+
+<!-- APP BAR -->
+<div class="app-bar">
+<div class="brand"><div class="brand-icon"><i class="fas fa-motorcycle"></i></div><div><h1>Fast8Bondhu</h1></div><span>DELIVERY</span></div>
+<div class="app-bar-right">
+<button onclick="loadAssignedOrders()" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+</div>
 </div>
 
-<!-- ══════════ APP SCREEN ══════════ -->
-<div class="screen" id="appScreen">
+<div class="pages">
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="topbar-brand-icon"><i class="fas fa-bolt"></i></div>
-      <div>
-        <h2 id="topbarName">Fast8</h2>
-        <p>Delivery Partner</p>
-      </div>
-    </div>
-    <div class="online-pill" id="onlinePill" onclick="toggleOnline()">
-      <div class="online-dot" id="onlineDot"></div>
-      <span id="onlineText">Offline</span>
-    </div>
-  </div>
-
-  <!-- PAGES -->
-
-  <!-- ────────── DASHBOARD PAGE ────────── -->
-  <div class="page active" id="page-dashboard">
-    <!-- Hero -->
-    <div class="dash-hero">
-      <div class="dash-greeting">
-        <div class="hey" id="greetingText">Good morning,</div>
-        <h2 id="dboyDisplayName">Delivery Boy</h2>
-        <div class="area-tag"><i class="fas fa-map-marker-alt"></i><span id="dboyAreaTag">—</span></div>
-      </div>
-    </div>
-
-    <!-- Stats -->
-    <div class="dash-stats">
-      <div class="dash-stat">
-        <div class="stat-icon" style="background:var(--green-bg)"><i class="fas fa-check-circle" style="color:var(--green)"></i></div>
-        <div>
-          <div class="stat-val" id="stat-delivered" style="color:var(--green)">0</div>
-          <div class="stat-lbl">Delivered</div>
-        </div>
-      </div>
-      <div class="dash-stat">
-        <div class="stat-icon" style="background:var(--orange-bg)"><i class="fas fa-clock" style="color:var(--orange)"></i></div>
-        <div>
-          <div class="stat-val" id="stat-pending" style="color:var(--orange)">0</div>
-          <div class="stat-lbl">Pending</div>
-        </div>
-      </div>
-      <div class="dash-stat">
-        <div class="stat-icon" style="background:#FFF8E1"><i class="fas fa-rupee-sign" style="color:var(--accent-dark)"></i></div>
-        <div>
-          <div class="stat-val" id="stat-cashCollected" style="color:var(--accent-dark)">₹0</div>
-          <div class="stat-lbl">Cash Held</div>
-        </div>
-      </div>
-      <div class="dash-stat">
-        <div class="stat-icon" style="background:var(--blue-bg)"><i class="fas fa-motorcycle" style="color:var(--blue)"></i></div>
-        <div>
-          <div class="stat-val" id="stat-earning" style="color:var(--blue)">₹0</div>
-          <div class="stat-lbl">Del. Income</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pending Cash Banner -->
-    <div class="pending-banner hidden" id="pendingCashBanner">
-      <div class="p-icon">💰</div>
-      <div>
-        <h4>Cash Pending Submission</h4>
-        <p id="pendingCashAmt">₹0 to be submitted</p>
-      </div>
-      <button class="collect-btn" onclick="showPage('cash');switchNav('cash')">Submit Now</button>
-    </div>
-
-    <!-- Active Deliveries -->
-    <div class="sec-hdr">
-      <h3>🏍 Active Deliveries</h3>
-      <span id="activeCount">0 orders</span>
-    </div>
-    <div class="orders-list" id="activeOrdersList">
-      <div class="no-orders">
-        <div class="icon-wrap">🏍️</div>
-        <h3>No active deliveries</h3>
-        <p>Assigned orders will appear here</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ────────── ALL ORDERS PAGE ────────── -->
-  <div class="page" id="page-orders">
-    <div style="background:white;padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-      <h2 style="font-size:18px;font-weight:900">My Orders</h2>
-      <div style="display:flex;gap:8px">
-        <select id="ordersFilter" onchange="filterMyOrders()" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer">
-          <option value="">All</option>
-          <option value="out_for_delivery">Active</option>
-          <option value="delivered">Delivered</option>
-        </select>
-        <button class="btn btn-outline btn-sm" onclick="loadMyOrders()"><i class="fas fa-sync-alt"></i></button>
-      </div>
-    </div>
-    <div class="orders-list" style="padding-top:14px" id="allOrdersList">
-      <div class="no-orders">
-        <div class="icon-wrap">📋</div>
-        <h3>No orders yet</h3>
-        <p>Your assigned orders appear here</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ────────── CASH SUBMISSION PAGE ────────── -->
-  <div class="page" id="page-cash">
-    <div style="background:white;padding:16px 18px;border-bottom:1px solid var(--border)">
-      <h2 style="font-size:18px;font-weight:900">Cash Submission</h2>
-      <p style="font-size:12px;color:var(--text3);margin-top:3px">Submit collected cash to admin</p>
-    </div>
-    <div class="cash-section" style="margin-top:16px">
-
-      <!-- Cash Summary Card -->
-      <div class="cash-card">
-        <h4><i class="fas fa-wallet" style="color:var(--orange);margin-right:8px"></i>Today's Cash Summary</h4>
-        <div class="cash-info-row"><span>COD Orders Delivered</span><span id="cashCodDelivered">0</span></div>
-        <div class="cash-info-row"><span>Total COD Collected</span><span id="cashCodTotal" style="color:var(--green);font-weight:800">₹0</span></div>
-        <div class="cash-info-row"><span>Already Submitted</span><span id="cashSubmitted" style="color:var(--blue)">₹0</span></div>
-        <div class="divider"></div>
-        <div class="cash-info-row">
-          <span style="font-weight:700;color:var(--text)">Pending to Submit</span>
-          <span id="cashPending" style="font-size:18px;font-weight:900;color:var(--primary);font-family:'Nunito',sans-serif">₹0</span>
-        </div>
-      </div>
-
-      <!-- Submit Form -->
-      <div class="cash-card">
-        <h4><i class="fas fa-hand-holding-usd" style="color:var(--green);margin-right:8px"></i>Submit Cash</h4>
-        <div class="cash-input">
-          <span>₹</span>
-          <input type="number" id="submitAmount" placeholder="0" inputmode="numeric">
-        </div>
-        <input type="text" class="note-input" id="submitNote" placeholder="Note (optional) — e.g. Short by ₹10...">
-        <button class="btn btn-green btn-full" onclick="submitCash()">
-          <i class="fas fa-paper-plane"></i> Submit Cash to Admin
-        </button>
-      </div>
-
-      <!-- Pending Entries -->
-      <div class="cash-card">
-        <h4><i class="fas fa-exclamation-triangle" style="color:var(--orange);margin-right:8px"></i>Pending / Short Entries</h4>
-        <button class="btn btn-outline btn-sm" style="margin-bottom:12px" onclick="openPendingModal()"><i class="fas fa-plus"></i> Add Pending Entry</button>
-        <div id="pendingEntriesList">
-          <p style="font-size:13px;color:var(--text3);text-align:center;padding:16px">No pending entries</p>
-        </div>
-      </div>
-
-      <!-- Today's Submissions Log -->
-      <div class="cash-card">
-        <h4><i class="fas fa-history" style="color:var(--blue);margin-right:8px"></i>Today's Submissions</h4>
-        <div class="submissions-list" id="submissionsList">
-          <p style="font-size:13px;color:var(--text3);text-align:center;padding:12px">No submissions yet today</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ────────── DAILY REPORT PAGE ────────── -->
-  <div class="page" id="page-report">
-    <div style="background:white;padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <h2 style="font-size:18px;font-weight:900">Daily Report</h2>
-        <p style="font-size:12px;color:var(--text3);margin-top:2px" id="reportDateLabel">Today</p>
-      </div>
-      <input type="date" id="reportDate" style="padding:8px 12px;border:2px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none" onchange="loadReport()">
-    </div>
-    <div class="report-section" style="margin-top:16px">
-      <!-- Big Number -->
-      <div class="report-hero">
-        <div style="position:relative;z-index:1">
-          <h3>Total Deliveries</h3>
-          <div class="big-num" id="rpt-total">0</div>
-          <div class="sub" id="rpt-subtitle">No deliveries yet</div>
-        </div>
-      </div>
-      <!-- Grid -->
-      <div class="report-grid">
-        <div class="report-item">
-          <div class="r-icon">💰</div>
-          <div class="r-val" id="rpt-codAmt" style="color:var(--green)">₹0</div>
-          <div class="r-lbl">COD Collected</div>
-        </div>
-        <div class="report-item">
-          <div class="r-icon">🚴</div>
-          <div class="r-val" id="rpt-delIncome" style="color:var(--blue)">₹0</div>
-          <div class="r-lbl">Del. Income</div>
-        </div>
-        <div class="report-item">
-          <div class="r-icon">📤</div>
-          <div class="r-val" id="rpt-submitted" style="color:var(--orange)">₹0</div>
-          <div class="r-lbl">Submitted</div>
-        </div>
-        <div class="report-item">
-          <div class="r-icon">⏳</div>
-          <div class="r-val" id="rpt-pendingAmt" style="color:var(--primary)">₹0</div>
-          <div class="r-lbl">Pending</div>
-        </div>
-      </div>
-      <!-- History -->
-      <div class="history-card">
-        <div class="history-header">
-          <h4>Delivered Orders</h4>
-          <span style="font-size:12px;color:var(--text3)" id="rpt-count">0 orders</span>
-        </div>
-        <div id="rpt-history">
-          <div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No deliveries for selected date</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ────────── PROFILE PAGE ────────── -->
-  <div class="page" id="page-profile">
-    <div class="profile-hero">
-      <div class="profile-avatar" id="profileInitials">D</div>
-      <div class="profile-name" id="profileName">Delivery Boy</div>
-      <div class="profile-phone" id="profilePhone">—</div>
-      <div class="profile-area-tag"><i class="fas fa-map-marker-alt"></i><span id="profileArea">—</span></div>
-    </div>
-
-    <div class="profile-section">
-      <div class="profile-item" onclick="showPage('report');switchNav('report');loadReport()">
-        <div class="pi-icon" style="background:var(--blue-bg);color:var(--blue)"><i class="fas fa-chart-bar"></i></div>
-        <div><h4>Daily Report</h4><p>View your delivery performance</p></div>
-        <i class="fas fa-chevron-right pi-arrow"></i>
-      </div>
-      <div class="profile-item" onclick="showPage('cash');switchNav('cash')">
-        <div class="pi-icon" style="background:var(--green-bg);color:var(--green)"><i class="fas fa-wallet"></i></div>
-        <div><h4>Cash Submission</h4><p>Submit collected cash</p></div>
-        <i class="fas fa-chevron-right pi-arrow"></i>
-      </div>
-      <div class="profile-item">
-        <div class="pi-icon" style="background:var(--orange-bg);color:var(--orange)"><i class="fas fa-headset"></i></div>
-        <div><h4>Contact Admin</h4><p id="adminContactInfo">Reach out for help</p></div>
-        <i class="fas fa-chevron-right pi-arrow"></i>
-      </div>
-    </div>
-
-    <div style="background:white;border-radius:var(--radius-sm);margin:12px 16px 0;padding:16px;box-shadow:var(--shadow-sm)">
-      <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">Today's Quick Stats</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
-        <div><div style="font-size:20px;font-weight:900;color:var(--green);font-family:'Nunito',sans-serif" id="pf-delivered">0</div><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase">Delivered</div></div>
-        <div><div style="font-size:20px;font-weight:900;color:var(--orange);font-family:'Nunito',sans-serif" id="pf-pending">0</div><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase">Active</div></div>
-        <div><div style="font-size:20px;font-weight:900;color:var(--blue);font-family:'Nunito',sans-serif" id="pf-income">₹0</div><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase">Income</div></div>
-      </div>
-    </div>
-
-    <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-    <div style="height:20px"></div>
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" id="nav-dashboard" onclick="showPage('dashboard');switchNav('dashboard')">
-      <i class="fas fa-home"></i>Home
-    </button>
-    <button class="nav-btn" id="nav-orders" onclick="showPage('orders');switchNav('orders');loadMyOrders()">
-      <i class="fas fa-list-ul"></i>Orders
-      <span class="nav-badge hidden" id="navOrdersBadge">0</span>
-    </button>
-    <button class="nav-btn" id="nav-cash" onclick="showPage('cash');switchNav('cash');loadCashPage()">
-      <i class="fas fa-wallet"></i>Cash
-    </button>
-    <button class="nav-btn" id="nav-report" onclick="showPage('report');switchNav('report');loadReport()">
-      <i class="fas fa-chart-bar"></i>Report
-    </button>
-    <button class="nav-btn" id="nav-profile" onclick="showPage('profile');switchNav('profile')">
-      <i class="fas fa-user"></i>Profile
-    </button>
-  </nav>
+<!-- HOME / ASSIGNED ORDERS -->
+<div id="pgHome" class="pg active">
+<div class="greeting-card" id="greetingCard">
+<h2 id="greetName">Loading...</h2>
+<p id="greetDate"></p>
+<div class="area-tag" id="greetArea"><i class="fas fa-map-pin"></i> ---</div>
 </div>
 
-<!-- ══ CONFIRM DELIVERY SHEET ══ -->
-<div class="overlay" id="confirmDeliveryOverlay" onclick="closeSheet(event,'confirmDeliveryOverlay')">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <h3 style="font-size:17px;font-weight:900;margin-bottom:4px">✅ Confirm Delivery</h3>
-    <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Make sure you have collected cash (if COD)</p>
-
-    <div class="confirm-order-preview" id="confirmOrderPreview"></div>
-
-    <div class="amount-box" id="confirmAmountBox">
-      <div class="label">COLLECT FROM CUSTOMER</div>
-      <div class="value" id="confirmAmountVal">₹0</div>
-    </div>
-
-    <div class="pickup-steps">
-      <div class="pickup-step"><div class="step-num">1</div><div class="step-text">Hand over all items to customer</div></div>
-      <div class="pickup-step"><div class="step-num">2</div><div class="step-text">Collect cash if payment is COD</div></div>
-      <div class="pickup-step"><div class="step-num">3</div><div class="step-text">Tap confirm to complete delivery</div></div>
-    </div>
-
-    <div style="display:flex;gap:10px">
-      <button class="btn btn-outline" style="flex:1" onclick="closeSheet(null,'confirmDeliveryOverlay')">Cancel</button>
-      <button class="btn btn-green" style="flex:2" id="confirmDeliveryBtn" onclick="confirmDelivery()">
-        <i class="fas fa-check-circle"></i> Confirm Delivered
-      </button>
-    </div>
-  </div>
+<div class="stats-row" id="statsRow">
+<div class="stat-mini" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8)"><div class="sm-val" id="stAssigned">0</div><div class="sm-lab">অর্ডার</div></div>
+<div class="stat-mini" style="background:linear-gradient(135deg,#10B981,#059669)"><div class="sm-val" id="stDelivered">0</div><div class="sm-lab">ডেলিভার্ড</div></div>
+<div class="stat-mini" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#1A1A2E"><div class="sm-val" id="stCash">₹0</div><div class="sm-lab">সংগ্রহ</div></div>
 </div>
 
-<!-- ══ PENDING ENTRY SHEET ══ -->
-<div class="overlay" id="pendingOverlay" onclick="closeSheet(event,'pendingOverlay')">
-  <div class="sheet" style="max-height:60vh">
-    <div class="sheet-handle"></div>
-    <h3 style="font-size:17px;font-weight:900;margin-bottom:14px">⚠️ Add Pending Entry</h3>
-    <div class="form-field">
-      <label>Reason</label>
-      <div class="input-wrap">
-        <i class="fas fa-comment"></i>
-        <input type="text" id="pendingReason" placeholder="e.g. Short change, customer unavailable...">
-      </div>
-    </div>
-    <div class="form-field">
-      <label>Amount (₹)</label>
-      <div class="input-wrap">
-        <i class="fas fa-rupee-sign"></i>
-        <input type="number" id="pendingAmount" placeholder="0">
-      </div>
-    </div>
-    <button class="btn btn-yellow btn-full" onclick="savePendingEntry()">
-      <i class="fas fa-save"></i> Save Pending Entry
-    </button>
-  </div>
+<div class="sec-header"><h3><i class="fas fa-clipboard-list" style="color:#2E7D32"></i> আমার অর্ডার</h3><span class="badge badge-info" id="orderCountBadge">0</span></div>
+
+<div class="filter-tabs" id="homeFilters">
+<div class="filter-tab active" onclick="filterHome('assigned',this)">ডেলিভারি করো</div>
+<div class="filter-tab" onclick="filterHome('delivered',this)">সম্পন্ন</div>
 </div>
 
-<!-- ══ ORDER DETAIL SHEET ══ -->
-<div class="overlay" id="orderDetailOverlay" onclick="closeSheet(event,'orderDetailOverlay')">
-  <div class="sheet" style="max-height:88vh">
-    <div class="sheet-handle"></div>
-    <div id="orderDetailContent"></div>
-  </div>
+<div id="ordersList"><div class="loader"><div class="spinner"></div></div></div>
 </div>
 
-<!-- ══ SUCCESS SCREEN ══ -->
-<div class="success-screen" id="successScreen">
-  <div class="success-icon-wrap">✅</div>
-  <h2>Delivery Complete!</h2>
-  <p id="successMsg">Order delivered successfully.</p>
-  <div class="success-id" id="successId">#000000</div>
-  <button class="btn btn-green btn-full" onclick="closeSuccess()" style="max-width:280px">
-    <i class="fas fa-home"></i> Back to Dashboard
-  </button>
+<!-- CASH PAGE -->
+<div id="pgCash" class="pg">
+<div class="sec-header"><h3><i class="fas fa-money-bill-wave" style="color:#2E7D32"></i> ক্যাশ সাবমিট</h3></div>
+
+<div class="cash-card">
+<div class="cash-stat">
+<div class="cash-box" style="background:#FFF8E1"><div class="cb-val" id="cashCollected" style="color:var(--accent-dark)">₹0</div><div class="cb-lab">সংগ্রহ</div></div>
+<div class="cash-box" style="background:#E8F5E9"><div class="cb-val" id="cashSubmitted" style="color:#2E7D32">₹0</div><div class="cb-lab">জমা দিয়েছি</div></div>
+<div class="cash-box" id="cashPendingBox" style="background:#FFF5F5"><div class="cb-val" id="cashPending" style="color:var(--danger)">₹0</div><div class="cb-lab">বাকি</div></div>
 </div>
 
-<!-- TOAST -->
-<div id="toastWrap"></div>
+<div class="form-group"><label>জমা দেওয়ার পরিমাণ (₹)</label><input type="number" id="submitAmount" placeholder="0" min="0"></div>
+<div class="form-group"><label>নোট (ঐচ্ছিক)</label><input type="text" id="submitNotes" placeholder="কিছু বলতে চাইলে..."></div>
+<button class="btn btn-green" onclick="submitCash()"><i class="fas fa-paper-plane"></i> ক্যাশ জমা দাও</button>
+</div>
 
-<!-- ══════════════ FIREBASE + JS ══════════════ -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, getDoc, getDocs, addDoc, updateDoc, query, orderBy, where, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<div class="sec-header" style="margin-top:16px"><h3><i class="fas fa-history" style="color:var(--text-sec)"></i> আজকের জমা</h3></div>
+<div id="cashHistory"><div class="loader"><div class="spinner"></div></div></div>
+</div>
 
+<!-- SUMMARY PAGE -->
+<div id="pgSummary" class="pg">
+<div class="sec-header"><h3><i class="fas fa-chart-bar" style="color:#2E7D32"></i> আজকের সারসংক্ষেপ</h3></div>
+<div id="summaryContent"><div class="loader"><div class="spinner"></div></div></div>
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<div class="nav-item active" onclick="goTo('home')"><i class="fas fa-motorcycle"></i><span>অর্ডার</span><div class="nav-badge" id="navBadge" style="display:none">0</div></div>
+<div class="nav-item" onclick="goTo('cash')"><i class="fas fa-money-bill-wave"></i><span>ক্যাশ</span></div>
+<div class="nav-item" onclick="goTo('summary')"><i class="fas fa-chart-pie"></i><span>সারাংশ</span></div>
+<div class="nav-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>লগআউট</span></div>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+<div class="modal-box"><div class="modal-header"><h3 id="modalTitle"></h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div><div class="modal-body" id="modalBody"></div><div class="modal-footer" id="modalFooter"></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+
+// ============================================================
+// ✅ YOUR FIREBASE CONFIG
+// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyBH5mkqNe6OVdBagDLBz-wJ7VpADKg--AY",
   authDomain: "fast8delivery-business.firebaseapp.com",
+  databaseURL: "https://fast8delivery-business-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "fast8delivery-business",
   storageBucket: "fast8delivery-business.firebasestorage.app",
   messagingSenderId: "968616663472",
   appId: "1:968616663472:web:5ef89accec468344cd9e75",
   measurementId: "G-WFHEXCC70P"
 };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// ============================================================
+// GLOBAL STATE
+// ============================================================
+let currentDB = null; // delivery boy
+let assignedOrders = [];
+let homeFilter = 'assigned';
 
-// ─── STATE ───
-let currentDboy = null;
-let myOrders = [];
-let allAreas = [];
-let pendingEntries = [];
-let submissionsToday = [];
-let confirmOrderId = null;
-let ordersUnsub = null;
-let isOnline = false;
+// ============================================================
+// UTILITIES
+// ============================================================
+function getToday(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function formatCurrency(n){return '₹'+Number(n||0).toLocaleString('en-IN')}
+function formatDate(ds){if(!ds)return '';return new Date(ds).toLocaleDateString('bn-IN',{day:'numeric',month:'short',year:'numeric'})}
+function formatTime(ts){if(!ts)return '';let d;if(ts.toDate)d=ts.toDate();else if(ts.seconds)d=new Date(ts.seconds*1000);else d=new Date(ts);return d.toLocaleString('bn-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}
+function getGreeting(){const h=new Date().getHours();if(h<12)return 'সুপ্রভাত';if(h<17)return 'শুভ বিকেল';return 'শুভ সন্ধ্যা'}
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' t-'+type:'');clearTimeout(t._timer);t._timer=setTimeout(()=>t.className='toast',2500)}
+function openModal(title,body,footer){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modalFooter').innerHTML=footer||'';document.getElementById('modalOverlay').classList.add('show')}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show')}
 
-// ─── HELPERS ───
-const today = () => new Date().toISOString().split('T')[0];
-const fmt = v => '₹' + (parseFloat(v)||0).toLocaleString('en-IN', {minimumFractionDigits:0, maximumFractionDigits:2});
-const fmtTime = ts => {
-  if (!ts) return '';
-  const d = ts.toDate ? ts.toDate() : new Date(ts);
-  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-};
-const fmtDate = ts => {
-  if (!ts) return '-';
-  const d = ts.toDate ? ts.toDate() : new Date(ts);
-  return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-};
-const greet = () => {
-  const h = new Date().getHours();
-  if (h<12) return 'Good morning,';
-  if (h<17) return 'Good afternoon,';
-  return 'Good evening,';
-};
+// ============================================================
+// AUTH — PHONE + PASSWORD LOGIN
+// ============================================================
+async function doLogin(){
+const phone=document.getElementById('loginPhone').value.trim();
+const pass=document.getElementById('loginPass').value.trim();
+const err=document.getElementById('loginError');
 
-// ─── TOAST ───
-window.showToast = (msg, type='success') => {
-  const c = document.getElementById('toastWrap');
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  const icons = {success:'fas fa-check-circle',error:'fas fa-times-circle',warning:'fas fa-exclamation-circle'};
-  el.innerHTML = `<i class="${icons[type]||'fas fa-info-circle'}"></i><span>${msg}</span>`;
-  c.appendChild(el);
-  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(8px)';el.style.transition='all 0.3s';setTimeout(()=>el.remove(),300);},3000);
-};
+if(!phone||phone.length<10){err.textContent='সঠিক ফোন নম্বর দাও';err.style.display='block';return}
+if(!pass){err.textContent='পাসওয়ার্ড দাও';err.style.display='block';return}
+err.style.display='none';
 
-// ─── LOADING ───
-const showLoad = v => document.getElementById('loadingWrap').style.display = v ? 'flex' : 'none';
+try{
+const s=await db.collection('deliveryBoys').where('phone','==',phone).get();
+if(s.empty){err.textContent='এই নম্বরে কোনো ডেলিভারি অ্যাকাউন্ট নেই';err.style.display='block';return}
 
-// ─── LOGIN ───
-window.doLogin = async () => {
-  const id = document.getElementById('loginId').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const errEl = document.getElementById('loginErr');
-  errEl.style.display = 'none';
-  if (!id||!pass) { errEl.textContent='Please enter ID and password'; errEl.style.display='block'; return; }
-  showLoad(true);
-  try {
-    const snap = await getDocs(query(collection(db,'deliveryBoys'),where('loginId','==',id),where('password','==',pass)));
-    if (snap.empty) { errEl.textContent='❌ Invalid login ID or password'; errEl.style.display='block'; }
-    else {
-      currentDboy = {id: snap.docs[0].id, ...snap.docs[0].data()};
-      localStorage.setItem('fast8dboy', JSON.stringify(currentDboy));
-      enterApp();
-    }
-  } catch(e) { errEl.textContent='Error: '+e.message; errEl.style.display='block'; }
-  showLoad(false);
-};
+const doc=s.docs[0];
+const data=doc.data();
 
-document.getElementById('loginId').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginPass').focus();});
-document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+if(data.password!==pass){err.textContent='পাসওয়ার্ড ভুল হয়েছে';err.style.display='block';return}
+if(data.active===false){err.textContent='তোমার অ্যাকাউন্ট নিষ্ক্রিয়। অ্যাডমিনকে বলো।';err.style.display='block';return}
 
-window.doLogout = () => {
-  if (ordersUnsub) ordersUnsub();
-  currentDboy = null; myOrders = [];
-  localStorage.removeItem('fast8dboy');
-  document.getElementById('appScreen').classList.remove('active');
-  document.getElementById('loginScreen').classList.add('active');
-};
+currentDB={id:doc.id,...data};
+localStorage.setItem('f8b_db',JSON.stringify(currentDB));
+showToast('স্বাগতম, '+currentDB.name+'! 🏍️','success');
+showMainApp();
 
-function enterApp() {
-  document.getElementById('loginScreen').classList.remove('active');
-  document.getElementById('appScreen').classList.add('active');
-  initApp();
+}catch(e){err.textContent='Error: '+e.message;err.style.display='block'}
 }
 
-// ─── INIT ───
-async function initApp() {
-  showLoad(true);
-  updateProfileUI();
-  listenMyOrders();
-  await loadAreas();
-  loadCashPage();
-  const today_dt = new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
-  document.getElementById('reportDateLabel').textContent = today_dt;
-  document.getElementById('reportDate').value = today();
-  showLoad(false);
+function checkAuth(){
+try{const u=JSON.parse(localStorage.getItem('f8b_db'));if(u&&u.id){currentDB=u;showMainApp();return}}catch(e){}
+document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';
 }
 
-function updateProfileUI() {
-  if (!currentDboy) return;
-  const initials = currentDboy.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('profileInitials').textContent = initials;
-  document.getElementById('profileName').textContent = currentDboy.name;
-  document.getElementById('profilePhone').textContent = '📞 '+currentDboy.phone;
-  document.getElementById('topbarName').textContent = currentDboy.name.split(' ')[0];
-  document.getElementById('dboyDisplayName').textContent = currentDboy.name;
-  document.getElementById('greetingText').textContent = greet();
+function showMainApp(){
+document.getElementById('loginScreen').style.display='none';
+document.getElementById('mainApp').style.display='block';
+renderGreeting();
+loadAssignedOrders();
 }
 
-async function loadAreas() {
-  const snap = await getDocs(collection(db,'areas'));
-  allAreas = snap.docs.map(d=>({id:d.id,...d.data()}));
-  const area = allAreas.find(a=>a.id===currentDboy?.areaId);
-  const areaName = area?.name || '—';
-  document.getElementById('dboyAreaTag').textContent = areaName;
-  document.getElementById('profileArea').textContent = areaName;
+function doLogout(){
+currentDB=null;localStorage.removeItem('f8b_db');
+document.getElementById('loginScreen').style.display='flex';
+document.getElementById('mainApp').style.display='none';
+document.getElementById('loginPass').value='';
+showToast('লগআউট হয়েছে','success');
 }
 
-// ─── REALTIME ORDERS LISTENER ───
-function listenMyOrders() {
-  if (ordersUnsub) ordersUnsub();
-  if (!currentDboy) return;
-  // Listen to orders assigned to this delivery boy
-  const q = query(collection(db,'orders'), where('deliveryBoyId','==',currentDboy.id), orderBy('createdAt','desc'));
-  ordersUnsub = onSnapshot(q, snap => {
-    myOrders = snap.docs.map(d=>({id:d.id,...d.data()}));
-    renderDashboard();
-  });
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+
+// ============================================================
+// GREETING
+// ============================================================
+function renderGreeting(){
+if(!currentDB)return;
+document.getElementById('greetName').textContent=getGreeting()+', '+currentDB.name+'! 🏍️';
+document.getElementById('greetDate').textContent=formatDate(getToday());
+document.getElementById('greetArea').innerHTML='<i class="fas fa-map-pin"></i> '+(currentDB.assignedArea||'কোনো এলাকা নেই');
 }
 
-// ─── NAVIGATION ───
-window.showPage = name => {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const pg = document.getElementById('page-'+name);
-  if (pg) { pg.classList.add('active'); window.scrollTo(0,0); }
-};
-window.switchNav = name => {
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const btn = document.getElementById('nav-'+name);
-  if (btn) btn.classList.add('active');
-};
+// ============================================================
+// LOAD ASSIGNED ORDERS
+// ============================================================
+async function loadAssignedOrders(){
+const c=document.getElementById('ordersList');
+c.innerHTML='<div class="loader"><div class="spinner"></div></div>';
 
-// ─── ONLINE TOGGLE ───
-window.toggleOnline = () => {
-  isOnline = !isOnline;
-  const pill = document.getElementById('onlinePill');
-  const text = document.getElementById('onlineText');
-  if (isOnline) { pill.classList.add('online'); text.textContent='Online'; showToast('You are now online 🟢'); }
-  else { pill.classList.remove('online'); text.textContent='Offline'; showToast('You are now offline 🔴','warning'); }
-};
+if(!currentDB)return;
+const today=getToday();
 
-// ─── DASHBOARD ───
-function renderDashboard() {
-  const todayStr = today();
-  const active = myOrders.filter(o=>o.status==='out_for_delivery');
-  const deliveredToday = myOrders.filter(o=>{
-    const d = o.deliveredAt?.toDate ? o.deliveredAt.toDate() : o.createdAt?.toDate ? o.createdAt.toDate() : new Date(0);
-    return d.toISOString().split('T')[0]===todayStr && o.status==='delivered';
-  });
-  const codCollected = deliveredToday.filter(o=>o.payment==='cod').reduce((s,o)=>s+(o.total||0),0);
-  const delIncome = deliveredToday.reduce((s,o)=>s+(o.deliveryCharge||0),0);
-  const submittedAmt = submissionsToday.reduce((s,sub)=>s+(sub.amount||0),0);
-  const pendingCash = codCollected - submittedAmt;
+try{
+// Get orders assigned to this delivery boy today
+const s=await db.collection('orders')
+.where('deliveryBoyId','==',currentDB.id)
+.where('dateStr','==',today)
+.orderBy('createdAt','desc')
+.get();
 
-  document.getElementById('stat-delivered').textContent = deliveredToday.length;
-  document.getElementById('stat-pending').textContent = active.length;
-  document.getElementById('stat-cashCollected').textContent = fmt(pendingCash > 0 ? pendingCash : 0);
-  document.getElementById('stat-earning').textContent = fmt(delIncome);
-  document.getElementById('activeCount').textContent = active.length + ' order'+(active.length!==1?'s':'');
+assignedOrders=[];
+s.forEach(doc=>assignedOrders.push({id:doc.id,...doc.data()}));
 
-  // Profile quick stats
-  document.getElementById('pf-delivered').textContent = deliveredToday.length;
-  document.getElementById('pf-pending').textContent = active.length;
-  document.getElementById('pf-income').textContent = fmt(delIncome);
+// Stats
+const assigned=assignedOrders.filter(o=>o.status==='assigned').length;
+const delivered=assignedOrders.filter(o=>o.status==='delivered').length;
+const cashCollected=assignedOrders.filter(o=>o.status==='delivered'&&o.paymentMethod==='cod').reduce((s,o)=>s+Number(o.totalAmount||0),0);
 
-  // Pending Cash Banner
-  const banner = document.getElementById('pendingCashBanner');
-  if (pendingCash > 0) {
-    banner.classList.remove('hidden');
-    document.getElementById('pendingCashAmt').textContent = fmt(pendingCash) + ' to be submitted';
-  } else { banner.classList.add('hidden'); }
+document.getElementById('stAssigned').textContent=assigned;
+document.getElementById('stDelivered').textContent=delivered;
+document.getElementById('stCash').textContent=formatCurrency(cashCollected);
 
-  // Nav badge
-  const badge = document.getElementById('navOrdersBadge');
-  if (active.length > 0) { badge.textContent = active.length; badge.classList.remove('hidden'); }
-  else { badge.classList.add('hidden'); }
+// Badge
+const b=document.getElementById('navBadge');
+if(assigned>0){b.textContent=assigned;b.style.display='block'}else{b.style.display='none'}
+document.getElementById('orderCountBadge').textContent=assignedOrders.length+' total';
 
-  renderActiveOrders(active);
+renderOrdersList();
+
+}catch(e){
+console.error(e);
+c.innerHTML='<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error loading orders</h3><p>'+e.message+'</p></div>';
+}
 }
 
-function renderActiveOrders(orders) {
-  const c = document.getElementById('activeOrdersList');
-  if (!orders.length) {
-    c.innerHTML = `<div class="no-orders">
-      <div class="icon-wrap">🏍️</div>
-      <h3>No active deliveries</h3>
-      <p>You'll see assigned orders here</p>
-    </div>`;
-    return;
-  }
-  c.innerHTML = orders.map(o => buildOrderCard(o, true)).join('');
+function filterHome(filter,el){
+homeFilter=filter;
+document.querySelectorAll('#homeFilters .filter-tab').forEach(t=>t.classList.remove('active'));
+if(el)el.classList.add('active');
+renderOrdersList();
 }
 
-function buildOrderCard(o, isActive) {
-  const items = (o.items||[]).slice(0,2).map(i=>i.name).join(', ')+(o.items?.length>2?` +${o.items.length-2} more`:'');
-  const isPaid = o.payment==='upi' || o.paymentStatus==='paid';
-  const custInitial = (o.customerName||'?')[0].toUpperCase();
-  return `<div class="order-card">
-    <div class="order-card-top">
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <div class="order-num">#${o.id.slice(-6).toUpperCase()}</div>
-          <span class="status-pill sp-${o.status}">${o.status?.replace(/_/g,' ')}</span>
-          <span class="payment-tag ${isPaid?'pt-paid':'pt-cod'}">${isPaid?'✅ Paid':'💵 COD'}</span>
-        </div>
-        <div class="order-time">${fmtDate(o.createdAt)} • ${fmtTime(o.createdAt)}</div>
-        <div class="order-items-text">📦 ${items}</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:4px">📍 ${o.address||o.area||'—'}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="order-amount">${fmt(o.total)}</div>
-        <div class="order-del-charge">🚴 +${fmt(o.deliveryCharge)} del.</div>
-        <button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i> View</button>
-      </div>
-    </div>
-    <div class="customer-row">
-      <div class="customer-info">
-        <div class="customer-avatar">${custInitial}</div>
-        <div>
-          <div class="customer-name">${o.customerName||'Customer'}</div>
-          <div class="customer-addr">${o.area||'—'} • ${o.km||0} km away</div>
-        </div>
-      </div>
-      <a href="tel:${o.customerPhone}" class="call-btn" title="Call Customer"><i class="fas fa-phone"></i></a>
-    </div>
-    ${isActive ? `<div class="order-actions">
-      <button class="btn btn-outline" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-map-marker-alt"></i> Details</button>
-      <button class="btn btn-green" style="flex:1" onclick="openConfirmDelivery('${o.id}')">
-        <i class="fas fa-check-circle"></i> Mark Delivered
-      </button>
-    </div>` : `<div class="order-actions">
-      <button class="btn btn-outline btn-full" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i> View Details</button>
-    </div>`}
-  </div>`;
+function renderOrdersList(){
+const c=document.getElementById('ordersList');
+let filtered=assignedOrders.filter(o=>o.status===homeFilter);
+
+if(!filtered.length){
+c.innerHTML=`<div class="empty-state"><i class="fas fa-${homeFilter==='assigned'?'motorcycle':'check-double'}"></i><h3>${homeFilter==='assigned'?'ডেলিভারি করার অর্ডার নেই':'আজ কোনো ডেলিভারি সম্পন্ন হয়নি'}</h3><p>${homeFilter==='assigned'?'অ্যাডমিন অর্ডার অ্যাসাইন করলে এখানে দেখাবে':'ডেলিভারি করলে এখানে আসবে'}</p></div>`;
+return;
 }
 
-// ─── ALL ORDERS ───
-window.loadMyOrders = async () => {
-  // Use cached myOrders first, just re-render
-  filterMyOrders();
-};
+c.innerHTML=filtered.map(o=>{
+const items=(o.items||[]).map(i=>`📦 ${i.name} × ${i.qty}`).join('<br>');
+const isCOD=o.paymentMethod==='cod';
 
-window.filterMyOrders = () => {
-  const filter = document.getElementById('ordersFilter').value;
-  const filtered = filter ? myOrders.filter(o=>o.status===filter) : myOrders;
-  const c = document.getElementById('allOrdersList');
-  if (!filtered.length) {
-    c.innerHTML = `<div class="no-orders"><div class="icon-wrap">📋</div><h3>No orders yet</h3><p>Your assigned orders appear here</p></div>`;
-    return;
-  }
-  const isActive = o => o.status === 'out_for_delivery';
-  c.innerHTML = filtered.map(o => buildOrderCard(o, isActive(o))).join('');
-};
-
-// ─── ORDER DETAIL ───
-window.viewOrderDetail = id => {
-  const o = myOrders.find(x=>x.id===id);
-  if (!o) return;
-  const itemsHtml = (o.items||[]).map(i=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
-      ${i.imageUrl?`<img src="${i.imageUrl}" style="width:40px;height:40px;border-radius:9px;object-fit:cover">`:`<div style="width:40px;height:40px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text3)"><i class="fas fa-box"></i></div>`}
-      <div style="flex:1"><div style="font-weight:700;font-size:13px">${i.name}</div><div style="font-size:11px;color:var(--text3)">${fmt(i.price)} × ${i.qty}</div></div>
-      <div style="font-weight:800;font-size:14px;color:var(--primary);font-family:'Nunito',sans-serif">${fmt(i.price*i.qty)}</div>
-    </div>`).join('');
-  const isPaid = o.payment==='upi'||o.paymentStatus==='paid';
-  document.getElementById('orderDetailContent').innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <h3 style="font-size:18px;font-weight:900">#${o.id.slice(-6).toUpperCase()}</h3>
-      <span class="status-pill sp-${o.status}">${o.status?.replace(/_/g,' ')}</span>
-    </div>
-    <div style="background:var(--bg);border-radius:13px;padding:14px;margin-bottom:14px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:white">${(o.customerName||'?')[0].toUpperCase()}</div>
-        <div><div style="font-weight:700;font-size:15px">${o.customerName||'—'}</div><div style="font-size:12px;color:var(--text3)">${o.customerPhone||'—'}</div></div>
-        <a href="tel:${o.customerPhone}" class="call-btn" style="margin-left:auto"><i class="fas fa-phone"></i></a>
-      </div>
-      <div style="font-size:12px;color:var(--text2)"><i class="fas fa-map-marker-alt" style="color:var(--primary)"></i> ${o.address||o.area||'—'}</div>
-      <div style="font-size:12px;color:var(--text3);margin-top:4px"><i class="fas fa-road"></i> ${o.km||0} km from hub</div>
-    </div>
-    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text3);margin-bottom:8px">Items</div>
-    ${itemsHtml}
-    <div style="margin-top:14px;background:${isPaid?'var(--green-bg)':'var(--orange-bg)'};border-radius:13px;padding:14px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px">
-        <span style="color:var(--text3)">Sub Total</span><span style="font-weight:700">${fmt(o.subTotal)}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px">
-        <span style="color:var(--text3)">Delivery</span><span style="font-weight:700">${fmt(o.deliveryCharge)}</span>
-      </div>
-      ${o.discount?`<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:var(--green)">Discount</span><span style="font-weight:700;color:var(--green)">-${fmt(o.discount)}</span></div>`:''}
-      <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid rgba(0,0,0,0.08)">
-        <span style="font-size:15px;font-weight:800;color:${isPaid?'var(--green)':'var(--orange)'}">${isPaid?'💳 UPI Paid':'💵 Collect COD'}</span>
-        <span style="font-size:20px;font-weight:900;color:${isPaid?'var(--green)':'var(--orange)'};font-family:'Nunito',sans-serif">${fmt(o.total)}</span>
-      </div>
-    </div>
-    ${o.status==='out_for_delivery'?`<div style="display:flex;gap:10px;margin-top:16px">
-      <a href="tel:${o.customerPhone}" class="btn btn-outline" style="flex:1;text-decoration:none;justify-content:center"><i class="fas fa-phone"></i> Call</a>
-      <button class="btn btn-green" style="flex:2" onclick="document.getElementById('orderDetailOverlay').classList.remove('open');openConfirmDelivery('${o.id}')">
-        <i class="fas fa-check-circle"></i> Mark Delivered
-      </button>
-    </div>`:'<div style="height:8px"></div>'}
-  `;
-  document.getElementById('orderDetailOverlay').classList.add('open');
-};
-
-// ─── CONFIRM DELIVERY ───
-window.openConfirmDelivery = id => {
-  const o = myOrders.find(x=>x.id===id);
-  if (!o) return;
-  confirmOrderId = id;
-  const isPaid = o.payment==='upi'||o.paymentStatus==='paid';
-  document.getElementById('confirmOrderPreview').innerHTML = `
-    <div class="confirm-row"><span>Order</span><span>#${o.id.slice(-6).toUpperCase()}</span></div>
-    <div class="confirm-row"><span>Customer</span><span>${o.customerName||'—'}</span></div>
-    <div class="confirm-row"><span>Items</span><span>${(o.items||[]).length} item(s)</span></div>
-    <div class="confirm-row"><span>Payment</span><span><span class="payment-tag ${isPaid?'pt-paid':'pt-cod'}">${isPaid?'✅ UPI Paid':'💵 COD'}</span></span></div>
-  `;
-  const amtBox = document.getElementById('confirmAmountBox');
-  if (isPaid) {
-    amtBox.style.background='linear-gradient(135deg,var(--blue),#3B82F6)';
-    document.getElementById('confirmAmountVal').textContent = '✅ Already Paid via UPI';
-    document.querySelector('#confirmAmountBox .label').textContent = 'PAYMENT STATUS';
-  } else {
-    amtBox.style.background='linear-gradient(135deg,var(--green),#22C55E)';
-    document.getElementById('confirmAmountVal').textContent = fmt(o.total);
-    document.querySelector('#confirmAmountBox .label').textContent = 'COLLECT FROM CUSTOMER';
-  }
-  document.getElementById('confirmDeliveryOverlay').classList.add('open');
-};
-
-window.confirmDelivery = async () => {
-  if (!confirmOrderId) return;
-  const btn = document.getElementById('confirmDeliveryBtn');
-  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-  try {
-    await updateDoc(doc(db,'orders',confirmOrderId), {
-      status:'delivered',
-      paymentStatus:'paid',
-      deliveredAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
-    document.getElementById('confirmDeliveryOverlay').classList.remove('open');
-    const o = myOrders.find(x=>x.id===confirmOrderId);
-    document.getElementById('successId').textContent = '#'+confirmOrderId.slice(-6).toUpperCase();
-    document.getElementById('successMsg').innerHTML = `
-      <strong>${o?.customerName||'Customer'}</strong> received their order.<br>
-      ${o?.payment==='cod'?`<span style="color:var(--green);font-weight:700">Remember to submit cash: ${fmt(o.total)}</span>`:'Payment was via UPI ✅'}
-    `;
-    document.getElementById('successScreen').classList.add('open');
-    confirmOrderId = null;
-    setTimeout(loadCashPage, 1000);
-  } catch(e) { showToast('Error: '+e.message, 'error'); }
-  btn.disabled=false; btn.innerHTML='<i class="fas fa-check-circle"></i> Confirm Delivered';
-};
-
-window.closeSuccess = () => {
-  document.getElementById('successScreen').classList.remove('open');
-  showPage('dashboard'); switchNav('dashboard');
-};
-
-// ─── CASH PAGE ───
-window.loadCashPage = async () => {
-  if (!currentDboy) return;
-  const todayStr = today();
-  // Load today's submitted cash
-  const subSnap = await getDocs(query(collection(db,'cashSubmissions'),where('dboyId','==',currentDboy.id),where('date','==',todayStr)));
-  submissionsToday = subSnap.docs.map(d=>({id:d.id,...d.data()}));
-  // Load pending entries
-  const penSnap = await getDocs(query(collection(db,'pendingEntries'),where('dboyId','==',currentDboy.id),where('resolved','==',false)));
-  pendingEntries = penSnap.docs.map(d=>({id:d.id,...d.data()}));
-  // Calculate
-  const deliveredToday = myOrders.filter(o=>{
-    const d = o.deliveredAt?.toDate?o.deliveredAt.toDate():o.updatedAt?.toDate?o.updatedAt.toDate():new Date(0);
-    return d.toISOString().split('T')[0]===todayStr && o.status==='delivered';
-  });
-  const codOrders = deliveredToday.filter(o=>o.payment==='cod');
-  const codTotal = codOrders.reduce((s,o)=>s+(o.total||0),0);
-  const submitted = submissionsToday.reduce((s,sub)=>s+(sub.amount||0),0);
-  const pending = codTotal - submitted;
-  document.getElementById('cashCodDelivered').textContent = codOrders.length;
-  document.getElementById('cashCodTotal').textContent = fmt(codTotal);
-  document.getElementById('cashSubmitted').textContent = fmt(submitted);
-  document.getElementById('cashPending').textContent = fmt(pending > 0 ? pending : 0);
-  if (pending > 0) document.getElementById('submitAmount').placeholder = (pending > 0 ? pending : 0).toString();
-  renderSubmissions();
-  renderPendingEntries();
-  // Also update dashboard
-  renderDashboard();
-};
-
-function renderSubmissions() {
-  const el = document.getElementById('submissionsList');
-  if (!submissionsToday.length) { el.innerHTML='<p style="font-size:13px;color:var(--text3);text-align:center;padding:12px">No submissions yet today</p>'; return; }
-  el.innerHTML = submissionsToday.map(s=>`
-    <div class="sub-item">
-      <div>
-        <div class="sub-amt">${fmt(s.amount)}</div>
-        <div class="sub-time">${s.time||fmtTime(s.createdAt)}</div>
-        ${s.note?`<div class="sub-note">${s.note}</div>`:''}
-      </div>
-      <span style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px">✅ Received</span>
-    </div>`).join('');
+if(o.status==='delivered'){
+return`<div class="order-card st-delivered">
+<div class="oc-header"><div><div class="oc-id">#${o.orderId||o.id.substr(0,8).toUpperCase()}</div><div class="oc-time">${formatTime(o.createdAt)}</div></div><span class="badge badge-success"><i class="fas fa-check-double"></i> সম্পন্ন</span></div>
+<div class="oc-customer"><div class="cust-name"><i class="fas fa-user"></i> ${o.userName||'Customer'}</div><div class="cust-detail"><i class="fas fa-map-pin"></i> ${o.userArea||''}</div></div>
+<div class="oc-bottom"><div class="oc-total">${formatCurrency(o.totalAmount)}</div><span class="badge ${isCOD?'badge-warning':'badge-success'}">${isCOD?'💵 COD':'📱 UPI'}</span></div>
+<div class="delivered-badge"><i class="fas fa-check-circle"></i> ডেলিভারি সফল!</div>
+</div>`;
 }
 
-function renderPendingEntries() {
-  const el = document.getElementById('pendingEntriesList');
-  if (!pendingEntries.length) { el.innerHTML='<p style="font-size:13px;color:var(--text3);text-align:center;padding:12px">No pending entries</p>'; return; }
-  el.innerHTML = pendingEntries.map(e=>`
-    <div class="sub-item" style="background:var(--orange-bg);border-color:#FED7AA">
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--orange)">${e.reason||'Pending'}</div>
-        <div style="font-size:18px;font-weight:900;color:var(--primary);font-family:'Nunito',sans-serif">${fmt(e.amount)}</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:2px">${fmtDate(e.createdAt)}</div>
-      </div>
-      <span class="pending-tag">⏳ Pending</span>
-    </div>`).join('');
+return`<div class="order-card st-assigned">
+<div class="oc-header"><div><div class="oc-id">#${o.orderId||o.id.substr(0,8).toUpperCase()}</div><div class="oc-time">${formatTime(o.createdAt)}</div></div><span class="badge badge-info"><i class="fas fa-motorcycle"></i> ডেলিভারি করো</span></div>
+
+<!-- Customer Details -->
+<div class="oc-customer">
+<div class="cust-name"><i class="fas fa-user"></i> ${o.userName||'Customer'}</div>
+<div class="cust-detail"><i class="fas fa-phone"></i> ${o.userPhone||'N/A'}</div>
+<div class="cust-detail"><i class="fas fa-map-pin"></i> ${o.userArea||''}</div>
+${o.userAddress?`<div class="cust-detail"><i class="fas fa-home"></i> ${o.userAddress}</div>`:''}
+<div class="cust-detail"><i class="fas fa-route"></i> ${o.distanceKm||0} KM দূরে</div>
+</div>
+
+<!-- Call Button -->
+${o.userPhone?`<a href="tel:${o.userPhone}" class="call-btn"><i class="fas fa-phone-alt"></i> কাস্টমারকে কল করো (${o.userPhone})</a>`:''}
+
+<!-- Items -->
+<div class="oc-items"><div style="font-size:11px;font-weight:600;margin-bottom:4px;color:var(--text)">📋 আইটেমস:</div>${items}</div>
+
+<!-- Total -->
+<div class="oc-bottom">
+<div class="oc-total">${formatCurrency(o.totalAmount)}</div>
+<div>
+<span class="badge ${isCOD?'badge-warning':'badge-success'}" style="font-size:11px">${isCOD?'💵 COD — টাকা নেবে':'📱 UPI — পেইড'}</span>
+<div style="font-size:10px;color:var(--text-sec);margin-top:2px">Del: ${formatCurrency(o.deliveryCharge)}</div>
+</div>
+</div>
+
+<!-- Actions -->
+<div class="oc-actions">
+<button class="btn btn-success btn-sm" style="flex:1" onclick="markDelivered('${o.id}','${(o.userName||'').replace(/'/g,"\\'")}',${o.totalAmount||0},'${o.paymentMethod||'cod'}')">
+<i class="fas fa-check-double"></i> ডেলিভারি সম্পন্ন
+</button>
+</div>
+</div>`;
+}).join('');
 }
 
-window.submitCash = async () => {
-  const amount = parseFloat(document.getElementById('submitAmount').value)||0;
-  const note = document.getElementById('submitNote').value.trim();
-  if (!amount||amount<=0) { showToast('Enter a valid amount','error'); return; }
-  if (!currentDboy) return;
-  const now = new Date();
-  try {
-    await addDoc(collection(db,'cashSubmissions'),{
-      dboyId: currentDboy.id,
-      dboyName: currentDboy.name,
-      amount, note,
-      date: today(),
-      time: now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),
-      createdAt: serverTimestamp()
-    });
-    document.getElementById('submitAmount').value='';
-    document.getElementById('submitNote').value='';
-    await loadCashPage();
-    showToast(`₹${amount} submitted to admin! ✅`);
-  } catch(e) { showToast('Error: '+e.message,'error'); }
-};
+// ============================================================
+// MARK DELIVERED
+// ============================================================
+function markDelivered(orderId,customerName,amount,payMethod){
+const isCOD=payMethod==='cod';
 
-window.openPendingModal = () => {
-  document.getElementById('pendingReason').value='';
-  document.getElementById('pendingAmount').value='';
-  document.getElementById('pendingOverlay').classList.add('open');
-};
+openModal('ডেলিভারি কনফার্ম',`
+<div style="text-align:center;margin-bottom:16px">
+<div style="width:56px;height:56px;background:#FFF8E1;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px">🏍️</div>
+<h3 style="margin-bottom:4px">${customerName}-কে ডেলিভারি?</h3>
+<p style="font-size:12px;color:var(--text-sec)">মোট: <strong style="color:var(--primary)">${formatCurrency(amount)}</strong></p>
+</div>
 
-window.savePendingEntry = async () => {
-  const reason=document.getElementById('pendingReason').value.trim();
-  const amount=parseFloat(document.getElementById('pendingAmount').value)||0;
-  if(!reason||!amount){showToast('Fill all fields','error');return;}
-  await addDoc(collection(db,'pendingEntries'),{dboyId:currentDboy.id,dboyName:currentDboy.name,reason,amount,resolved:false,createdAt:serverTimestamp()});
-  document.getElementById('pendingOverlay').classList.remove('open');
-  await loadCashPage();
-  showToast('Pending entry saved','warning');
-};
+${isCOD?`
+<div style="background:#FFF8E1;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px">
+<div style="font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px"><i class="fas fa-money-bill-wave"></i> COD — ক্যাশ সংগ্রহ</div>
+<div class="form-group" style="margin-bottom:0">
+<label>কত টাকা পেয়েছ? *</label>
+<input type="number" id="collectedAmount" value="${amount}" min="0" placeholder="0">
+</div>
+<div class="form-group" style="margin-bottom:0;margin-top:8px">
+<label>বাকি থাকলে পরিমাণ</label>
+<input type="number" id="pendingAmount" value="0" min="0" placeholder="0">
+</div>
+</div>
+`:`
+<div style="background:#E8F5E9;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;text-align:center">
+<div style="font-size:12px;font-weight:700;color:#2E7D32"><i class="fas fa-mobile-alt"></i> UPI — অলরেডি পেইড</div>
+<p style="font-size:11px;color:var(--text-sec)">ক্যাশ সংগ্রহের দরকার নেই</p>
+</div>
+`}
 
-// ─── REPORT ───
-window.loadReport = async () => {
-  if (!currentDboy) return;
-  const date = document.getElementById('reportDate').value || today();
-  document.getElementById('reportDateLabel').textContent = new Date(date).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  // Delivered orders on that date
-  const delivered = myOrders.filter(o=>{
-    const d = o.deliveredAt?.toDate?o.deliveredAt.toDate():o.updatedAt?.toDate?o.updatedAt.toDate():new Date(0);
-    return d.toISOString().split('T')[0]===date && o.status==='delivered';
-  });
-  const codAmt = delivered.filter(o=>o.payment==='cod').reduce((s,o)=>s+(o.total||0),0);
-  const delIncome = delivered.reduce((s,o)=>s+(o.deliveryCharge||0),0);
-  // Submissions for that date
-  const subSnap = await getDocs(query(collection(db,'cashSubmissions'),where('dboyId','==',currentDboy.id),where('date','==',date)));
-  const submitted = subSnap.docs.reduce((s,d)=>s+(d.data().amount||0),0);
-  const pendingAmt = codAmt - submitted;
-  document.getElementById('rpt-total').textContent = delivered.length;
-  document.getElementById('rpt-subtitle').textContent = delivered.length + ' order'+(delivered.length!==1?'s':'')+' completed';
-  document.getElementById('rpt-codAmt').textContent = fmt(codAmt);
-  document.getElementById('rpt-delIncome').textContent = fmt(delIncome);
-  document.getElementById('rpt-submitted').textContent = fmt(submitted);
-  document.getElementById('rpt-pendingAmt').textContent = fmt(pendingAmt>0?pendingAmt:0);
-  document.getElementById('rpt-count').textContent = delivered.length+' orders';
-  const hist = document.getElementById('rpt-history');
-  if (!delivered.length) { hist.innerHTML='<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No deliveries for selected date</div>'; return; }
-  hist.innerHTML = delivered.map(o=>`
-    <div class="history-row">
-      <div>
-        <div class="h-id">#${o.id.slice(-6).toUpperCase()}</div>
-        <div class="h-name">${o.customerName||'—'} • ${o.area||'—'}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="h-amt">${fmt(o.total)}</div>
-        <div class="h-time">${fmtTime(o.deliveredAt||o.updatedAt)}</div>
-      </div>
-    </div>`).join('');
-};
-
-// ─── SHEET HELPERS ───
-window.closeSheet = (e, id) => { if(!e||e.target===document.getElementById(id)) document.getElementById(id).classList.remove('open'); };
-
-// ─── INIT ───
-async function boot() {
-  showLoad(true);
-  const saved = localStorage.getItem('fast8dboy');
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      const snap = await getDoc(doc(db,'deliveryBoys',parsed.id));
-      if (snap.exists()) {
-        currentDboy = {id:snap.id,...snap.data()};
-        localStorage.setItem('fast8dboy',JSON.stringify(currentDboy));
-        enterApp(); return;
-      } else { localStorage.removeItem('fast8dboy'); }
-    } catch(e) { localStorage.removeItem('fast8dboy'); }
-  }
-  showLoad(false);
+<div class="form-group">
+<label>নোট (ঐচ্ছিক)</label>
+<input type="text" id="deliveryNotes" placeholder="কিছু বলতে চাইলে...">
+</div>
+`,`
+<button class="btn btn-outline" onclick="closeModal()">বাতিল</button>
+<button class="btn btn-success" onclick="confirmDelivery('${orderId}','${payMethod}')"><i class="fas fa-check-double"></i> কনফার্ম</button>
+`);
 }
 
-boot();
+async function confirmDelivery(orderId,payMethod){
+const notes=document.getElementById('deliveryNotes')?.value?.trim()||'';
+let collected=0,pending=0;
+
+if(payMethod==='cod'){
+collected=Number(document.getElementById('collectedAmount')?.value)||0;
+pending=Number(document.getElementById('pendingAmount')?.value)||0;
+if(collected<=0){showToast('কত টাকা পেয়েছ বলো','error');return}
+}
+
+try{
+// Update order status
+await db.collection('orders').doc(orderId).update({
+status:'delivered',
+deliveredAt:firebase.firestore.FieldValue.serverTimestamp(),
+paymentStatus:'paid',
+deliveryNotes:notes,
+collectedAmount:collected,
+pendingAmount:pending,
+updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+});
+
+// Deduct stock for delivered items
+const orderDoc=await db.collection('orders').doc(orderId).get();
+const orderData=orderDoc.data();
+if(orderData&&orderData.items){
+const batch=db.batch();
+for(const item of orderData.items){
+if(item.productId){
+const ref=db.collection('products').doc(item.productId);
+batch.update(ref,{
+stock:firebase.firestore.FieldValue.increment(-(item.qty||0)),
+totalSold:firebase.firestore.FieldValue.increment(item.qty||0)
+});
+}}
+await batch.commit();
+}
+
+// Update delivery boy total
+await db.collection('deliveryBoys').doc(currentDB.id).update({
+totalDeliveries:firebase.firestore.FieldValue.increment(1)
+});
+
+showToast('ডেলিভারি সম্পন্ন! ✅','success');
+closeModal();
+loadAssignedOrders();
+
+}catch(e){
+showToast('Error: '+e.message,'error');
+console.error(e);
+}
+}
+
+// ============================================================
+// CASH SUBMISSION
+// ============================================================
+async function loadCashPage(){
+if(!currentDB)return;
+const today=getToday();
+
+try{
+// Cash collected today (COD delivered orders)
+const os=await db.collection('orders')
+.where('deliveryBoyId','==',currentDB.id)
+.where('dateStr','==',today)
+.where('status','==','delivered')
+.get();
+
+let totalCollected=0;
+os.forEach(doc=>{const o=doc.data();if(o.paymentMethod==='cod')totalCollected+=Number(o.totalAmount||0)});
+
+// Cash submitted today
+const cs=await db.collection('cashSubmissions')
+.where('deliveryBoyId','==',currentDB.id)
+.where('date','==',today)
+.get();
+
+let totalSubmitted=0;
+let submissions=[];
+cs.forEach(doc=>{const c=doc.data();totalSubmitted+=Number(c.amount||0);submissions.push(c)});
+
+const pending=Math.max(0,totalCollected-totalSubmitted);
+
+document.getElementById('cashCollected').textContent=formatCurrency(totalCollected);
+document.getElementById('cashSubmitted').textContent=formatCurrency(totalSubmitted);
+document.getElementById('cashPending').textContent=formatCurrency(pending);
+document.getElementById('cashPendingBox').style.background=pending>0?'#FFF5F5':'#F0FFF4';
+document.getElementById('cashPending').style.color=pending>0?'var(--danger)':'var(--success)';
+
+// Set default submit amount
+document.getElementById('submitAmount').value=pending>0?pending:'';
+
+// Render history
+const hist=document.getElementById('cashHistory');
+if(!submissions.length){
+hist.innerHTML='<div class="empty-state"><i class="fas fa-receipt"></i><h3>আজ কোনো জমা নেই</h3></div>';
+}else{
+hist.innerHTML=submissions.map(s=>`
+<div class="card" style="margin-bottom:8px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div>
+<div style="font-size:14px;font-weight:700;color:var(--success);font-family:'Poppins'">${formatCurrency(s.amount)}</div>
+<div style="font-size:10px;color:var(--text-sec)">${formatTime(s.createdAt)}${s.notes?' · '+s.notes:''}</div>
+</div>
+<span class="badge badge-success"><i class="fas fa-check"></i> জমা</span>
+</div>
+</div>
+`).join('');
+}
+
+}catch(e){
+console.error(e);
+showToast('Error loading cash data','error');
+}
+}
+
+async function submitCash(){
+const amount=Number(document.getElementById('submitAmount').value);
+const notes=document.getElementById('submitNotes').value.trim();
+
+if(!amount||amount<=0){showToast('পরিমাণ দাও','error');return}
+
+try{
+await db.collection('cashSubmissions').add({
+deliveryBoyId:currentDB.id,
+deliveryBoyName:currentDB.name,
+amount,
+notes,
+date:getToday(),
+createdAt:firebase.firestore.FieldValue.serverTimestamp()
+});
+
+showToast('₹'+amount+' জমা সফল! ✅','success');
+document.getElementById('submitAmount').value='';
+document.getElementById('submitNotes').value='';
+loadCashPage();
+
+}catch(e){
+showToast('Error: '+e.message,'error');
+}
+}
+
+// ============================================================
+// DAILY SUMMARY
+// ============================================================
+async function loadSummary(){
+const c=document.getElementById('summaryContent');
+c.innerHTML='<div class="loader"><div class="spinner"></div></div>';
+if(!currentDB)return;
+const today=getToday();
+
+try{
+const os=await db.collection('orders')
+.where('deliveryBoyId','==',currentDB.id)
+.where('dateStr','==',today)
+.get();
+
+let totalOrders=0,delivered=0,totalAmount=0,codAmount=0,upiAmount=0,deliveryIncome=0;
+let areaMap={};
+
+os.forEach(doc=>{
+const o=doc.data();
+totalOrders++;
+if(o.status==='delivered'){
+delivered++;
+totalAmount+=Number(o.totalAmount||0);
+deliveryIncome+=Number(o.deliveryCharge||0);
+if(o.paymentMethod==='cod')codAmount+=Number(o.totalAmount||0);
+else upiAmount+=Number(o.totalAmount||0);
+}
+const area=o.userArea||'Unknown';
+if(!areaMap[area])areaMap[area]=0;
+areaMap[area]++;
+});
+
+// Cash submissions
+const cs=await db.collection('cashSubmissions')
+.where('deliveryBoyId','==',currentDB.id)
+.where('date','==',today)
+.get();
+let totalCashSubmitted=0;
+cs.forEach(doc=>totalCashSubmitted+=Number(doc.data().amount||0));
+
+const cashPending=Math.max(0,codAmount-totalCashSubmitted);
+const pendingDeliveries=totalOrders-delivered;
+
+c.innerHTML=`
+<!-- Summary Header -->
+<div class="card" style="text-align:center;background:linear-gradient(135deg,#2E7D32,#43A047);color:#fff;margin-bottom:14px">
+<div style="font-size:11px;opacity:.85">আজকের সারসংক্ষেপ</div>
+<div style="font-size:18px;font-weight:800;font-family:'Poppins';margin:4px 0">${formatDate(today)}</div>
+<div style="font-size:11px;opacity:.85">${currentDB.name} · ${currentDB.assignedArea||'N/A'}</div>
+</div>
+
+<!-- Delivery Stats -->
+<div class="card">
+<div class="card-header"><h3><i class="fas fa-motorcycle" style="color:#2E7D32"></i> ডেলিভারি</h3></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div style="background:#DBEAFE;padding:12px;border-radius:10px;text-align:center">
+<div style="font-size:22px;font-weight:800;color:var(--info);font-family:'Poppins'">${totalOrders}</div>
+<div style="font-size:9px;color:var(--text-sec)">মোট অর্ডার</div>
+</div>
+<div style="background:#D1FAE5;padding:12px;border-radius:10px;text-align:center">
+<div style="font-size:22px;font-weight:800;color:var(--success);font-family:'Poppins'">${delivered}</div>
+<div style="font-size:9px;color:var(--text-sec)">সম্পন্ন</div>
+</div>
+<div style="background:${pendingDeliveries>0?'#FEF3C7':'#F5F5F5'};padding:12px;border-radius:10px;text-align:center">
+<div style="font-size:22px;font-weight:800;color:${pendingDeliveries>0?'var(--warning)':'var(--text-sec)'};font-family:'Poppins'">${pendingDeliveries}</div>
+<div style="font-size:9px;color:var(--text-sec)">বাকি</div>
+</div>
+</div>
+</div>
+
+<!-- Financial -->
+<div class="card">
+<div class="card-header"><h3><i class="fas fa-indian-rupee-sign" style="color:var(--accent-dark)"></i> আর্থিক</h3></div>
+<div class="summary-row"><span class="sr-label">মোট ডেলিভারি মূল্য</span><span class="sr-value" style="color:var(--success)">${formatCurrency(totalAmount)}</span></div>
+<div class="summary-row"><span class="sr-label">ডেলিভারি চার্জ (আয়)</span><span class="sr-value" style="color:var(--purple)">${formatCurrency(deliveryIncome)}</span></div>
+<div class="summary-row"><span class="sr-label">💵 COD সংগ্রহ</span><span class="sr-value" style="color:var(--accent-dark)">${formatCurrency(codAmount)}</span></div>
+<div class="summary-row"><span class="sr-label">📱 UPI অর্ডার</span><span class="sr-value" style="color:var(--success)">${formatCurrency(upiAmount)}</span></div>
+</div>
+
+<!-- Cash Status -->
+<div class="card" style="border-left:4px solid ${cashPending>0?'var(--danger)':'var(--success)'}">
+<div class="card-header"><h3><i class="fas fa-money-bill-wave" style="color:#2E7D32"></i> ক্যাশ স্ট্যাটাস</h3></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div style="background:#FFF8E1;padding:10px;border-radius:8px;text-align:center">
+<div style="font-size:16px;font-weight:800;color:var(--accent-dark);font-family:'Poppins'">${formatCurrency(codAmount)}</div>
+<div style="font-size:9px;color:var(--text-sec)">সংগ্রহ</div>
+</div>
+<div style="background:#E8F5E9;padding:10px;border-radius:8px;text-align:center">
+<div style="font-size:16px;font-weight:800;color:#2E7D32;font-family:'Poppins'">${formatCurrency(totalCashSubmitted)}</div>
+<div style="font-size:9px;color:var(--text-sec)">জমা</div>
+</div>
+<div style="background:${cashPending>0?'#FFF5F5':'#F0FFF4'};padding:10px;border-radius:8px;text-align:center">
+<div style="font-size:16px;font-weight:800;color:${cashPending>0?'var(--danger)':'var(--success)'};font-family:'Poppins'">${formatCurrency(cashPending)}</div>
+<div style="font-size:9px;color:var(--text-sec)">বাকি</div>
+</div>
+</div>
+${cashPending>0?`<div style="margin-top:10px;padding:8px;background:#FFF5F5;border-radius:8px;font-size:11px;color:var(--danger);font-weight:600;text-align:center"><i class="fas fa-exclamation-circle"></i> ${formatCurrency(cashPending)} জমা দেওয়া বাকি আছে!</div>
+<button class="btn btn-sm btn-accent" style="margin-top:8px" onclick="goTo('cash')"><i class="fas fa-money-bill-wave"></i> জমা দাও</button>`:'<div style="margin-top:10px;padding:8px;background:#D1FAE5;border-radius:8px;font-size:11px;color:#065F46;font-weight:600;text-align:center"><i class="fas fa-check-circle"></i> সব ক্যাশ জমা দেওয়া হয়েছে!</div>'}
+</div>
+
+<!-- Area Breakdown -->
+${Object.keys(areaMap).length>0?`
+<div class="card">
+<div class="card-header"><h3><i class="fas fa-map-pin" style="color:var(--primary)"></i> এলাকা ভিত্তিক</h3></div>
+${Object.entries(areaMap).map(([area,count])=>`
+<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+<span style="font-size:12px;font-weight:600"><i class="fas fa-map-marker-alt" style="color:var(--primary);margin-right:4px"></i>${area}</span>
+<span class="badge badge-info">${count} order${count>1?'s':''}</span>
+</div>`).join('')}
+</div>`:''}
+
+<!-- Salary Info -->
+${currentDB.dailySalary?`
+<div class="card" style="text-align:center;background:#FFF8E1">
+<div style="font-size:10px;color:var(--text-sec);font-weight:600">আজকের বেতন</div>
+<div style="font-size:24px;font-weight:800;color:var(--accent-dark);font-family:'Poppins';margin:4px 0">${formatCurrency(currentDB.dailySalary)}</div>
+<div style="font-size:10px;color:var(--text-sec)">${delivered} ডেলিভারি সম্পন্ন</div>
+</div>`:''}
+
+<!-- Footer -->
+<div style="text-align:center;padding:16px 0">
+<div style="font-size:10px;color:var(--text-sec)">Fast8Bondhu Delivery v1.0</div>
+<div style="font-size:9px;color:var(--border)">আজকের ডেলিভারি রিপোর্ট 🏍️</div>
+</div>
+`;
+
+}catch(e){
+console.error(e);
+c.innerHTML='<div class="empty-state"><h3>Error</h3><p>'+e.message+'</p></div>';
+}
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goTo(page){
+document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+
+const map={home:'pgHome',cash:'pgCash',summary:'pgSummary'};
+const idx={home:0,cash:1,summary:2};
+
+document.getElementById(map[page]).classList.add('active');
+if(idx[page]!==undefined)document.querySelectorAll('.nav-item')[idx[page]].classList.add('active');
+
+switch(page){
+case 'home':loadAssignedOrders();break;
+case 'cash':loadCashPage();break;
+case 'summary':loadSummary();break;
+}
+
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ============================================================
+// REAL-TIME LISTENER — NEW ORDER ASSIGNMENTS
+// ============================================================
+function startListener(){
+if(!currentDB)return;
+
+db.collection('orders')
+.where('deliveryBoyId','==',currentDB.id)
+.where('status','==','assigned')
+.onSnapshot(snap=>{
+const count=snap.size;
+const b=document.getElementById('navBadge');
+if(count>0){b.textContent=count;b.style.display='block'}else{b.style.display='none'}
+
+// Check for new assignments
+if(count>0){
+try{
+const ctx=new(window.AudioContext||window.webkitAudioContext)();
+function bp(t,f){const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.01,t+.3);o.start(t);o.stop(t+.3)}
+const n=ctx.currentTime;bp(n,660);bp(n+.15,880);bp(n+.3,1100);
+}catch(e){}
+if(navigator.vibrate)navigator.vibrate([200,100,200]);
+}
+},e=>console.error('Listener:',e));
+}
+
+// ============================================================
+// AUTO REFRESH
+// ============================================================
+let refreshInterval=null;
+function startAutoRefresh(){
+refreshInterval=setInterval(()=>{
+const activePg=document.querySelector('.pg.active');
+if(activePg&&activePg.id==='pgHome')loadAssignedOrders();
+},60000); // Every 1 minute
+}
+
+// ============================================================
+// VISIBILITY HANDLER
+// ============================================================
+document.addEventListener('visibilitychange',()=>{
+if(document.visibilityState==='visible'&&currentDB){
+const activePg=document.querySelector('.pg.active');
+if(activePg){
+switch(activePg.id){
+case 'pgHome':loadAssignedOrders();break;
+case 'pgCash':loadCashPage();break;
+case 'pgSummary':loadSummary();break;
+}
+}
+}
+});
+
+// ============================================================
+// INIT
+// ============================================================
+checkAuth();
+setTimeout(()=>{if(currentDB){startListener();startAutoRefresh()}},1500);
+
 </script>
 </body>
 </html>
