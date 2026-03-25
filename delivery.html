@@ -14,7 +14,7 @@
 --bg:#F0F2F5;--card:#FFF;--text:#1A1A2E;--text-sec:#6B7280;--border:#E5E7EB;
 --success:#10B981;--warning:#F59E0B;--danger:#EF4444;--info:#3B82F6;--purple:#8B5CF6;
 --shadow:0 2px 8px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.1);
---radius:16px;--radius-sm:10px;--radius-xs:6px;
+--radius:16px;--radius-sm:12px;--radius-xs:6px;
 --transition:all .3s cubic-bezier(.4,0,.2,1)
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
@@ -34,159 +34,142 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
 /* FORMS */
 .form-group{margin-bottom:16px;text-align:left}
 .form-group label{display:block;font-size:11px;font-weight:600;color:var(--text-sec);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Inter';transition:var(--transition);background:#FAFAFA;color:var(--text)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Inter';transition:var(--transition);background:#FAFAFA;color:var(--text)}
 .form-group input:focus{border-color:#2E7D32;outline:none;background:#fff;box-shadow:0 0 0 3px rgba(46,125,50,.15)}
 
 /* BUTTONS */
-.btn{padding:13px 24px;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:'Poppins';cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.btn{padding:14px 24px;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:'Poppins';cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%}
 .btn-green{background:linear-gradient(135deg,#2E7D32,#1B5E20);color:#fff;box-shadow:0 4px 16px rgba(46,125,50,.3)}
 .btn-green:active{transform:scale(.97)}
-.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff}
-.btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#1A1A2E}
-.btn-success{background:linear-gradient(135deg,var(--success),#059669);color:#fff}
-.btn-danger{background:linear-gradient(135deg,var(--danger),#DC2626);color:#fff}
-.btn-info{background:linear-gradient(135deg,var(--info),#1D4ED8);color:#fff}
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text)}
-.btn-sm{padding:8px 16px;font-size:12px}
-.btn-xs{padding:6px 12px;font-size:11px;border-radius:var(--radius-xs)}
-.btn-icon{width:44px;height:44px;padding:0;border-radius:12px;border:none;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-size:16px}
+.btn-sm{padding:10px 16px;font-size:13px}
 
 /* APP BAR */
-.app-bar{position:fixed;top:0;left:0;right:0;height:58px;background:linear-gradient(135deg,#2E7D32,#1B5E20);display:flex;align-items:center;padding:0 14px;z-index:100;box-shadow:0 2px 12px rgba(46,125,50,.3)}
+.app-bar{position:fixed;top:0;left:0;right:0;height:60px;background:linear-gradient(135deg,#2E7D32,#1B5E20);display:flex;align-items:center;padding:0 16px;z-index:100;box-shadow:0 2px 12px rgba(46,125,50,.3)}
 .app-bar .brand{display:flex;align-items:center;gap:8px;color:#fff}
-.app-bar .brand-icon{width:34px;height:34px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.app-bar .brand h1{font-size:15px;font-weight:700}
-.app-bar .brand span{font-size:8px;background:var(--accent);color:#1A1A2E;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:4px}
+.app-bar .brand-icon{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.app-bar .brand h1{font-size:16px;font-weight:700}
+.app-bar .brand span{font-size:9px;background:var(--accent);color:#1A1A2E;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:6px}
 .app-bar-right{margin-left:auto;display:flex;gap:6px}
-.app-bar-right button{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.app-bar-right button{width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
 /* PAGES */
-.pages{margin-top:58px;margin-bottom:68px;min-height:calc(100vh - 126px)}
-.pg{display:none;padding:14px;animation:fadeIn .3s ease}
+.pages{margin-top:60px;margin-bottom:72px;min-height:calc(100vh - 132px)}
+.pg{display:none;padding:16px;animation:fadeIn .3s ease}
 .pg.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;display:flex;align-items:center;justify-content:space-around;z-index:100;box-shadow:0 -2px 12px rgba(0,0,0,.06);border-top:1px solid var(--border)}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:6px 16px;border-radius:8px;transition:var(--transition);position:relative}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:68px;background:#fff;display:flex;align-items:center;justify-content:space-around;z-index:100;box-shadow:0 -2px 16px rgba(0,0,0,.06);border-top:1px solid var(--border)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:8px 16px;border-radius:10px;transition:var(--transition);position:relative}
 .nav-item i{font-size:18px;color:var(--text-sec);transition:var(--transition)}
-.nav-item span{font-size:9px;font-weight:600;color:var(--text-sec)}
+.nav-item span{font-size:10px;font-weight:600;color:var(--text-sec)}
 .nav-item.active i{color:#2E7D32}
 .nav-item.active span{color:#2E7D32}
-.nav-item.active::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:20px;height:3px;background:#2E7D32;border-radius:0 0 3px 3px}
-.nav-badge{position:absolute;top:0;right:4px;background:var(--danger);color:#fff;font-size:7px;font-weight:700;padding:1px 5px;border-radius:10px;min-width:14px;text-align:center}
+.nav-item.active::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:24px;height:3px;background:#2E7D32;border-radius:0 0 4px 4px}
+.nav-badge{position:absolute;top:0;right:4px;background:var(--danger);color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:16px;text-align:center}
 
 /* STAT CARDS */
-.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
-.stat-mini{padding:14px 10px;border-radius:var(--radius);text-align:center;color:#fff;position:relative;overflow:hidden}
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.stat-mini{padding:16px 10px;border-radius:var(--radius);text-align:center;color:#fff;position:relative;overflow:hidden}
 .stat-mini::after{content:'';position:absolute;top:-15px;right:-15px;width:50px;height:50px;background:rgba(255,255,255,.1);border-radius:50%}
-.stat-mini .sm-val{font-size:22px;font-weight:800;font-family:'Poppins';line-height:1}
-.stat-mini .sm-lab{font-size:9px;opacity:.85;margin-top:3px;font-weight:500}
+.stat-mini .sm-val{font-size:24px;font-weight:800;font-family:'Poppins';line-height:1}
+.stat-mini .sm-lab{font-size:10px;opacity:.9;margin-top:4px;font-weight:500}
 
 /* GREETING */
-.greeting-card{background:linear-gradient(135deg,#2E7D32,#43A047);border-radius:var(--radius);padding:18px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
-.greeting-card::after{content:'🏍️';position:absolute;right:14px;bottom:10px;font-size:40px;opacity:.2}
-.greeting-card h2{font-size:17px;font-weight:700;margin-bottom:2px}
-.greeting-card p{font-size:11px;opacity:.9}
-.greeting-card .area-tag{margin-top:8px;display:inline-block;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
+.greeting-card{background:linear-gradient(135deg,#2E7D32,#43A047);border-radius:var(--radius);padding:20px;color:#fff;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:0 4px 12px rgba(46,125,50,.2)}
+.greeting-card::after{content:'🏍️';position:absolute;right:16px;bottom:10px;font-size:48px;opacity:.15}
+.greeting-card h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.greeting-card p{font-size:12px;opacity:.9}
+.greeting-card .area-tag{margin-top:10px;display:inline-block;background:rgba(255,255,255,.2);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600}
 
-/* CARD */
-.card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.card-header h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}
-.badge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;display:inline-block}
-.badge-success{background:#D1FAE5;color:#065F46}
-.badge-danger{background:#FEE2E2;color:#991B1B}
-.badge-warning{background:#FEF3C7;color:#92400E}
-.badge-info{background:#DBEAFE;color:#1E40AF}
-.badge-purple{background:#EDE9FE;color:#5B21B6}
-.badge-accent{background:#FFF8E1;color:#F57F17}
+/* SECTION HEADER */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-header h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:6px;color:#1A1A2E}
+
+/* FILTER */
+.filter-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;-webkit-overflow-scrolling:touch}
+.filter-tabs::-webkit-scrollbar{display:none}
+.filter-tab{padding:8px 18px;border-radius:50px;font-size:13px;font-weight:600;border:1px solid #D1D5DB;background:#fff;cursor:pointer;white-space:nowrap;transition:var(--transition);font-family:'Inter';color:#4B5563}
+.filter-tab.active{background:#2E7D32;color:#fff;border-color:#2E7D32}
 
 /* ORDER CARD */
-.order-card{background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);border-left:4px solid var(--warning);transition:var(--transition)}
+.order-card{background:#fff;border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--warning);transition:var(--transition)}
 .order-card.st-assigned{border-left-color:var(--info)}
 .order-card.st-delivered{border-left-color:var(--success)}
-.oc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.oc-id{font-size:14px;font-weight:700;font-family:'Poppins'}
-.oc-time{font-size:10px;color:var(--text-sec)}
-.oc-customer{background:#F8F9FA;padding:10px;border-radius:var(--radius-sm);margin-bottom:8px}
-.oc-customer .cust-name{font-size:13px;font-weight:700;margin-bottom:2px}
-.oc-customer .cust-detail{font-size:11px;color:var(--text-sec);display:flex;align-items:center;gap:4px;margin-top:2px}
-.oc-items{font-size:11px;color:var(--text-sec);margin-bottom:6px;line-height:1.6;padding:8px;background:#FFFBEB;border-radius:var(--radius-xs)}
-.oc-bottom{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.oc-total{font-size:20px;font-weight:800;color:var(--primary);font-family:'Poppins'}
-.oc-pay{font-size:10px;font-weight:600}
-.oc-actions{display:flex;gap:6px;flex-wrap:wrap}
+.oc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.oc-id{font-size:15px;font-weight:700;font-family:'Poppins';color:#111827}
+.oc-time{font-size:11px;color:var(--text-sec)}
+.badge{font-size:10px;padding:4px 10px;border-radius:20px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.badge-success{background:#D1FAE5;color:#065F46}
+.badge-warning{background:#FEF3C7;color:#92400E}
+.badge-info{background:#DBEAFE;color:#1E40AF}
 
-/* CALL BUTTON */
-.call-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;background:#E8F5E9;color:#2E7D32;border:2px solid #C8E6C9;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);font-family:'Inter';width:100%;margin-bottom:8px;text-decoration:none}
-.call-btn:active{background:#C8E6C9}
-.call-btn i{font-size:16px}
+.oc-customer{background:#F9FAFB;padding:12px;border-radius:12px;margin-bottom:12px;border:1px solid #F3F4F6}
+.oc-customer .cust-name{font-size:14px;font-weight:700;margin-bottom:4px;color:#1F2937}
+.oc-customer .cust-detail{font-size:12px;color:#4B5563;display:flex;align-items:flex-start;gap:6px;margin-top:4px}
+.oc-items{font-size:12px;color:#4B5563;margin-bottom:12px;line-height:1.6;padding:12px;background:#FFFBEB;border-radius:12px;border:1px dashed #FDE68A}
+.oc-bottom{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-top:10px;border-top:1px solid #F3F4F6}
+.oc-total{font-size:22px;font-weight:800;color:var(--primary);font-family:'Poppins'}
+.oc-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ACTION BUTTONS (CALL & MAP) */
+.btn-group { display: flex; gap: 8px; margin-bottom: 12px; }
+.action-btn{display:flex;flex:1;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:var(--transition);font-family:'Inter';text-decoration:none}
+.btn-call { background:#E8F5E9; color:#2E7D32; border:1px solid #C8E6C9; }
+.btn-call:active { background:#C8E6C9; }
+.btn-map { background:#E0F2FE; color:#1D4ED8; border:1px solid #BFDBFE; }
+.btn-map:active { background:#BFDBFE; }
 
 /* CASH SUBMIT */
-.cash-card{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
-.cash-stat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
-.cash-box{padding:12px 8px;border-radius:var(--radius-sm);text-align:center}
+.cash-card{background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.cash-stat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.cash-box{padding:14px 8px;border-radius:12px;text-align:center}
 .cash-box .cb-val{font-size:18px;font-weight:800;font-family:'Poppins'}
-.cash-box .cb-lab{font-size:9px;color:var(--text-sec);margin-top:2px}
+.cash-box .cb-lab{font-size:10px;color:var(--text-sec);margin-top:2px;font-weight:500}
 
 /* SUMMARY CARD */
-.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}
 .summary-row:last-child{border-bottom:none}
-.summary-row .sr-label{color:var(--text-sec)}
-.summary-row .sr-value{font-weight:700;font-family:'Poppins'}
+.summary-row .sr-label{color:#4B5563;font-weight:500}
+.summary-row .sr-value{font-weight:800;font-family:'Poppins'}
 
-/* DELIVERED SUCCESS */
-.delivered-badge{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#D1FAE5;color:#065F46;border-radius:var(--radius-sm);font-size:12px;font-weight:600}
-
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+/* BOTTOM SHEET MODAL (Premium) */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.show{display:flex}
-.modal-box{background:#fff;border-radius:var(--radius);width:100%;max-width:420px;max-height:85vh;overflow-y:auto;animation:modalIn .3s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
-.modal-header{padding:18px 18px 0;display:flex;align-items:center;justify-content:space-between}
-.modal-header h3{font-size:16px;font-weight:700}
-.modal-close{width:34px;height:34px;border-radius:50%;border:none;background:#F5F5F5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
-.modal-body{padding:18px}
-.modal-footer{padding:0 18px 18px;display:flex;gap:8px}
+.modal-box{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(0.16, 1, 0.3, 1);padding-bottom:20px}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-handle{width:40px;height:4px;background:#D1D5DB;border-radius:2px;margin:12px auto 0}
+.modal-header{padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:18px;font-weight:700}
+.modal-close{width:36px;height:36px;border-radius:50%;border:none;background:#F5F5F5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:16px 20px}
+.modal-footer{padding:0 20px;display:flex;gap:10px}
 .modal-footer .btn{flex:1}
 
 /* TOAST */
-.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:#323232;color:#fff;padding:10px 20px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;z-index:999;opacity:0;transition:all .3s ease;pointer-events:none;max-width:90%;text-align:center}
+.toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-20px);background:#323232;color:#fff;padding:12px 24px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:all .3s ease;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.t-success{background:var(--success)}
+.toast.t-success{background:#2E7D32}
 .toast.t-error{background:var(--danger)}
-.toast.t-warning{background:var(--warning);color:#1A1A2E}
 
-/* EMPTY */
-.empty-state{text-align:center;padding:40px 20px}
-.empty-state i{font-size:44px;color:var(--border);margin-bottom:10px}
-.empty-state h3{font-size:15px;color:var(--text-sec);margin-bottom:4px}
-.empty-state p{font-size:11px;color:var(--text-sec)}
-
-/* LOADER */
+/* EMPTY & LOADER */
+.empty-state{text-align:center;padding:40px 20px;background:#fff;border-radius:16px;box-shadow:var(--shadow)}
+.empty-state i{font-size:48px;color:#D1D5DB;margin-bottom:12px}
+.empty-state h3{font-size:16px;color:#374151;margin-bottom:4px;font-weight:700}
+.empty-state p{font-size:12px;color:var(--text-sec)}
 .loader{display:flex;align-items:center;justify-content:center;padding:30px}
-.spinner{width:28px;height:28px;border:3px solid #C8E6C9;border-top-color:#2E7D32;border-radius:50%;animation:spin .7s linear infinite}
+.spinner{width:32px;height:32px;border:3px solid #C8E6C9;border-top-color:#2E7D32;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* SECTION */
-.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.sec-header h3{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px}
-
-/* FILTER */
-.filter-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;-webkit-overflow-scrolling:touch}
-.filter-tabs::-webkit-scrollbar{display:none}
-.filter-tab{padding:7px 16px;border-radius:50px;font-size:12px;font-weight:600;border:2px solid var(--border);background:#fff;cursor:pointer;white-space:nowrap;transition:var(--transition);font-family:'Inter'}
-.filter-tab.active{background:#2E7D32;color:#fff;border-color:#2E7D32}
 
 @media(min-width:768px){
 .pages{max-width:500px;margin-left:auto;margin-right:auto}
-.bottom-nav{max-width:500px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0}
+.bottom-nav{max-width:500px;left:50%;transform:translateX(-50%);border-radius:20px 20px 0 0}
+.modal-box{border-radius:20px;margin-bottom:20px}
 }
 </style>
 </head>
 <body>
-
 <!-- ========== LOGIN ========== -->
 <div class="login-screen" id="loginScreen">
 <div class="login-card">
@@ -227,7 +210,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
 <div class="stat-mini" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#1A1A2E"><div class="sm-val" id="stCash">₹0</div><div class="sm-lab">সংগ্রহ</div></div>
 </div>
 
-<div class="sec-header"><h3><i class="fas fa-clipboard-list" style="color:#2E7D32"></i> আমার অর্ডার</h3><span class="badge badge-info" id="orderCountBadge">0</span></div>
+<div class="sec-header"><h3><i class="fas fa-clipboard-list" style="color:#2E7D32"></i> আমার অর্ডার</h3><span class="badge badge-info" id="orderCountBadge" style="font-size:12px; padding:4px 10px;">0</span></div>
 
 <div class="filter-tabs" id="homeFilters">
 <div class="filter-tab active" onclick="filterHome('assigned',this)">ডেলিভারি করো</div>
@@ -275,9 +258,14 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
 
 </div>
 
-<!-- MODAL -->
+<!-- BOTTOM SHEET MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
-<div class="modal-box"><div class="modal-header"><h3 id="modalTitle"></h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div><div class="modal-body" id="modalBody"></div><div class="modal-footer" id="modalFooter"></div></div>
+<div class="modal-box">
+<div class="sheet-handle"></div>
+<div class="modal-header"><h3 id="modalTitle"></h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
+<div class="modal-body" id="modalBody"></div>
+<div class="modal-footer" id="modalFooter"></div>
+</div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -305,8 +293,8 @@ const db = firebase.firestore();
 // ============================================================
 // GLOBAL STATE
 // ============================================================
-let currentDB = null; // delivery boy
-let assignedOrders = [];
+let currentDB = null; 
+let assignedOrders =[];
 let homeFilter = 'assigned';
 
 // ============================================================
@@ -322,53 +310,53 @@ function openModal(title,body,footer){document.getElementById('modalTitle').text
 function closeModal(){document.getElementById('modalOverlay').classList.remove('show')}
 
 // ============================================================
-// AUTH — PHONE + PASSWORD LOGIN
+// AUTH 
 // ============================================================
 async function doLogin(){
-const phone=document.getElementById('loginPhone').value.trim();
-const pass=document.getElementById('loginPass').value.trim();
-const err=document.getElementById('loginError');
+  const phone=document.getElementById('loginPhone').value.trim();
+  const pass=document.getElementById('loginPass').value.trim();
+  const err=document.getElementById('loginError');
 
-if(!phone||phone.length<10){err.textContent='সঠিক ফোন নম্বর দাও';err.style.display='block';return}
-if(!pass){err.textContent='পাসওয়ার্ড দাও';err.style.display='block';return}
-err.style.display='none';
+  if(!phone||phone.length<10){err.textContent='সঠিক ফোন নম্বর দাও';err.style.display='block';return}
+  if(!pass){err.textContent='পাসওয়ার্ড দাও';err.style.display='block';return}
+  err.style.display='none';
 
-try{
-const s=await db.collection('deliveryBoys').where('phone','==',phone).get();
-if(s.empty){err.textContent='এই নম্বরে কোনো ডেলিভারি অ্যাকাউন্ট নেই';err.style.display='block';return}
+  try{
+    const s=await db.collection('deliveryBoys').where('phone','==',phone).get();
+    if(s.empty){err.textContent='এই নম্বরে কোনো ডেলিভারি অ্যাকাউন্ট নেই';err.style.display='block';return}
 
-const doc=s.docs[0];
-const data=doc.data();
+    const doc=s.docs[0];
+    const data=doc.data();
 
-if(data.password!==pass){err.textContent='পাসওয়ার্ড ভুল হয়েছে';err.style.display='block';return}
-if(data.active===false){err.textContent='তোমার অ্যাকাউন্ট নিষ্ক্রিয়। অ্যাডমিনকে বলো।';err.style.display='block';return}
+    if(data.password!==pass){err.textContent='পাসওয়ার্ড ভুল হয়েছে';err.style.display='block';return}
+    if(data.active===false){err.textContent='তোমার অ্যাকাউন্ট নিষ্ক্রিয়। অ্যাডমিনকে বলো।';err.style.display='block';return}
 
-currentDB={id:doc.id,...data};
-localStorage.setItem('f8b_db',JSON.stringify(currentDB));
-showToast('স্বাগতম, '+currentDB.name+'! 🏍️','success');
-showMainApp();
+    currentDB={id:doc.id,...data};
+    localStorage.setItem('f8b_db',JSON.stringify(currentDB));
+    showToast('স্বাগতম, '+currentDB.name+'! 🏍️','success');
+    showMainApp();
 
-}catch(e){err.textContent='Error: '+e.message;err.style.display='block'}
+  }catch(e){err.textContent='Error: '+e.message;err.style.display='block'}
 }
 
 function checkAuth(){
-try{const u=JSON.parse(localStorage.getItem('f8b_db'));if(u&&u.id){currentDB=u;showMainApp();return}}catch(e){}
-document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';
+  try{const u=JSON.parse(localStorage.getItem('f8b_db'));if(u&&u.id){currentDB=u;showMainApp();return}}catch(e){}
+  document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';
 }
 
 function showMainApp(){
-document.getElementById('loginScreen').style.display='none';
-document.getElementById('mainApp').style.display='block';
-renderGreeting();
-loadAssignedOrders();
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  renderGreeting();
+  loadAssignedOrders();
 }
 
 function doLogout(){
-currentDB=null;localStorage.removeItem('f8b_db');
-document.getElementById('loginScreen').style.display='flex';
-document.getElementById('mainApp').style.display='none';
-document.getElementById('loginPass').value='';
-showToast('লগআউট হয়েছে','success');
+  currentDB=null;localStorage.removeItem('f8b_db');
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('loginPass').value='';
+  showToast('লগআউট হয়েছে','success');
 }
 
 document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
@@ -377,516 +365,503 @@ document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='
 // GREETING
 // ============================================================
 function renderGreeting(){
-if(!currentDB)return;
-document.getElementById('greetName').textContent=getGreeting()+', '+currentDB.name+'! 🏍️';
-document.getElementById('greetDate').textContent=formatDate(getToday());
-document.getElementById('greetArea').innerHTML='<i class="fas fa-map-pin"></i> '+(currentDB.assignedArea||'কোনো এলাকা নেই');
+  if(!currentDB)return;
+  document.getElementById('greetName').textContent=getGreeting()+', '+currentDB.name+'! 🏍️';
+  document.getElementById('greetDate').textContent=formatDate(getToday());
+  document.getElementById('greetArea').innerHTML='<i class="fas fa-map-pin"></i> '+(currentDB.assignedArea||'কোনো এলাকা নেই');
 }
 
 // ============================================================
 // LOAD ASSIGNED ORDERS
 // ============================================================
 async function loadAssignedOrders(){
-const c=document.getElementById('ordersList');
-c.innerHTML='<div class="loader"><div class="spinner"></div></div>';
+  const c=document.getElementById('ordersList');
+  c.innerHTML='<div class="loader"><div class="spinner"></div></div>';
 
-if(!currentDB)return;
-const today=getToday();
+  if(!currentDB)return;
+  const today=getToday();
 
-try{
-// Get orders assigned to this delivery boy today
-const s=await db.collection('orders')
-.where('deliveryBoyId','==',currentDB.id)
-.where('dateStr','==',today)
-.orderBy('createdAt','desc')
-.get();
+  try{
+    // Need composite index: deliveryBoyId ASC, dateStr ASC, createdAt DESC
+    const s=await db.collection('orders')
+    .where('deliveryBoyId','==',currentDB.id)
+    .where('dateStr','==',today)
+    .orderBy('createdAt','desc')
+    .get();
 
-assignedOrders=[];
-s.forEach(doc=>assignedOrders.push({id:doc.id,...doc.data()}));
+    assignedOrders=[];
+    s.forEach(doc=>assignedOrders.push({id:doc.id,...doc.data()}));
 
-// Stats
-const assigned=assignedOrders.filter(o=>o.status==='assigned').length;
-const delivered=assignedOrders.filter(o=>o.status==='delivered').length;
-const cashCollected=assignedOrders.filter(o=>o.status==='delivered'&&o.paymentMethod==='cod').reduce((s,o)=>s+Number(o.totalAmount||0),0);
+    const assigned=assignedOrders.filter(o=>o.status==='assigned').length;
+    const delivered=assignedOrders.filter(o=>o.status==='delivered').length;
+    const cashCollected=assignedOrders.filter(o=>o.status==='delivered'&&o.paymentMethod==='cod').reduce((s,o)=>s+Number(o.totalAmount||0),0);
 
-document.getElementById('stAssigned').textContent=assigned;
-document.getElementById('stDelivered').textContent=delivered;
-document.getElementById('stCash').textContent=formatCurrency(cashCollected);
+    document.getElementById('stAssigned').textContent=assigned;
+    document.getElementById('stDelivered').textContent=delivered;
+    document.getElementById('stCash').textContent=formatCurrency(cashCollected);
 
-// Badge
-const b=document.getElementById('navBadge');
-if(assigned>0){b.textContent=assigned;b.style.display='block'}else{b.style.display='none'}
-document.getElementById('orderCountBadge').textContent=assignedOrders.length+' total';
+    const b=document.getElementById('navBadge');
+    if(assigned>0){b.textContent=assigned;b.style.display='block'}else{b.style.display='none'}
+    document.getElementById('orderCountBadge').textContent=assignedOrders.length+' total';
 
-renderOrdersList();
+    renderOrdersList();
 
-}catch(e){
-console.error(e);
-c.innerHTML='<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error loading orders</h3><p>'+e.message+'</p></div>';
-}
+  }catch(e){
+    console.error(e);
+    c.innerHTML='<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error loading orders</h3><p style="margin-top:10px;">Please ensure Firestore Indexes are created.</p></div>';
+  }
 }
 
 function filterHome(filter,el){
-homeFilter=filter;
-document.querySelectorAll('#homeFilters .filter-tab').forEach(t=>t.classList.remove('active'));
-if(el)el.classList.add('active');
-renderOrdersList();
+  homeFilter=filter;
+  document.querySelectorAll('#homeFilters .filter-tab').forEach(t=>t.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderOrdersList();
 }
 
 function renderOrdersList(){
-const c=document.getElementById('ordersList');
-let filtered=assignedOrders.filter(o=>o.status===homeFilter);
+  const c=document.getElementById('ordersList');
+  let filtered=assignedOrders.filter(o=>o.status===homeFilter);
 
-if(!filtered.length){
-c.innerHTML=`<div class="empty-state"><i class="fas fa-${homeFilter==='assigned'?'motorcycle':'check-double'}"></i><h3>${homeFilter==='assigned'?'ডেলিভারি করার অর্ডার নেই':'আজ কোনো ডেলিভারি সম্পন্ন হয়নি'}</h3><p>${homeFilter==='assigned'?'অ্যাডমিন অর্ডার অ্যাসাইন করলে এখানে দেখাবে':'ডেলিভারি করলে এখানে আসবে'}</p></div>`;
-return;
-}
+  if(!filtered.length){
+    c.innerHTML=`<div class="empty-state"><i class="fas fa-${homeFilter==='assigned'?'motorcycle':'check-double'}"></i><h3>${homeFilter==='assigned'?'ডেলিভারি করার অর্ডার নেই':'আজ কোনো ডেলিভারি সম্পন্ন হয়নি'}</h3><p>${homeFilter==='assigned'?'অ্যাডমিন অর্ডার অ্যাসাইন করলে এখানে দেখাবে':'ডেলিভারি করলে এখানে আসবে'}</p></div>`;
+    return;
+  }
 
-c.innerHTML=filtered.map(o=>{
-const items=(o.items||[]).map(i=>`📦 ${i.name} × ${i.qty}`).join('<br>');
-const isCOD=o.paymentMethod==='cod';
+  c.innerHTML=filtered.map(o=>{
+    const items=(o.items||[]).map(i=>`📦 ${i.name||'Item'} × ${i.qty}`).join('<br>');
+    const isCOD=o.paymentMethod==='cod';
 
-if(o.status==='delivered'){
-return`<div class="order-card st-delivered">
-<div class="oc-header"><div><div class="oc-id">#${o.orderId||o.id.substr(0,8).toUpperCase()}</div><div class="oc-time">${formatTime(o.createdAt)}</div></div><span class="badge badge-success"><i class="fas fa-check-double"></i> সম্পন্ন</span></div>
-<div class="oc-customer"><div class="cust-name"><i class="fas fa-user"></i> ${o.userName||'Customer'}</div><div class="cust-detail"><i class="fas fa-map-pin"></i> ${o.userArea||''}</div></div>
-<div class="oc-bottom"><div class="oc-total">${formatCurrency(o.totalAmount)}</div><span class="badge ${isCOD?'badge-warning':'badge-success'}">${isCOD?'💵 COD':'📱 UPI'}</span></div>
-<div class="delivered-badge"><i class="fas fa-check-circle"></i> ডেলিভারি সফল!</div>
-</div>`;
-}
+    // MAP LINK URL
+    const mapQuery = encodeURIComponent(`${o.userAddress || ''} ${o.userArea || ''}`);
 
-return`<div class="order-card st-assigned">
-<div class="oc-header"><div><div class="oc-id">#${o.orderId||o.id.substr(0,8).toUpperCase()}</div><div class="oc-time">${formatTime(o.createdAt)}</div></div><span class="badge badge-info"><i class="fas fa-motorcycle"></i> ডেলিভারি করো</span></div>
+    if(o.status==='delivered'){
+      return`
+      <div class="order-card st-delivered">
+        <div class="oc-header"><div><div class="oc-id">#${o.orderId||o.id.substr(0,8).toUpperCase()}</div><div class="oc-time">${formatTime(o.createdAt)}</div></div><span class="badge badge-success"><i class="fas fa-check-double"></i> সম্পন্ন</span></div>
+        <div class="oc-customer"><div class="cust-name"><i class="fas fa-user"></i> ${o.userName||'Customer'}</div><div class="cust-detail"><i class="fas fa-map-pin"></i> ${o.userArea||''}</div></div>
+        <div class="oc-bottom"><div class="oc-total">${formatCurrency(o.totalAmount)}</div><span class="badge ${isCOD?'badge-warning':'badge-success'}">${isCOD?'💵 COD':'📱 UPI'}</span></div>
+        <div class="delivered-badge"><i class="fas fa-check-circle"></i> ডেলিভারি সফল!</div>
+      </div>`;
+    }
 
-<!-- Customer Details -->
-<div class="oc-customer">
-<div class="cust-name"><i class="fas fa-user"></i> ${o.userName||'Customer'}</div>
-<div class="cust-detail"><i class="fas fa-phone"></i> ${o.userPhone||'N/A'}</div>
-<div class="cust-detail"><i class="fas fa-map-pin"></i> ${o.userArea||''}</div>
-${o.userAddress?`<div class="cust-detail"><i class="fas fa-home"></i> ${o.userAddress}</div>`:''}
-<div class="cust-detail"><i class="fas fa-route"></i> ${o.distanceKm||0} KM দূরে</div>
-</div>
+    return`
+    <div class="order-card st-assigned">
+      <div class="oc-header"><div><div class="oc-id">#${o.orderId||o.id.substr(0,8).toUpperCase()}</div><div class="oc-time">${formatTime(o.createdAt)}</div></div><span class="badge badge-info"><i class="fas fa-motorcycle"></i> ডেলিভারি করো</span></div>
 
-<!-- Call Button -->
-${o.userPhone?`<a href="tel:${o.userPhone}" class="call-btn"><i class="fas fa-phone-alt"></i> কাস্টমারকে কল করো (${o.userPhone})</a>`:''}
+      <!-- Customer Details -->
+      <div class="oc-customer">
+        <div class="cust-name"><i class="fas fa-user"></i> ${o.userName||'Customer'}</div>
+        <div class="cust-detail"><i class="fas fa-phone"></i> ${o.userPhone||'N/A'}</div>
+        <div class="cust-detail"><i class="fas fa-map-pin"></i> ${o.userArea||''}</div>
+        ${o.userAddress?`<div class="cust-detail"><i class="fas fa-home"></i> ${o.userAddress}</div>`:''}
+        <div class="cust-detail"><i class="fas fa-route"></i> ${o.distanceKm||0} KM দূরে</div>
+      </div>
 
-<!-- Items -->
-<div class="oc-items"><div style="font-size:11px;font-weight:600;margin-bottom:4px;color:var(--text)">📋 আইটেমস:</div>${items}</div>
+      <!-- NEW: Call & Map Buttons -->
+      <div class="btn-group">
+        ${o.userPhone?`<a href="tel:${o.userPhone}" class="action-btn btn-call"><i class="fas fa-phone-alt"></i> কল</a>`:''}
+        <a href="https://maps.google.com/?q=${mapQuery}" target="_blank" class="action-btn btn-map"><i class="fas fa-map-marked-alt"></i> ম্যাপ</a>
+      </div>
 
-<!-- Total -->
-<div class="oc-bottom">
-<div class="oc-total">${formatCurrency(o.totalAmount)}</div>
-<div>
-<span class="badge ${isCOD?'badge-warning':'badge-success'}" style="font-size:11px">${isCOD?'💵 COD — টাকা নেবে':'📱 UPI — পেইড'}</span>
-<div style="font-size:10px;color:var(--text-sec);margin-top:2px">Del: ${formatCurrency(o.deliveryCharge)}</div>
-</div>
-</div>
+      <!-- Items -->
+      <div class="oc-items"><div style="font-size:11px;font-weight:600;margin-bottom:4px;color:var(--text)">📋 আইটেমস:</div>${items}</div>
 
-<!-- Actions -->
-<div class="oc-actions">
-<button class="btn btn-success btn-sm" style="flex:1" onclick="markDelivered('${o.id}','${(o.userName||'').replace(/'/g,"\\'")}',${o.totalAmount||0},'${o.paymentMethod||'cod'}')">
-<i class="fas fa-check-double"></i> ডেলিভারি সম্পন্ন
-</button>
-</div>
-</div>`;
-}).join('');
+      <!-- Total -->
+      <div class="oc-bottom">
+        <div class="oc-total">${formatCurrency(o.totalAmount)}</div>
+        <div style="text-align:right;">
+          <span class="badge ${isCOD?'badge-warning':'badge-success'}" style="font-size:11px">${isCOD?'💵 COD — টাকা নেবে':'📱 UPI — পেইড'}</span>
+          <div style="font-size:10px;color:var(--text-sec);margin-top:4px">Del Charge: ${formatCurrency(o.deliveryCharge)}</div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="oc-actions">
+        <button class="btn btn-green btn-sm" style="flex:1; font-size:14px; padding:12px;" onclick="markDelivered('${o.id}','${(o.userName||'').replace(/'/g,"\\'")}',${o.totalAmount||0},'${o.paymentMethod||'cod'}')">
+          <i class="fas fa-check-double"></i> ডেলিভারি সম্পন্ন
+        </button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ============================================================
 // MARK DELIVERED
 // ============================================================
 function markDelivered(orderId,customerName,amount,payMethod){
-const isCOD=payMethod==='cod';
+  const isCOD=payMethod==='cod';
 
-openModal('ডেলিভারি কনফার্ম',`
-<div style="text-align:center;margin-bottom:16px">
-<div style="width:56px;height:56px;background:#FFF8E1;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px">🏍️</div>
-<h3 style="margin-bottom:4px">${customerName}-কে ডেলিভারি?</h3>
-<p style="font-size:12px;color:var(--text-sec)">মোট: <strong style="color:var(--primary)">${formatCurrency(amount)}</strong></p>
-</div>
+  openModal('ডেলিভারি কনফার্ম',`
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="width:64px;height:64px;background:#FFF8E1;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px">🏍️</div>
+    <h3 style="margin-bottom:6px;font-size:18px;">${customerName}-কে ডেলিভারি?</h3>
+    <p style="font-size:13px;color:var(--text-sec)">মোট বিল: <strong style="color:var(--primary);font-size:16px;">${formatCurrency(amount)}</strong></p>
+  </div>
 
-${isCOD?`
-<div style="background:#FFF8E1;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px">
-<div style="font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px"><i class="fas fa-money-bill-wave"></i> COD — ক্যাশ সংগ্রহ</div>
-<div class="form-group" style="margin-bottom:0">
-<label>কত টাকা পেয়েছ? *</label>
-<input type="number" id="collectedAmount" value="${amount}" min="0" placeholder="0">
-</div>
-<div class="form-group" style="margin-bottom:0;margin-top:8px">
-<label>বাকি থাকলে পরিমাণ</label>
-<input type="number" id="pendingAmount" value="0" min="0" placeholder="0">
-</div>
-</div>
-`:`
-<div style="background:#E8F5E9;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;text-align:center">
-<div style="font-size:12px;font-weight:700;color:#2E7D32"><i class="fas fa-mobile-alt"></i> UPI — অলরেডি পেইড</div>
-<p style="font-size:11px;color:var(--text-sec)">ক্যাশ সংগ্রহের দরকার নেই</p>
-</div>
-`}
+  ${isCOD?`
+  <div style="background:#FFF8E1;padding:16px;border-radius:12px;margin-bottom:16px; border:1px dashed var(--warning)">
+    <div style="font-size:13px;font-weight:700;color:var(--accent-dark);margin-bottom:10px"><i class="fas fa-money-bill-wave"></i> COD — ক্যাশ সংগ্রহ করুন</div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label style="font-size:12px;">কত টাকা পেয়েছ? *</label>
+      <input type="number" id="collectedAmount" value="${amount}" min="0" placeholder="0" style="font-size:16px;font-weight:bold;">
+    </div>
+    <div class="form-group" style="margin-bottom:0;">
+      <label style="font-size:12px;">বাকি থাকলে পরিমাণ</label>
+      <input type="number" id="pendingAmount" value="0" min="0" placeholder="0">
+    </div>
+  </div>
+  `:`
+  <div style="background:#E8F5E9;padding:16px;border-radius:12px;margin-bottom:16px;text-align:center; border:1px dashed var(--success)">
+    <div style="font-size:14px;font-weight:700;color:#2E7D32"><i class="fas fa-mobile-alt"></i> UPI — অলরেডি পেইড</div>
+    <p style="font-size:12px;color:var(--text-sec);margin-top:4px;">কাস্টমার থেকে ক্যাশ সংগ্রহের দরকার নেই।</p>
+  </div>
+  `}
 
-<div class="form-group">
-<label>নোট (ঐচ্ছিক)</label>
-<input type="text" id="deliveryNotes" placeholder="কিছু বলতে চাইলে...">
-</div>
-`,`
-<button class="btn btn-outline" onclick="closeModal()">বাতিল</button>
-<button class="btn btn-success" onclick="confirmDelivery('${orderId}','${payMethod}')"><i class="fas fa-check-double"></i> কনফার্ম</button>
-`);
+  <div class="form-group" style="margin-bottom:0;">
+    <label>নোট (ঐচ্ছিক)</label>
+    <input type="text" id="deliveryNotes" placeholder="কোনো সমস্যা থাকলে লিখুন...">
+  </div>
+  `,`
+  <button class="btn btn-outline" onclick="closeModal()">বাতিল</button>
+  <button class="btn btn-green" onclick="confirmDelivery('${orderId}','${payMethod}')"><i class="fas fa-check-double"></i> কনফার্ম করুন</button>
+  `);
 }
 
 async function confirmDelivery(orderId,payMethod){
-const notes=document.getElementById('deliveryNotes')?.value?.trim()||'';
-let collected=0,pending=0;
+  const notes=document.getElementById('deliveryNotes')?.value?.trim()||'';
+  let collected=0,pending=0;
 
-if(payMethod==='cod'){
-collected=Number(document.getElementById('collectedAmount')?.value)||0;
-pending=Number(document.getElementById('pendingAmount')?.value)||0;
-if(collected<=0){showToast('কত টাকা পেয়েছ বলো','error');return}
-}
+  if(payMethod==='cod'){
+    collected=Number(document.getElementById('collectedAmount')?.value)||0;
+    pending=Number(document.getElementById('pendingAmount')?.value)||0;
+    if(collected < 0){showToast('সঠিক টাকার পরিমাণ দিন','error');return}
+  }
 
-try{
-// Update order status
-await db.collection('orders').doc(orderId).update({
-status:'delivered',
-deliveredAt:firebase.firestore.FieldValue.serverTimestamp(),
-paymentStatus:'paid',
-deliveryNotes:notes,
-collectedAmount:collected,
-pendingAmount:pending,
-updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-});
+  try{
+    // 1. Update order status
+    await db.collection('orders').doc(orderId).update({
+      status:'delivered',
+      deliveredAt:firebase.firestore.FieldValue.serverTimestamp(),
+      paymentStatus:'paid',
+      deliveryNotes:notes,
+      collectedAmount:collected,
+      pendingAmount:pending,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
 
-// Deduct stock for delivered items
-const orderDoc=await db.collection('orders').doc(orderId).get();
-const orderData=orderDoc.data();
-if(orderData&&orderData.items){
-const batch=db.batch();
-for(const item of orderData.items){
-if(item.productId){
-const ref=db.collection('products').doc(item.productId);
-batch.update(ref,{
-stock:firebase.firestore.FieldValue.increment(-(item.qty||0)),
-totalSold:firebase.firestore.FieldValue.increment(item.qty||0)
-});
-}}
-await batch.commit();
-}
+    // 2. Deduct stock for delivered items
+    const orderDoc=await db.collection('orders').doc(orderId).get();
+    const orderData=orderDoc.data();
+    if(orderData&&orderData.items){
+      const batch=db.batch();
+      for(const item of orderData.items){
+        if(item.productId){
+          const ref=db.collection('products').doc(item.productId);
+          batch.update(ref,{
+            stock:firebase.firestore.FieldValue.increment(-(item.qty||0)),
+            totalSold:firebase.firestore.FieldValue.increment(item.qty||0)
+          });
+        }
+      }
+      await batch.commit();
+    }
 
-// Update delivery boy total
-await db.collection('deliveryBoys').doc(currentDB.id).update({
-totalDeliveries:firebase.firestore.FieldValue.increment(1)
-});
+    // 3. Update delivery boy total
+    await db.collection('deliveryBoys').doc(currentDB.id).update({
+      totalDeliveries:firebase.firestore.FieldValue.increment(1)
+    });
 
-showToast('ডেলিভারি সম্পন্ন! ✅','success');
-closeModal();
-loadAssignedOrders();
+    showToast('ডেলিভারি সম্পন্ন! ✅','success');
+    closeModal();
+    loadAssignedOrders();
 
-}catch(e){
-showToast('Error: '+e.message,'error');
-console.error(e);
-}
+  }catch(e){
+    showToast('Error: '+e.message,'error');
+    console.error(e);
+  }
 }
 
 // ============================================================
 // CASH SUBMISSION
 // ============================================================
 async function loadCashPage(){
-if(!currentDB)return;
-const today=getToday();
+  if(!currentDB)return;
+  const today=getToday();
 
-try{
-// Cash collected today (COD delivered orders)
-const os=await db.collection('orders')
-.where('deliveryBoyId','==',currentDB.id)
-.where('dateStr','==',today)
-.where('status','==','delivered')
-.get();
+  try{
+    const os=await db.collection('orders')
+    .where('deliveryBoyId','==',currentDB.id)
+    .where('dateStr','==',today)
+    .where('status','==','delivered')
+    .get();
 
-let totalCollected=0;
-os.forEach(doc=>{const o=doc.data();if(o.paymentMethod==='cod')totalCollected+=Number(o.totalAmount||0)});
+    let totalCollected=0;
+    os.forEach(doc=>{const o=doc.data();if(o.paymentMethod==='cod')totalCollected+=Number(o.totalAmount||0)});
 
-// Cash submitted today
-const cs=await db.collection('cashSubmissions')
-.where('deliveryBoyId','==',currentDB.id)
-.where('date','==',today)
-.get();
+    const cs=await db.collection('cashSubmissions')
+    .where('deliveryBoyId','==',currentDB.id)
+    .where('date','==',today)
+    .get();
 
-let totalSubmitted=0;
-let submissions=[];
-cs.forEach(doc=>{const c=doc.data();totalSubmitted+=Number(c.amount||0);submissions.push(c)});
+    let totalSubmitted=0;
+    let submissions=[];
+    cs.forEach(doc=>{const c=doc.data();totalSubmitted+=Number(c.amount||0);submissions.push(c)});
 
-const pending=Math.max(0,totalCollected-totalSubmitted);
+    const pending=Math.max(0,totalCollected-totalSubmitted);
 
-document.getElementById('cashCollected').textContent=formatCurrency(totalCollected);
-document.getElementById('cashSubmitted').textContent=formatCurrency(totalSubmitted);
-document.getElementById('cashPending').textContent=formatCurrency(pending);
-document.getElementById('cashPendingBox').style.background=pending>0?'#FFF5F5':'#F0FFF4';
-document.getElementById('cashPending').style.color=pending>0?'var(--danger)':'var(--success)';
+    document.getElementById('cashCollected').textContent=formatCurrency(totalCollected);
+    document.getElementById('cashSubmitted').textContent=formatCurrency(totalSubmitted);
+    document.getElementById('cashPending').textContent=formatCurrency(pending);
+    document.getElementById('cashPendingBox').style.background=pending>0?'#FFF5F5':'#F0FFF4';
+    document.getElementById('cashPending').style.color=pending>0?'var(--danger)':'var(--success)';
 
-// Set default submit amount
-document.getElementById('submitAmount').value=pending>0?pending:'';
+    document.getElementById('submitAmount').value=pending>0?pending:'';
 
-// Render history
-const hist=document.getElementById('cashHistory');
-if(!submissions.length){
-hist.innerHTML='<div class="empty-state"><i class="fas fa-receipt"></i><h3>আজ কোনো জমা নেই</h3></div>';
-}else{
-hist.innerHTML=submissions.map(s=>`
-<div class="card" style="margin-bottom:8px">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<div>
-<div style="font-size:14px;font-weight:700;color:var(--success);font-family:'Poppins'">${formatCurrency(s.amount)}</div>
-<div style="font-size:10px;color:var(--text-sec)">${formatTime(s.createdAt)}${s.notes?' · '+s.notes:''}</div>
-</div>
-<span class="badge badge-success"><i class="fas fa-check"></i> জমা</span>
-</div>
-</div>
-`).join('');
-}
+    const hist=document.getElementById('cashHistory');
+    if(!submissions.length){
+      hist.innerHTML='<div class="empty-state"><i class="fas fa-receipt"></i><h3>আজ কোনো জমা নেই</h3></div>';
+    }else{
+      hist.innerHTML=submissions.map(s=>`
+      <div class="card" style="margin-bottom:10px; padding:12px 16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:16px;font-weight:800;color:var(--success);font-family:'Poppins'">${formatCurrency(s.amount)}</div>
+            <div style="font-size:11px;color:var(--text-sec); margin-top:2px;">${formatTime(s.createdAt)}${s.notes?' · '+s.notes:''}</div>
+          </div>
+          <span class="badge badge-success"><i class="fas fa-check"></i> জমা</span>
+        </div>
+      </div>
+      `).join('');
+    }
 
-}catch(e){
-console.error(e);
-showToast('Error loading cash data','error');
-}
+  }catch(e){
+    console.error(e);
+    showToast('Error loading cash data','error');
+  }
 }
 
 async function submitCash(){
-const amount=Number(document.getElementById('submitAmount').value);
-const notes=document.getElementById('submitNotes').value.trim();
+  const amount=Number(document.getElementById('submitAmount').value);
+  const notes=document.getElementById('submitNotes').value.trim();
 
-if(!amount||amount<=0){showToast('পরিমাণ দাও','error');return}
+  if(!amount||amount<=0){showToast('পরিমাণ দিন','error');return}
 
-try{
-await db.collection('cashSubmissions').add({
-deliveryBoyId:currentDB.id,
-deliveryBoyName:currentDB.name,
-amount,
-notes,
-date:getToday(),
-createdAt:firebase.firestore.FieldValue.serverTimestamp()
-});
+  try{
+    await db.collection('cashSubmissions').add({
+      deliveryBoyId:currentDB.id,
+      deliveryBoyName:currentDB.name,
+      amount,
+      notes,
+      date:getToday(),
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
 
-showToast('₹'+amount+' জমা সফল! ✅','success');
-document.getElementById('submitAmount').value='';
-document.getElementById('submitNotes').value='';
-loadCashPage();
+    showToast('₹'+amount+' জমা সফল! ✅','success');
+    document.getElementById('submitAmount').value='';
+    document.getElementById('submitNotes').value='';
+    loadCashPage();
 
-}catch(e){
-showToast('Error: '+e.message,'error');
-}
+  }catch(e){
+    showToast('Error: '+e.message,'error');
+  }
 }
 
 // ============================================================
 // DAILY SUMMARY
 // ============================================================
 async function loadSummary(){
-const c=document.getElementById('summaryContent');
-c.innerHTML='<div class="loader"><div class="spinner"></div></div>';
-if(!currentDB)return;
-const today=getToday();
+  const c=document.getElementById('summaryContent');
+  c.innerHTML='<div class="loader"><div class="spinner"></div></div>';
+  if(!currentDB)return;
+  const today=getToday();
 
-try{
-const os=await db.collection('orders')
-.where('deliveryBoyId','==',currentDB.id)
-.where('dateStr','==',today)
-.get();
+  try{
+    const os=await db.collection('orders')
+    .where('deliveryBoyId','==',currentDB.id)
+    .where('dateStr','==',today)
+    .get();
 
-let totalOrders=0,delivered=0,totalAmount=0,codAmount=0,upiAmount=0,deliveryIncome=0;
-let areaMap={};
+    let totalOrders=0,delivered=0,totalAmount=0,codAmount=0,upiAmount=0,deliveryIncome=0;
+    let areaMap={};
 
-os.forEach(doc=>{
-const o=doc.data();
-totalOrders++;
-if(o.status==='delivered'){
-delivered++;
-totalAmount+=Number(o.totalAmount||0);
-deliveryIncome+=Number(o.deliveryCharge||0);
-if(o.paymentMethod==='cod')codAmount+=Number(o.totalAmount||0);
-else upiAmount+=Number(o.totalAmount||0);
-}
-const area=o.userArea||'Unknown';
-if(!areaMap[area])areaMap[area]=0;
-areaMap[area]++;
-});
+    os.forEach(doc=>{
+      const o=doc.data();
+      totalOrders++;
+      if(o.status==='delivered'){
+        delivered++;
+        totalAmount+=Number(o.totalAmount||0);
+        deliveryIncome+=Number(o.deliveryCharge||0);
+        if(o.paymentMethod==='cod')codAmount+=Number(o.totalAmount||0);
+        else upiAmount+=Number(o.totalAmount||0);
+      }
+      const area=o.userArea||'Unknown';
+      if(!areaMap[area])areaMap[area]=0;
+      areaMap[area]++;
+    });
 
-// Cash submissions
-const cs=await db.collection('cashSubmissions')
-.where('deliveryBoyId','==',currentDB.id)
-.where('date','==',today)
-.get();
-let totalCashSubmitted=0;
-cs.forEach(doc=>totalCashSubmitted+=Number(doc.data().amount||0));
+    const cs=await db.collection('cashSubmissions')
+    .where('deliveryBoyId','==',currentDB.id)
+    .where('date','==',today)
+    .get();
+    let totalCashSubmitted=0;
+    cs.forEach(doc=>totalCashSubmitted+=Number(doc.data().amount||0));
 
-const cashPending=Math.max(0,codAmount-totalCashSubmitted);
-const pendingDeliveries=totalOrders-delivered;
+    const cashPending=Math.max(0,codAmount-totalCashSubmitted);
+    const pendingDeliveries=totalOrders-delivered;
 
-c.innerHTML=`
-<!-- Summary Header -->
-<div class="card" style="text-align:center;background:linear-gradient(135deg,#2E7D32,#43A047);color:#fff;margin-bottom:14px">
-<div style="font-size:11px;opacity:.85">আজকের সারসংক্ষেপ</div>
-<div style="font-size:18px;font-weight:800;font-family:'Poppins';margin:4px 0">${formatDate(today)}</div>
-<div style="font-size:11px;opacity:.85">${currentDB.name} · ${currentDB.assignedArea||'N/A'}</div>
-</div>
+    c.innerHTML=`
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#2E7D32,#43A047);color:#fff;margin-bottom:14px">
+      <div style="font-size:11px;opacity:.85">আজকের সারসংক্ষেপ</div>
+      <div style="font-size:18px;font-weight:800;font-family:'Poppins';margin:4px 0">${formatDate(today)}</div>
+      <div style="font-size:12px;opacity:.9">${currentDB.name} · ${currentDB.assignedArea||'N/A'}</div>
+    </div>
 
-<!-- Delivery Stats -->
-<div class="card">
-<div class="card-header"><h3><i class="fas fa-motorcycle" style="color:#2E7D32"></i> ডেলিভারি</h3></div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-<div style="background:#DBEAFE;padding:12px;border-radius:10px;text-align:center">
-<div style="font-size:22px;font-weight:800;color:var(--info);font-family:'Poppins'">${totalOrders}</div>
-<div style="font-size:9px;color:var(--text-sec)">মোট অর্ডার</div>
-</div>
-<div style="background:#D1FAE5;padding:12px;border-radius:10px;text-align:center">
-<div style="font-size:22px;font-weight:800;color:var(--success);font-family:'Poppins'">${delivered}</div>
-<div style="font-size:9px;color:var(--text-sec)">সম্পন্ন</div>
-</div>
-<div style="background:${pendingDeliveries>0?'#FEF3C7':'#F5F5F5'};padding:12px;border-radius:10px;text-align:center">
-<div style="font-size:22px;font-weight:800;color:${pendingDeliveries>0?'var(--warning)':'var(--text-sec)'};font-family:'Poppins'">${pendingDeliveries}</div>
-<div style="font-size:9px;color:var(--text-sec)">বাকি</div>
-</div>
-</div>
-</div>
+    <div class="card">
+      <div class="card-header"><h3><i class="fas fa-motorcycle" style="color:#2E7D32"></i> ডেলিভারি</h3></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:#DBEAFE;padding:12px;border-radius:10px;text-align:center">
+          <div style="font-size:22px;font-weight:800;color:var(--info);font-family:'Poppins'">${totalOrders}</div>
+          <div style="font-size:9px;color:var(--text-sec)">মোট অর্ডার</div>
+        </div>
+        <div style="background:#D1FAE5;padding:12px;border-radius:10px;text-align:center">
+          <div style="font-size:22px;font-weight:800;color:var(--success);font-family:'Poppins'">${delivered}</div>
+          <div style="font-size:9px;color:var(--text-sec)">সম্পন্ন</div>
+        </div>
+        <div style="background:${pendingDeliveries>0?'#FEF3C7':'#F5F5F5'};padding:12px;border-radius:10px;text-align:center">
+          <div style="font-size:22px;font-weight:800;color:${pendingDeliveries>0?'var(--warning)':'var(--text-sec)'};font-family:'Poppins'">${pendingDeliveries}</div>
+          <div style="font-size:9px;color:var(--text-sec)">বাকি</div>
+        </div>
+      </div>
+    </div>
 
-<!-- Financial -->
-<div class="card">
-<div class="card-header"><h3><i class="fas fa-indian-rupee-sign" style="color:var(--accent-dark)"></i> আর্থিক</h3></div>
-<div class="summary-row"><span class="sr-label">মোট ডেলিভারি মূল্য</span><span class="sr-value" style="color:var(--success)">${formatCurrency(totalAmount)}</span></div>
-<div class="summary-row"><span class="sr-label">ডেলিভারি চার্জ (আয়)</span><span class="sr-value" style="color:var(--purple)">${formatCurrency(deliveryIncome)}</span></div>
-<div class="summary-row"><span class="sr-label">💵 COD সংগ্রহ</span><span class="sr-value" style="color:var(--accent-dark)">${formatCurrency(codAmount)}</span></div>
-<div class="summary-row"><span class="sr-label">📱 UPI অর্ডার</span><span class="sr-value" style="color:var(--success)">${formatCurrency(upiAmount)}</span></div>
-</div>
+    <div class="card">
+      <div class="card-header"><h3><i class="fas fa-indian-rupee-sign" style="color:var(--accent-dark)"></i> আর্থিক</h3></div>
+      <div class="summary-row"><span class="sr-label">মোট ডেলিভারি মূল্য</span><span class="sr-value" style="color:var(--success)">${formatCurrency(totalAmount)}</span></div>
+      <div class="summary-row"><span class="sr-label">ডেলিভারি চার্জ (আয়)</span><span class="sr-value" style="color:var(--purple)">${formatCurrency(deliveryIncome)}</span></div>
+      <div class="summary-row"><span class="sr-label">💵 COD সংগ্রহ</span><span class="sr-value" style="color:var(--accent-dark)">${formatCurrency(codAmount)}</span></div>
+      <div class="summary-row"><span class="sr-label">📱 UPI অর্ডার</span><span class="sr-value" style="color:var(--success)">${formatCurrency(upiAmount)}</span></div>
+    </div>
 
-<!-- Cash Status -->
-<div class="card" style="border-left:4px solid ${cashPending>0?'var(--danger)':'var(--success)'}">
-<div class="card-header"><h3><i class="fas fa-money-bill-wave" style="color:#2E7D32"></i> ক্যাশ স্ট্যাটাস</h3></div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-<div style="background:#FFF8E1;padding:10px;border-radius:8px;text-align:center">
-<div style="font-size:16px;font-weight:800;color:var(--accent-dark);font-family:'Poppins'">${formatCurrency(codAmount)}</div>
-<div style="font-size:9px;color:var(--text-sec)">সংগ্রহ</div>
-</div>
-<div style="background:#E8F5E9;padding:10px;border-radius:8px;text-align:center">
-<div style="font-size:16px;font-weight:800;color:#2E7D32;font-family:'Poppins'">${formatCurrency(totalCashSubmitted)}</div>
-<div style="font-size:9px;color:var(--text-sec)">জমা</div>
-</div>
-<div style="background:${cashPending>0?'#FFF5F5':'#F0FFF4'};padding:10px;border-radius:8px;text-align:center">
-<div style="font-size:16px;font-weight:800;color:${cashPending>0?'var(--danger)':'var(--success)'};font-family:'Poppins'">${formatCurrency(cashPending)}</div>
-<div style="font-size:9px;color:var(--text-sec)">বাকি</div>
-</div>
-</div>
-${cashPending>0?`<div style="margin-top:10px;padding:8px;background:#FFF5F5;border-radius:8px;font-size:11px;color:var(--danger);font-weight:600;text-align:center"><i class="fas fa-exclamation-circle"></i> ${formatCurrency(cashPending)} জমা দেওয়া বাকি আছে!</div>
-<button class="btn btn-sm btn-accent" style="margin-top:8px" onclick="goTo('cash')"><i class="fas fa-money-bill-wave"></i> জমা দাও</button>`:'<div style="margin-top:10px;padding:8px;background:#D1FAE5;border-radius:8px;font-size:11px;color:#065F46;font-weight:600;text-align:center"><i class="fas fa-check-circle"></i> সব ক্যাশ জমা দেওয়া হয়েছে!</div>'}
-</div>
+    <div class="card" style="border-left:4px solid ${cashPending>0?'var(--danger)':'var(--success)'}">
+      <div class="card-header"><h3><i class="fas fa-money-bill-wave" style="color:#2E7D32"></i> ক্যাশ স্ট্যাটাস</h3></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:#FFF8E1;padding:10px;border-radius:8px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:var(--accent-dark);font-family:'Poppins'">${formatCurrency(codAmount)}</div>
+          <div style="font-size:9px;color:var(--text-sec)">সংগ্রহ</div>
+        </div>
+        <div style="background:#E8F5E9;padding:10px;border-radius:8px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:#2E7D32;font-family:'Poppins'">${formatCurrency(totalCashSubmitted)}</div>
+          <div style="font-size:9px;color:var(--text-sec)">জমা</div>
+        </div>
+        <div style="background:${cashPending>0?'#FFF5F5':'#F0FFF4'};padding:10px;border-radius:8px;text-align:center">
+          <div style="font-size:16px;font-weight:800;color:${cashPending>0?'var(--danger)':'var(--success)'};font-family:'Poppins'">${formatCurrency(cashPending)}</div>
+          <div style="font-size:9px;color:var(--text-sec)">বাকি</div>
+        </div>
+      </div>
+      ${cashPending>0?`<div style="margin-top:12px;padding:10px;background:#FFF5F5;border-radius:8px;font-size:12px;color:var(--danger);font-weight:600;text-align:center"><i class="fas fa-exclamation-circle"></i> ${formatCurrency(cashPending)} জমা দেওয়া বাকি আছে!</div><button class="btn btn-sm btn-accent" style="margin-top:10px;width:100%;" onclick="goTo('cash')"><i class="fas fa-money-bill-wave"></i> এখনই জমা দিন</button>`:'<div style="margin-top:12px;padding:10px;background:#D1FAE5;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;text-align:center"><i class="fas fa-check-circle"></i> সব ক্যাশ জমা দেওয়া হয়েছে!</div>'}
+    </div>
 
-<!-- Area Breakdown -->
-${Object.keys(areaMap).length>0?`
-<div class="card">
-<div class="card-header"><h3><i class="fas fa-map-pin" style="color:var(--primary)"></i> এলাকা ভিত্তিক</h3></div>
-${Object.entries(areaMap).map(([area,count])=>`
-<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-<span style="font-size:12px;font-weight:600"><i class="fas fa-map-marker-alt" style="color:var(--primary);margin-right:4px"></i>${area}</span>
-<span class="badge badge-info">${count} order${count>1?'s':''}</span>
-</div>`).join('')}
-</div>`:''}
+    ${Object.keys(areaMap).length>0?`
+    <div class="card">
+      <div class="card-header"><h3><i class="fas fa-map-pin" style="color:var(--primary)"></i> এলাকা ভিত্তিক</h3></div>
+      ${Object.entries(areaMap).map(([area,count])=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:13px;font-weight:600;color:#374151;"><i class="fas fa-map-marker-alt" style="color:var(--primary);margin-right:6px"></i>${area}</span>
+        <span class="badge badge-info" style="font-size:11px;">${count} order${count>1?'s':''}</span>
+      </div>`).join('')}
+    </div>`:''}
 
-<!-- Salary Info -->
-${currentDB.dailySalary?`
-<div class="card" style="text-align:center;background:#FFF8E1">
-<div style="font-size:10px;color:var(--text-sec);font-weight:600">আজকের বেতন</div>
-<div style="font-size:24px;font-weight:800;color:var(--accent-dark);font-family:'Poppins';margin:4px 0">${formatCurrency(currentDB.dailySalary)}</div>
-<div style="font-size:10px;color:var(--text-sec)">${delivered} ডেলিভারি সম্পন্ন</div>
-</div>`:''}
+    ${currentDB.dailySalary?`
+    <div class="card" style="text-align:center;background:#FFF8E1;border:1px dashed #FDE68A;">
+      <div style="font-size:11px;color:var(--text-sec);font-weight:600">আজকের বেতন</div>
+      <div style="font-size:26px;font-weight:800;color:var(--accent-dark);font-family:'Poppins';margin:4px 0">${formatCurrency(currentDB.dailySalary)}</div>
+      <div style="font-size:11px;color:var(--text-sec)">${delivered} ডেলিভারি সম্পন্ন</div>
+    </div>`:''}
 
-<!-- Footer -->
-<div style="text-align:center;padding:16px 0">
-<div style="font-size:10px;color:var(--text-sec)">Fast8Bondhu Delivery v1.0</div>
-<div style="font-size:9px;color:var(--border)">আজকের ডেলিভারি রিপোর্ট 🏍️</div>
-</div>
-`;
+    <div style="text-align:center;padding:16px 0">
+      <div style="font-size:11px;color:var(--text-sec);font-weight:600;">Fast8Bondhu Delivery App</div>
+    </div>
+    `;
 
-}catch(e){
-console.error(e);
-c.innerHTML='<div class="empty-state"><h3>Error</h3><p>'+e.message+'</p></div>';
-}
+  }catch(e){
+    console.error(e);
+    c.innerHTML='<div class="empty-state"><h3>Error</h3><p>'+e.message+'</p></div>';
+  }
 }
 
 // ============================================================
 // NAVIGATION
 // ============================================================
 function goTo(page){
-document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
-document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
 
-const map={home:'pgHome',cash:'pgCash',summary:'pgSummary'};
-const idx={home:0,cash:1,summary:2};
+  const map={home:'pgHome',cash:'pgCash',summary:'pgSummary'};
+  const idx={home:0,cash:1,summary:2};
 
-document.getElementById(map[page]).classList.add('active');
-if(idx[page]!==undefined)document.querySelectorAll('.nav-item')[idx[page]].classList.add('active');
+  document.getElementById(map[page]).classList.add('active');
+  if(idx[page]!==undefined)document.querySelectorAll('.nav-item')[idx[page]].classList.add('active');
 
-switch(page){
-case 'home':loadAssignedOrders();break;
-case 'cash':loadCashPage();break;
-case 'summary':loadSummary();break;
-}
+  switch(page){
+    case 'home':loadAssignedOrders();break;
+    case 'cash':loadCashPage();break;
+    case 'summary':loadSummary();break;
+  }
 
-window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ============================================================
-// REAL-TIME LISTENER — NEW ORDER ASSIGNMENTS
+// REAL-TIME LISTENER
 // ============================================================
 function startListener(){
-if(!currentDB)return;
+  if(!currentDB)return;
 
-db.collection('orders')
-.where('deliveryBoyId','==',currentDB.id)
-.where('status','==','assigned')
-.onSnapshot(snap=>{
-const count=snap.size;
-const b=document.getElementById('navBadge');
-if(count>0){b.textContent=count;b.style.display='block'}else{b.style.display='none'}
+  db.collection('orders')
+  .where('deliveryBoyId','==',currentDB.id)
+  .where('status','==','assigned')
+  .onSnapshot(snap=>{
+    const count=snap.size;
+    const b=document.getElementById('navBadge');
+    if(count>0){b.textContent=count;b.style.display='block'}else{b.style.display='none'}
 
-// Check for new assignments
-if(count>0){
-try{
-const ctx=new(window.AudioContext||window.webkitAudioContext)();
-function bp(t,f){const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.01,t+.3);o.start(t);o.stop(t+.3)}
-const n=ctx.currentTime;bp(n,660);bp(n+.15,880);bp(n+.3,1100);
-}catch(e){}
-if(navigator.vibrate)navigator.vibrate([200,100,200]);
-}
-},e=>console.error('Listener:',e));
+    if(count>0){
+      try{
+        const ctx=new(window.AudioContext||window.webkitAudioContext)();
+        function bp(t,f){const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.01,t+.3);o.start(t);o.stop(t+.3)}
+        const n=ctx.currentTime;bp(n,660);bp(n+.15,880);bp(n+.3,1100);
+      }catch(e){}
+      if(navigator.vibrate)navigator.vibrate([200,100,200]);
+    }
+  },e=>console.error('Listener:',e));
 }
 
 // ============================================================
-// AUTO REFRESH
+// AUTO REFRESH & VISIBILITY
 // ============================================================
 let refreshInterval=null;
 function startAutoRefresh(){
-refreshInterval=setInterval(()=>{
-const activePg=document.querySelector('.pg.active');
-if(activePg&&activePg.id==='pgHome')loadAssignedOrders();
-},60000); // Every 1 minute
+  refreshInterval=setInterval(()=>{
+    const activePg=document.querySelector('.pg.active');
+    if(activePg&&activePg.id==='pgHome')loadAssignedOrders();
+  },60000); 
 }
 
-// ============================================================
-// VISIBILITY HANDLER
-// ============================================================
 document.addEventListener('visibilitychange',()=>{
-if(document.visibilityState==='visible'&&currentDB){
-const activePg=document.querySelector('.pg.active');
-if(activePg){
-switch(activePg.id){
-case 'pgHome':loadAssignedOrders();break;
-case 'pgCash':loadCashPage();break;
-case 'pgSummary':loadSummary();break;
-}
-}
-}
+  if(document.visibilityState==='visible'&&currentDB){
+    const activePg=document.querySelector('.pg.active');
+    if(activePg){
+      switch(activePg.id){
+        case 'pgHome':loadAssignedOrders();break;
+        case 'pgCash':loadCashPage();break;
+        case 'pgSummary':loadSummary();break;
+      }
+    }
+  }
 });
 
-// ============================================================
 // INIT
-// ============================================================
 checkAuth();
 setTimeout(()=>{if(currentDB){startListener();startAutoRefresh()}},1500);
 
